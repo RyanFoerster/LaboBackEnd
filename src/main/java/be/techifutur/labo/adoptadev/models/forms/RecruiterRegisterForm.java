@@ -1,16 +1,20 @@
 package be.techifutur.labo.adoptadev.models.forms;
 
+import be.techifutur.labo.adoptadev.models.entities.JobOffer;
+import be.techifutur.labo.adoptadev.models.entities.Recruiter;
 import be.techifutur.labo.adoptadev.models.entities.User;
 import be.techifutur.labo.adoptadev.models.enums.Role;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 
+import java.util.Collections;
 import java.util.Set;
 
 @Data
-public class RegisterForm {
+public class RecruiterRegisterForm {
 
     @NotBlank
     @Size(min = 6, max = 20)
@@ -23,26 +27,27 @@ public class RegisterForm {
             message = "Doit contenir une majuscule, un chiffre, un caractère spécial et minimum 6 caractères"
     )
     private String password;
-
+    @NotBlank
     private String firstName;
-
+    @NotBlank
     private String lastName;
-
+    @NotBlank
+    @Email
     private String email;
-
+    @NotBlank
     private String description;
+    private Set<JobOffer> jobOfferSet;
 
-    private Set<Role> roles;
-
-    public User toEntity(){
-        User user = new User();
-        user.setUsername(this.username);
-        user.setPassword(this.password);
-        user.setFirstName(this.firstName);
-        user.setLastName(this.lastName);
-        user.setEmail(this.email);
-        user.setDescription(this.description);
-        user.setRoles(this.roles);
-        return user;
+    public Recruiter toEntity(){
+        Recruiter recruiter = new Recruiter();
+        recruiter.setUsername(this.username);
+        recruiter.setPassword(this.password);
+        recruiter.setFirstName(this.firstName);
+        recruiter.setLastName(this.lastName);
+        recruiter.setEmail(this.email);
+        recruiter.setDescription(this.description);
+        recruiter.setRoles(Collections.singleton(Role.RECRUITER));
+        recruiter.setJobOfferSet(this.jobOfferSet);
+        return recruiter;
     }
 }

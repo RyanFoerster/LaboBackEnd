@@ -14,7 +14,7 @@ import java.util.Set;
 @Setter
 public class Recruiter extends User{
 
-    @OneToMany
-    private Set<JobOffer> jobOfferList = new HashSet<>();
+    @OneToMany(mappedBy = "recruiter")
+    private Set<JobOffer> jobOfferSet = new HashSet<>();
 
 }

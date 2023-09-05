@@ -1,6 +1,8 @@
 package be.techifutur.labo.adoptadev.services.Impl;
 
 import be.techifutur.labo.adoptadev.exceptions.UniqueViolationException;
+import be.techifutur.labo.adoptadev.models.entities.Dev;
+import be.techifutur.labo.adoptadev.models.entities.Recruiter;
 import be.techifutur.labo.adoptadev.models.entities.User;
 import be.techifutur.labo.adoptadev.repositories.UserRepository;
 import be.techifutur.labo.adoptadev.services.UserService;
@@ -30,16 +32,29 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void register(User user) {
-        Assert.notNull(user, "user should not be null");
+    public void devRegister(Dev dev) {
+        Assert.notNull(dev, "user should not be null");
 
-        if (userRepository.existsByUsername(user.getUsername())) {
+        if (userRepository.existsByUsername(dev.getUsername())) {
             throw new UniqueViolationException("username");
         }
 
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        dev.setPassword(passwordEncoder.encode(dev.getPassword()));
 
-        userRepository.save(user);
+        userRepository.save(dev);
+    }
+
+    @Override
+    public void recruiterRegister(Recruiter recruiter) {
+        Assert.notNull(recruiter, "user should not be null");
+
+        if (userRepository.existsByUsername(recruiter.getUsername())) {
+            throw new UniqueViolationException("username");
+        }
+
+        recruiter.setPassword(passwordEncoder.encode(recruiter.getPassword()));
+
+        userRepository.save(recruiter);
     }
 
     @Override

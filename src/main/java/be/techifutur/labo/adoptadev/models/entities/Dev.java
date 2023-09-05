@@ -18,13 +18,13 @@ public class Dev extends User {
     @Column(name = "dev_birthdate", nullable = false)
     private LocalDate birthDate;
 
-    @Column(name = "dev_technologies_back_end", nullable = false)
+    @Column(name = "dev_technologies_back_end")
     private Set<TechnologyBackEnd> technologiesBackEnd = new HashSet<>();//TODO enum Technologies
 
-    @Column(name = "dev_technologies_front_end", nullable = false)
+    @Column(name = "dev_technologies_front_end")
     private Set<TechnologyFrontEnd> technologiesFrontEnd = new HashSet<>();//TODO enum Technologies
 
-    @Column(name = "dev_github", nullable = false)
+    @Column(name = "dev_github")
     private String gitHub;
 
     @Column(name = "dev_linkedin")
