@@ -24,7 +24,9 @@ public class RegisterForm {
     )
     private String password;
 
-    private String name;
+    private String firstName;
+
+    private String lastName;
 
     private String email;
 
@@ -36,7 +38,8 @@ public class RegisterForm {
         User user = new User();
         user.setUsername(this.username);
         user.setPassword(this.password);
-        user.setName(this.name);
+        user.setFirstName(this.firstName);
+        user.setLastName(this.lastName);
         user.setEmail(this.email);
         user.setDescription(this.description);
         user.setRoles(this.roles);
