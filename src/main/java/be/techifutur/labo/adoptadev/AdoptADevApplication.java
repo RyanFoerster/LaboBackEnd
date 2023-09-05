@@ -1,4 +1,4 @@
-package com.example.adoptadev;
+package be.techifutur.labo.adoptadev;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
