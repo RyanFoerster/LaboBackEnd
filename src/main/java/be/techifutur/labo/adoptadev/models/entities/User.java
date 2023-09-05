@@ -17,29 +17,28 @@ import java.util.stream.Collectors;
 @Table(name = "\"user\"")
 @Getter
 @Setter
-@Inheritance
-public class User implements UserDetails {
+@Inheritance(strategy = InheritanceType.JOINED)
+public class User implements UserDetails{
 
     @Id
+    @Column(name = "user_id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @Column(name = "user_username")
+    @Column(name = "user_username", nullable = false)
     private String username;
-
-    @Column(name = "user_password")
+    @Column(name = "user_password", nullable = false)
     private String password;
-
-    @Column(name="user_name")
-    private String name;
-
-    @Column(name="user_email")
+    @Column(name = "user_first_name", nullable = false)
+    private String firstName;
+    @Column(name = "user_last_name", nullable = false)
+    private String lastName;
+    @Column(name = "user_email", nullable = false)
     private String email;
 
     @Column(name = "user_description")
     private String description;
 
-    @Column(name = "user_roles")
+    @Column(name = "user_roles", nullable = false)
     @Enumerated(EnumType.STRING)
     private Set<Role> roles;
 
