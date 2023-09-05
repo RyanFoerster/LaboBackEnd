@@ -1,9 +1,12 @@
 package be.techifutur.labo.adoptadev.controllers.security;
 
 import be.techifutur.labo.adoptadev.models.dtos.AuthDTO;
+import be.techifutur.labo.adoptadev.models.entities.Dev;
+import be.techifutur.labo.adoptadev.models.entities.Recruiter;
 import be.techifutur.labo.adoptadev.models.entities.User;
+import be.techifutur.labo.adoptadev.models.forms.DevRegisterForm;
 import be.techifutur.labo.adoptadev.models.forms.LoginForm;
-import be.techifutur.labo.adoptadev.models.forms.RegisterForm;
+import be.techifutur.labo.adoptadev.models.forms.RecruiterRegisterForm;
 import be.techifutur.labo.adoptadev.services.UserService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -26,10 +29,17 @@ public class AuthController {
         this.userDetailsService = userDetailsService;
     }
 
-    @PostMapping("/register")
-    public ResponseEntity<?> register(@RequestBody @Valid RegisterForm registerForm){
-        User user = registerForm.toEntity();
-        userService.register(user);
+    @PostMapping("/dev-register")
+    public ResponseEntity<?> devRegister(@RequestBody @Valid DevRegisterForm form){
+        Dev dev = form.toEntity();
+        userService.devRegister(dev);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+    @PostMapping("/recruiter-register")
+    public ResponseEntity<?> recruiterRegister(@RequestBody @Valid RecruiterRegisterForm form){
+        Recruiter recruiter = form.toEntity();
+        userService.recruiterRegister(recruiter);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
