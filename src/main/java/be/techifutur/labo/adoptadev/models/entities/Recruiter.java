@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -14,6 +15,6 @@ import java.util.Set;
 public class Recruiter extends User{
 
     @OneToMany
-    private Set<JobOffer> jobOfferList;
+    private Set<JobOffer> jobOfferList = new HashSet<>();
 
 }

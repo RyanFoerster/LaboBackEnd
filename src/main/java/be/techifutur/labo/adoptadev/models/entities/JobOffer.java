@@ -1,6 +1,6 @@
 package be.techifutur.labo.adoptadev.models.entities;
 
-import be.techifutur.labo.adoptadev.models.enums.Technologie;
+import be.techifutur.labo.adoptadev.models.enums.TechnologyFrontEnd;
 import jakarta.persistence.*;
 
 import java.util.HashSet;
@@ -25,12 +25,12 @@ public class JobOffer {
             name = "job_offer_technologie",
             joinColumns = @JoinColumn(name = "game_id")
     )
-    private Set<Technologie> technologies = new HashSet<>();
+    private Set<TechnologyFrontEnd> technologies = new HashSet<>();
 
     @Column(name = "job_offer_link")
     private String link;
 
     @ManyToOne
-    @JoinColumn(name = "job_offer_link", nullable = false)
+    @JoinColumn(name = "job_offer_recruiter", nullable = false)
     private Recruiter recruiter;
 }

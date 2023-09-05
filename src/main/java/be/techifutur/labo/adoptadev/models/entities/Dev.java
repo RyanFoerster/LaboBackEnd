@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -18,10 +19,10 @@ public class Dev extends User {
     private LocalDate birthDate;
 
     @Column(name = "dev_technologies_back_end", nullable = false)
-    private Set<TechnologyBackEnd> technologiesBackEnd;//TODO enum Technologies
+    private Set<TechnologyBackEnd> technologiesBackEnd = new HashSet<>();//TODO enum Technologies
 
     @Column(name = "dev_technologies_front_end", nullable = false)
-    private Set<TechnologyFrontEnd> technologiesFrontEnd;//TODO enum Technologies
+    private Set<TechnologyFrontEnd> technologiesFrontEnd = new HashSet<>();//TODO enum Technologies
 
     @Column(name = "dev_github", nullable = false)
     private String gitHub;
