@@ -14,6 +14,10 @@ public class UserDTO {
 
     private Long id;
     private String username;
+    private String firstName;
+    private String lastName;
+    private String email;
+    private String description;
     private Set<Role> roles;
 
     public static UserDTO toDTO(User entity) {
@@ -24,6 +28,10 @@ public class UserDTO {
         return UserDTO.builder()
                 .id(entity.getId())
                 .username(entity.getUsername())
+                .firstName(entity.getFirstName())
+                .lastName(entity.getLastName())
+                .email(entity.getEmail())
+                .description(entity.getDescription())
                 .roles(entity.getRoles())
                 .build();
     }
