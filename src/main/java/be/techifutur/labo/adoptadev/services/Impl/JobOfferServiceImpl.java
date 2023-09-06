@@ -1,7 +1,11 @@
 package be.techifutur.labo.adoptadev.services.Impl;
 
+import be.techifutur.labo.adoptadev.models.entities.Company;
 import be.techifutur.labo.adoptadev.models.entities.JobOffer;
+import be.techifutur.labo.adoptadev.repositories.AddressRepository;
+import be.techifutur.labo.adoptadev.repositories.CompanyRepository;
 import be.techifutur.labo.adoptadev.repositories.JobOfferRepository;
+import be.techifutur.labo.adoptadev.repositories.RecruiterRepository;
 import be.techifutur.labo.adoptadev.services.JobOfferService;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +22,7 @@ public class JobOfferServiceImpl implements JobOfferService {
 
     @Override
     public Long add(JobOffer jobOffer) {
+        //TODO attribuer au recruteur qui crée l'offre
         return jobOfferRepository.save(jobOffer).getId();
     }
 
