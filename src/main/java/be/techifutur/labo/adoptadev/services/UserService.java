@@ -9,6 +9,18 @@ public interface UserService {
 
     void recruiterRegister(Recruiter recruiter);
 
+    Recruiter getOneRecruiter(Long id);
+
+    Dev getOneDev(Long id);
+
+    void updateRecruiter(Long id, Recruiter recruiter);
+
+    void updateDev(Long id, Dev dev);
+
+    void deleteRecruiter(Long id);
+
+    void deleteDev(Long id);
+
     String login(String username, String password);
 
 }
