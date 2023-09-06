@@ -37,7 +37,7 @@ public abstract class JwtUtil {
             return false;
         }
         // token signé
-        JWTVerifier jwtVerifier = JWT.require(Algorithm.HMAC512("s3cr3t"))
+        JWTVerifier jwtVerifier = JWT.require(Algorithm.HMAC512("gIqCW5BtsRY;CY4]6Pi%oGHU,Xqx/`Nk.D}2zf]ct5@xn/uNCNvGOc%Tn1{mQ9S"))
                 .acceptExpiresAt(86_400_000)
                 .build();
 

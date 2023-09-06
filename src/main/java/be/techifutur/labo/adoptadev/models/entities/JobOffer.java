@@ -28,25 +28,16 @@ public class JobOffer {
     @Column(name = "job_offer_description", nullable = false)
     private String description;
 
-    @ElementCollection
     @Enumerated(EnumType.STRING)
-    @CollectionTable(
-            name = "job_offer_front_technologies",
-            joinColumns = @JoinColumn(name = "job_offer_id")
-    )
     private Set<TechnologyFrontEnd> technologyFrontEnds = new HashSet<>();
-    @ElementCollection
+
     @Enumerated(EnumType.STRING)
-    @CollectionTable(
-            name = "job_offer_back_technologies",
-            joinColumns = @JoinColumn(name = "job_offer_id")
-    )
     private Set<TechnologyBackEnd> technologyBackEnds = new HashSet<>();
 
     @Column(name = "job_offer_link", nullable = false)
     private String link;
 
     @ManyToOne
-    @JoinColumn(name = "job_offer_recruiter")
+    @JoinColumn(name = "job_offer_recruiter",nullable = false)
     private Recruiter recruiter;
 }
