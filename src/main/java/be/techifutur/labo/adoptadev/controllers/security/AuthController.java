@@ -32,6 +32,7 @@ public class AuthController {
 
     @PostMapping("/dev-register")
     public ResponseEntity<UserDTO> devRegister(@RequestBody @Valid DevRegisterForm form){
+
         Dev dev = form.toEntity();
         userService.devRegister(dev);
         return ResponseEntity.status(HttpStatus.CREATED).body(UserDTO.toDTO(dev));
