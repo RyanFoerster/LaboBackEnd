@@ -15,7 +15,7 @@ import java.time.Instant;
 import java.util.Objects;
 
 @Component
-public abstract class JwtUtil {
+public class JwtUtil {
 
     public static String generateToken(Authentication authentication) {
 
@@ -37,7 +37,7 @@ public abstract class JwtUtil {
             return false;
         }
         // token signé
-        JWTVerifier jwtVerifier = JWT.require(Algorithm.HMAC512("s3cr3t"))
+        JWTVerifier jwtVerifier = JWT.require(Algorithm.HMAC512("gIqCW5BtsRY;CY4]6Pi%oGHU,Xqx/`Nk.D}2zf]ct5@xn/uNCNvGOc%Tn1{mQ9S"))
                 .acceptExpiresAt(86_400_000)
                 .build();
 
@@ -70,4 +70,8 @@ public abstract class JwtUtil {
         return JWT.decode(token).getSubject();
 
     }
+    public String getId(String token){
+        return JWT.decode(token).getId();
+    }
+
 }
