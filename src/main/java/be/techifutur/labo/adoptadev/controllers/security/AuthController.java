@@ -30,14 +30,14 @@ public class AuthController {
     }
 
     @PostMapping("/dev-register")
-    public ResponseEntity<?> devRegister(@RequestBody @Valid DevRegisterForm form){
+    public ResponseEntity<AuthDTO> devRegister(@RequestBody @Valid DevRegisterForm form){
         Dev dev = form.toEntity();
         userService.devRegister(dev);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @PostMapping("/recruiter-register")
-    public ResponseEntity<?> recruiterRegister(@RequestBody @Valid RecruiterRegisterForm form){
+    public ResponseEntity<AuthDTO> recruiterRegister(@RequestBody @Valid RecruiterRegisterForm form){
         Recruiter recruiter = form.toEntity();
         userService.recruiterRegister(recruiter);
         return ResponseEntity.status(HttpStatus.CREATED).build();
