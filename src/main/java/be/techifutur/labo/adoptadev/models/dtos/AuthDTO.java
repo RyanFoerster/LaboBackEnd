@@ -1,6 +1,5 @@
 package be.techifutur.labo.adoptadev.models.dtos;
 
-import be.techifutur.labo.adoptadev.models.entities.Dev;
 import be.techifutur.labo.adoptadev.models.entities.User;
 import lombok.Builder;
 import lombok.Data;

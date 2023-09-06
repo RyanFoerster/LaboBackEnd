@@ -1,7 +1,6 @@
 package be.techifutur.labo.adoptadev.services;
 
 import be.techifutur.labo.adoptadev.models.entities.JobOffer;
-import org.springframework.security.core.Authentication;
 
 import java.util.List;
 

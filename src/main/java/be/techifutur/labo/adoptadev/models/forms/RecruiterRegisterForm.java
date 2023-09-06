@@ -1,10 +1,7 @@
 package be.techifutur.labo.adoptadev.models.forms;
 
-import be.techifutur.labo.adoptadev.models.entities.JobOffer;
 import be.techifutur.labo.adoptadev.models.entities.Recruiter;
-import be.techifutur.labo.adoptadev.models.entities.User;
 import be.techifutur.labo.adoptadev.models.enums.Role;
-import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
@@ -12,7 +9,6 @@ import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 import java.util.Collections;
-import java.util.Set;
 
 @Data
 public class RecruiterRegisterForm {

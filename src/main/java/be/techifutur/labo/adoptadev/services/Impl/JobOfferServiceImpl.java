@@ -2,12 +2,9 @@ package be.techifutur.labo.adoptadev.services.Impl;
 
 import be.techifutur.labo.adoptadev.models.entities.JobOffer;
 import be.techifutur.labo.adoptadev.models.entities.Recruiter;
-import be.techifutur.labo.adoptadev.models.entities.User;
 import be.techifutur.labo.adoptadev.repositories.JobOfferRepository;
 import be.techifutur.labo.adoptadev.repositories.RecruiterRepository;
-import be.techifutur.labo.adoptadev.repositories.UserRepository;
 import be.techifutur.labo.adoptadev.services.JobOfferService;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

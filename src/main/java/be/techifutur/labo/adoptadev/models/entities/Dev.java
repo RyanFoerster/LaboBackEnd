@@ -49,4 +49,18 @@ public class Dev extends User {
     @OneToMany(mappedBy = "dev")
     private Set<Participant> participants = new HashSet<>();
 
+    @Override
+    public String toString() {
+        return "Dev{" +
+                "birthDate=" + birthDate +
+                ", technologiesBackEnd=" + technologiesBackEnd +
+                ", technologiesFrontEnd=" + technologiesFrontEnd +
+                ", gitHub='" + gitHub + '\'' +
+                ", linkedIn='" + linkedIn + '\'' +
+                ", cv='" + cv + '\'' +
+                ", pseudo='" + pseudo + '\'' +
+                ", address=" + address +
+                ", participants=" + participants +
+                '}';
+    }
 }
