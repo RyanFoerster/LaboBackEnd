@@ -1,6 +1,7 @@
 package be.techifutur.labo.adoptadev.controllers.security;
 
 import be.techifutur.labo.adoptadev.models.dtos.AuthDTO;
+import be.techifutur.labo.adoptadev.models.dtos.UserDTO;
 import be.techifutur.labo.adoptadev.models.entities.Dev;
 import be.techifutur.labo.adoptadev.models.entities.Recruiter;
 import be.techifutur.labo.adoptadev.models.entities.User;
@@ -30,14 +31,14 @@ public class AuthController {
     }
 
     @PostMapping("/dev-register")
-    public ResponseEntity<?> devRegister(@RequestBody @Valid DevRegisterForm form){
+    public ResponseEntity<UserDTO> devRegister(@RequestBody @Valid DevRegisterForm form){
         Dev dev = form.toEntity();
         userService.devRegister(dev);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+        return ResponseEntity.status(HttpStatus.CREATED).body(UserDTO.toDTO(dev));
     }
 
     @PostMapping("/recruiter-register")
-    public ResponseEntity<?> recruiterRegister(@RequestBody @Valid RecruiterRegisterForm form){
+    public ResponseEntity<AuthDTO> recruiterRegister(@RequestBody @Valid RecruiterRegisterForm form){
         Recruiter recruiter = form.toEntity();
         userService.recruiterRegister(recruiter);
         return ResponseEntity.status(HttpStatus.CREATED).build();
