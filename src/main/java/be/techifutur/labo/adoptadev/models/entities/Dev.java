@@ -10,6 +10,7 @@ import lombok.Setter;
 
 import java.time.LocalDate;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -48,5 +49,11 @@ public class Dev extends User {
 
     @OneToMany(mappedBy = "dev")
     private Set<Participant> participants = new HashSet<>();
+
+    @OneToMany(mappedBy = "dev")
+    private List<PostHelp> posts;
+
+    @OneToMany(mappedBy = "dev")
+    private List<Comment> comments;
 
 }
