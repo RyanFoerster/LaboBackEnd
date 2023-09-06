@@ -1,10 +1,12 @@
 package be.techifutur.labo.adoptadev.controllers.security;
 
 import be.techifutur.labo.adoptadev.models.dtos.AuthDTO;
+import be.techifutur.labo.adoptadev.models.dtos.DevDTO;
 import be.techifutur.labo.adoptadev.models.dtos.UserDTO;
 import be.techifutur.labo.adoptadev.models.entities.Dev;
 import be.techifutur.labo.adoptadev.models.entities.Recruiter;
 import be.techifutur.labo.adoptadev.models.entities.User;
+import be.techifutur.labo.adoptadev.models.enums.Role;
 import be.techifutur.labo.adoptadev.models.forms.DevRegisterForm;
 import be.techifutur.labo.adoptadev.models.forms.LoginForm;
 import be.techifutur.labo.adoptadev.models.forms.RecruiterRegisterForm;

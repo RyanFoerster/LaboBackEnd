@@ -19,7 +19,7 @@ import java.util.Set;
 @NoArgsConstructor
 public class Dev extends User {
 
-    @Column(name = "dev_birthdate", nullable = false)
+    @Column(name = "dev_birthdate")
     private LocalDate birthDate;
 
     @Column(name = "dev_technologies_back_end")
@@ -37,13 +37,12 @@ public class Dev extends User {
     @Column(name = "dev_cv")
     private String cv; //TODO à revoir
 
-    @Column(name = "dev_pseudo", nullable = false, unique = true)
+    @Column(name = "dev_pseudo", unique = true)
     private String pseudo;
 
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(
-            name = "address_id",
-            nullable = false
+            name = "address_id"
     )
     private Address address;
 
