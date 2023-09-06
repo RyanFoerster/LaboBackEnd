@@ -3,7 +3,9 @@ package be.techifutur.labo.adoptadev.models.entities;
 import be.techifutur.labo.adoptadev.models.enums.TechnologyBackEnd;
 import be.techifutur.labo.adoptadev.models.enums.TechnologyFrontEnd;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
@@ -13,6 +15,8 @@ import java.util.Set;
 @Entity
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class Dev extends User {
 
     @Column(name = "dev_birthdate", nullable = false)
@@ -42,5 +46,8 @@ public class Dev extends User {
             nullable = false
     )
     private Address address;
+
+    @OneToMany(mappedBy = "dev")
+    private Set<Participant> participants = new HashSet<>();
 
 }
