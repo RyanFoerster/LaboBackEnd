@@ -28,9 +28,11 @@ public class Projet {
     private String name;
 
     @Column(name = "projet_technologie_frontend")
+    @Enumerated(EnumType.STRING)
     private TechnologyFrontEnd technologyFrontEnd;
 
     @Column(name = "projet_technologie_backend")
+    @Enumerated(EnumType.STRING)
     private TechnologyBackEnd technologyBackEnd;
 
     @Column(name = "projet_description", nullable = false)
@@ -42,4 +44,16 @@ public class Projet {
     @OneToMany(mappedBy = "projet")
     private Set<Participant> participants = new HashSet<>();
 
+    @Override
+    public String toString() {
+        return "Projet{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", technologyFrontEnd=" + technologyFrontEnd +
+                ", technologyBackEnd=" + technologyBackEnd +
+                ", description='" + description + '\'' +
+                ", github='" + github + '\'' +
+                ", participants=" + participants +
+                '}';
+    }
 }

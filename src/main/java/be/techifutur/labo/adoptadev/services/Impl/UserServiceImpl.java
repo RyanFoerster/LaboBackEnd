@@ -1,9 +1,11 @@
 package be.techifutur.labo.adoptadev.services.Impl;
 
+import be.techifutur.labo.adoptadev.exceptions.ResourceNotFoundException;
 import be.techifutur.labo.adoptadev.exceptions.UniqueViolationException;
 import be.techifutur.labo.adoptadev.models.entities.Dev;
 import be.techifutur.labo.adoptadev.models.entities.Recruiter;
-import be.techifutur.labo.adoptadev.models.entities.User;
+import be.techifutur.labo.adoptadev.repositories.DevRepository;
+import be.techifutur.labo.adoptadev.repositories.RecruiterRepository;
 import be.techifutur.labo.adoptadev.repositories.UserRepository;
 import be.techifutur.labo.adoptadev.services.UserService;
 import be.techifutur.labo.adoptadev.utils.JwtUtil;
@@ -18,15 +20,21 @@ import org.springframework.util.Assert;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final RecruiterRepository recruiterRepository;
+    private final DevRepository devRepository;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
 
     public UserServiceImpl(
             UserRepository userRepository,
+            RecruiterRepository recruiterRepository,
+            DevRepository devRepository,
             PasswordEncoder passwordEncoder,
             AuthenticationManager authenticationManager
     ) {
         this.userRepository = userRepository;
+        this.recruiterRepository = recruiterRepository;
+        this.devRepository = devRepository;
         this.passwordEncoder = passwordEncoder;
         this.authenticationManager = authenticationManager;
     }
@@ -55,6 +63,42 @@ public class UserServiceImpl implements UserService {
         recruiter.setPassword(passwordEncoder.encode(recruiter.getPassword()));
 
         userRepository.save(recruiter);
+    }
+
+    @Override
+    public Recruiter getOneRecruiter(Long id) {
+        return recruiterRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException(id, Recruiter.class));
+    }
+
+    @Override
+    public Dev getOneDev(Long id) {
+        return devRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException(id, Dev.class));
+    }
+
+    @Override
+    public void updateRecruiter(Long id, Recruiter recruiter) {
+
+    }
+
+    @Override
+    public void updateDev(Long id, Dev dev) {
+
+    }
+
+    @Override
+    public void deleteRecruiter(Long id) {
+        Recruiter recruiter = getOneRecruiter(id);
+        recruiter.setEnabled(false);
+        recruiterRepository.save(recruiter);
+    }
+
+    @Override
+    public void deleteDev(Long id) {
+        Dev dev = getOneDev(id);
+        dev.setEnabled(false);
+        devRepository.save(dev);
     }
 
     @Override

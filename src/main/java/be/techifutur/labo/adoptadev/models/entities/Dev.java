@@ -50,10 +50,12 @@ public class Dev extends User {
     @OneToMany(mappedBy = "dev")
     private Set<Participant> participants = new HashSet<>();
 
+
     @OneToMany(mappedBy = "dev")
     private List<PostHelp> posts;
 
     @OneToMany(mappedBy = "dev")
     private List<Comment> comments;
+
 
 }
