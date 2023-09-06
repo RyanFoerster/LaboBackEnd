@@ -6,6 +6,7 @@ import be.techifutur.labo.adoptadev.services.JobOfferService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,9 +22,10 @@ public class JobOfferController {
     }
 
     @PostMapping
-    public ResponseEntity<Long> add(@RequestBody @Valid JobOfferForm form){
+    public ResponseEntity<Long> add(@RequestBody @Valid JobOfferForm form,Authentication authentication){
+        String recruiterName = authentication.getName();
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(jobOfferService.add(form.toEntity()));
+                .body(jobOfferService.add(form.toEntity(),recruiterName));
     }
 
     @GetMapping
