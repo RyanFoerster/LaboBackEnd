@@ -15,7 +15,7 @@ import java.time.Instant;
 import java.util.Objects;
 
 @Component
-public abstract class JwtUtil {
+public class JwtUtil {
 
     public static String generateToken(Authentication authentication) {
 
@@ -70,4 +70,8 @@ public abstract class JwtUtil {
         return JWT.decode(token).getSubject();
 
     }
+    public String getId(String token){
+        return JWT.decode(token).getId();
+    }
+
 }

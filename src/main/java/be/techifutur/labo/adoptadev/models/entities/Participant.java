@@ -1,12 +1,8 @@
 package be.techifutur.labo.adoptadev.models.entities;
 
 import be.techifutur.labo.adoptadev.models.enums.ProjetRole;
-import be.techifutur.labo.adoptadev.models.enums.Role;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.io.Serializable;
 
@@ -38,6 +34,7 @@ public class Participant {
     @Getter @Setter
     @NoArgsConstructor
     @AllArgsConstructor
+    @EqualsAndHashCode
     public static class ParticipantId implements Serializable {
 
         private Long devId;

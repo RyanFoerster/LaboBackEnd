@@ -6,7 +6,8 @@ import be.techifutur.labo.adoptadev.models.enums.TechnologyFrontEnd;
 import lombok.Builder;
 import lombok.Data;
 
-@Data @Builder
+@Data
+@Builder
 public class ProjetDTO {
 
     private Long id;
