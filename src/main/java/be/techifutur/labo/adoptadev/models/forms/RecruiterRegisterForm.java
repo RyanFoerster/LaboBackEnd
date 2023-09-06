@@ -4,6 +4,7 @@ import be.techifutur.labo.adoptadev.models.entities.JobOffer;
 import be.techifutur.labo.adoptadev.models.entities.Recruiter;
 import be.techifutur.labo.adoptadev.models.entities.User;
 import be.techifutur.labo.adoptadev.models.enums.Role;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
@@ -36,7 +37,6 @@ public class RecruiterRegisterForm {
     private String email;
     @NotBlank
     private String description;
-    private Set<JobOffer> jobOfferSet;
 
     public Recruiter toEntity(){
         Recruiter recruiter = new Recruiter();
@@ -47,7 +47,6 @@ public class RecruiterRegisterForm {
         recruiter.setEmail(this.email);
         recruiter.setDescription(this.description);
         recruiter.setRoles(Collections.singleton(Role.RECRUITER));
-        recruiter.setJobOfferSet(this.jobOfferSet);
         return recruiter;
     }
 }

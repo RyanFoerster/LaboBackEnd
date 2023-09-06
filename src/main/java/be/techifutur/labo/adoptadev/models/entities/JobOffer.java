@@ -47,6 +47,6 @@ public class JobOffer {
     private String link;
 
     @ManyToOne
-    @JoinColumn(name = "job_offer_recruiter", nullable = false)
+    @JoinColumn(name = "job_offer_recruiter")
     private Recruiter recruiter;
 }
