@@ -2,6 +2,7 @@ package be.techifutur.labo.adoptadev.utils;
 
 import be.techifutur.labo.adoptadev.configs.SecurityConfig;
 import be.techifutur.labo.adoptadev.models.entities.Dev;
+import be.techifutur.labo.adoptadev.models.enums.Role;
 import be.techifutur.labo.adoptadev.repositories.DevRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -30,6 +31,7 @@ public class DataInitializer implements CommandLineRunner {
         dev.setFirstName("string");
         dev.setLastName("string");
         dev.setEmail("string@string");
+        dev.getRoles().add(Role.DEVELOPER);
         devRepository.save(dev);
 
         Dev dev2 = new Dev();
@@ -38,6 +40,7 @@ public class DataInitializer implements CommandLineRunner {
         dev2.setFirstName("string");
         dev2.setLastName("string");
         dev2.setEmail("string2@string");
+        dev2.getRoles().add(Role.DEVELOPER);
         devRepository.save(dev2);
 
 
