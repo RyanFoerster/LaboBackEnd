@@ -6,12 +6,12 @@ import java.util.List;
 
 public interface ProjetService {
 
-    Long add(Projet projet);
+    Long add(Projet projet, Long devId);
 
     void register(Long devId, Long projetId);
 
     void unregister(Long devId, Long projetId);
 
-    List<Projet> getAllProjects();
+    List<Projet> getAllProjects(Long devId);
 
 }

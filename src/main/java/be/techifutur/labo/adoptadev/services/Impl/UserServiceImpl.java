@@ -3,7 +3,6 @@ package be.techifutur.labo.adoptadev.services.Impl;
 import be.techifutur.labo.adoptadev.exceptions.UniqueViolationException;
 import be.techifutur.labo.adoptadev.models.entities.Dev;
 import be.techifutur.labo.adoptadev.models.entities.Recruiter;
-import be.techifutur.labo.adoptadev.models.entities.User;
 import be.techifutur.labo.adoptadev.repositories.UserRepository;
 import be.techifutur.labo.adoptadev.services.UserService;
 import be.techifutur.labo.adoptadev.utils.JwtUtil;
