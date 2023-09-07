@@ -5,6 +5,7 @@ import be.techifutur.labo.adoptadev.models.dtos.RecruiterDTO;
 import be.techifutur.labo.adoptadev.models.forms.DevProfileUpdateForm;
 import be.techifutur.labo.adoptadev.models.forms.RecruiterProfileUpdateForm;
 import be.techifutur.labo.adoptadev.services.UserService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,8 +18,8 @@ public class RecruiterController {
         this.userService = userService;
     }
 
-    @PutMapping("/{id[0-9]+}")
-    public ResponseEntity<RecruiterDTO> update(@PathVariable Long id, @RequestBody RecruiterProfileUpdateForm form){
+    @PutMapping("/{id:[0-9]+}")
+    public ResponseEntity<RecruiterDTO> update(@PathVariable Long id, @RequestBody @Valid RecruiterProfileUpdateForm form){
         userService.updateRecruiter(id,form.toEntity());
         return ResponseEntity.noContent()
                 .build();

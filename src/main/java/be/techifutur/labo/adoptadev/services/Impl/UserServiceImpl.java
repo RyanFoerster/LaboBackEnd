@@ -82,15 +82,13 @@ public class UserServiceImpl implements UserService {
     public void updateRecruiter(Long id, Recruiter recruiter) {
         Recruiter entity = getOneRecruiter(id);
 
-        if (recruiter.getPassword() != null)
-            entity.setPassword(recruiter.getPassword());
-        if (recruiter.getFirstName() != null)
+        if (!recruiter.getFirstName().isEmpty()&&!recruiter.getFirstName().isBlank())
             entity.setFirstName(recruiter.getFirstName());
-        if (recruiter.getLastName() != null)
+        if (!recruiter.getLastName().isEmpty()&&!recruiter.getLastName().isBlank())
             entity.setLastName(recruiter.getLastName());
-        if (recruiter.getEmail() != null)
+        if (!recruiter.getEmail().isEmpty()&&!recruiter.getEmail().isBlank())
             entity.setEmail(recruiter.getEmail());
-        if (recruiter.getDescription() != null)
+        if (!recruiter.getDescription().isEmpty()&&!recruiter.getDescription().isBlank())
             entity.setDescription(recruiter.getDescription());
 
         userRepository.save(entity);
@@ -101,29 +99,27 @@ public class UserServiceImpl implements UserService {
     public void updateDev(Long id, Dev dev) {
         Dev entity = getOneDev(id);
 
-        if (dev.getPassword() != null)
-            entity.setPassword(dev.getPassword());
-        if (dev.getFirstName() != null)
+        if (!dev.getFirstName().isEmpty()&&!dev.getFirstName().isBlank())
             entity.setFirstName(dev.getFirstName());
-        if (dev.getLastName() != null)
+        if (!dev.getLastName().isEmpty()&&!dev.getLastName().isBlank())
             entity.setLastName(dev.getLastName());
-        if (dev.getEmail() != null)
+        if (!dev.getEmail().isEmpty()&&!dev.getEmail().isBlank())
             entity.setEmail(dev.getEmail());
-        if (dev.getDescription() != null)
+        if (!dev.getDescription().isEmpty()&&!dev.getDescription().isBlank())
             entity.setDescription(dev.getDescription());
         if (dev.getBirthDate() != null)
             entity.setBirthDate(dev.getBirthDate());
-        if (dev.getTechnologiesBackEnd() != null)
+        if (!dev.getTechnologiesBackEnd().isEmpty())
             entity.setTechnologiesBackEnd(dev.getTechnologiesBackEnd());
-        if (dev.getTechnologiesFrontEnd() != null)
+        if (!dev.getTechnologiesFrontEnd().isEmpty())
             entity.setTechnologiesFrontEnd(dev.getTechnologiesFrontEnd());
-        if (dev.getGitHub() != null)
+        if (!dev.getGitHub().isEmpty()&&!dev.getGitHub().isBlank())
             entity.setGitHub(dev.getGitHub());
-        if (dev.getLinkedIn() != null)
+        if (!dev.getLinkedIn().isEmpty()&&!dev.getLinkedIn().isBlank())
             entity.setLinkedIn(dev.getLinkedIn());
-        if (dev.getCv() != null)
+        if (!dev.getCv().isEmpty()&&!dev.getCv().isBlank())
             entity.setCv(dev.getCv());
-        if (dev.getPseudo() != null)
+        if (!dev.getPseudo().isEmpty()&&!dev.getPseudo().isBlank())
             entity.setPseudo(dev.getPseudo());
 
         userRepository.save(entity);

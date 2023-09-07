@@ -12,12 +12,6 @@ import lombok.Data;
 @Builder
 public class RecruiterProfileUpdateForm {
 
-    @Size(min = 6)
-    @Pattern(
-            regexp = "^(?=.*[!=@#$%^&*()_+{}\\\\[\\\\]:;<>,.?~\\\\-]).*(?=.*[A-Z]).*(?=.*[0-9]).*$",
-            message = "Doit contenir une majuscule, un chiffre, un caractère spécial et minimum 6 caractères"
-    )
-    private String password;
     private String firstName;
     private String lastName;
     @Email
@@ -27,7 +21,7 @@ public class RecruiterProfileUpdateForm {
 
     public Recruiter toEntity(){
         Recruiter recruiter = new Recruiter();
-        recruiter.setPassword(this.password);
+
         recruiter.setFirstName(this.firstName);
         recruiter.setLastName(this.lastName);
         recruiter.setEmail(this.email);
