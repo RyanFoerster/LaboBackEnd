@@ -1,5 +1,6 @@
 package be.techifutur.labo.adoptadev.models.forms;
 
+import be.techifutur.labo.adoptadev.models.dtos.AddressDTO;
 import be.techifutur.labo.adoptadev.models.entities.Dev;
 import be.techifutur.labo.adoptadev.models.enums.Role;
 import jakarta.validation.constraints.Email;
@@ -35,6 +36,10 @@ public class DevRegisterForm {
     @Email
     private String email;
 
+    private DevProfileUpdateForm devProfileUpdateForm;
+
+    private AddressForm addressForm;
+
     public Dev toEntity(){
         Dev dev = new Dev();
         dev.setUsername(this.username);
@@ -43,6 +48,13 @@ public class DevRegisterForm {
         dev.setLastName(this.lastName);
         dev.setEmail(this.email);
         dev.setRoles(Collections.singleton(Role.DEVELOPER));
+        dev.setBirthDate(devProfileUpdateForm.getBirthDate());
+        dev.setTechnologiesBackEnd(devProfileUpdateForm.getTechnologyBackEnds());
+        dev.setTechnologiesFrontEnd(devProfileUpdateForm.getTechnologyFrontEnds());
+        dev.setGitHub(devProfileUpdateForm.getGitHub());
+        dev.setLinkedIn(devProfileUpdateForm.getLinkedIn());
+        dev.setPseudo(devProfileUpdateForm.getPseudo());
+        dev.setAddress(this.addressForm.toEntity());
         return dev;
     }
 }
