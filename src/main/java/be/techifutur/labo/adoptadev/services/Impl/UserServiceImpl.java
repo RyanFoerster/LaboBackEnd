@@ -4,6 +4,7 @@ import be.techifutur.labo.adoptadev.exceptions.ResourceNotFoundException;
 import be.techifutur.labo.adoptadev.exceptions.UniqueViolationException;
 import be.techifutur.labo.adoptadev.models.entities.Dev;
 import be.techifutur.labo.adoptadev.models.entities.Recruiter;
+import be.techifutur.labo.adoptadev.models.entities.User;
 import be.techifutur.labo.adoptadev.repositories.DevRepository;
 import be.techifutur.labo.adoptadev.repositories.RecruiterRepository;
 import be.techifutur.labo.adoptadev.repositories.UserRepository;
@@ -79,12 +80,53 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void updateRecruiter(Long id, Recruiter recruiter) {
+        Recruiter entity = getOneRecruiter(id);
 
+        if (recruiter.getPassword() != null)
+            entity.setPassword(recruiter.getPassword());
+        if (recruiter.getFirstName() != null)
+            entity.setFirstName(recruiter.getFirstName());
+        if (recruiter.getLastName() != null)
+            entity.setLastName(recruiter.getLastName());
+        if (recruiter.getEmail() != null)
+            entity.setEmail(recruiter.getEmail());
+        if (recruiter.getDescription() != null)
+            entity.setDescription(recruiter.getDescription());
+
+        userRepository.save(entity);
     }
+
 
     @Override
     public void updateDev(Long id, Dev dev) {
+        Dev entity = getOneDev(id);
 
+        if (dev.getPassword() != null)
+            entity.setPassword(dev.getPassword());
+        if (dev.getFirstName() != null)
+            entity.setFirstName(dev.getFirstName());
+        if (dev.getLastName() != null)
+            entity.setLastName(dev.getLastName());
+        if (dev.getEmail() != null)
+            entity.setEmail(dev.getEmail());
+        if (dev.getDescription() != null)
+            entity.setDescription(dev.getDescription());
+        if (dev.getBirthDate() != null)
+            entity.setBirthDate(dev.getBirthDate());
+        if (dev.getTechnologiesBackEnd() != null)
+            entity.setTechnologiesBackEnd(dev.getTechnologiesBackEnd());
+        if (dev.getTechnologiesFrontEnd() != null)
+            entity.setTechnologiesFrontEnd(dev.getTechnologiesFrontEnd());
+        if (dev.getGitHub() != null)
+            entity.setGitHub(dev.getGitHub());
+        if (dev.getLinkedIn() != null)
+            entity.setLinkedIn(dev.getLinkedIn());
+        if (dev.getCv() != null)
+            entity.setCv(dev.getCv());
+        if (dev.getPseudo() != null)
+            entity.setPseudo(dev.getPseudo());
+
+        userRepository.save(entity);
     }
 
     @Override

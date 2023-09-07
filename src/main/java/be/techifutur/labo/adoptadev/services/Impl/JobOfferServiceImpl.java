@@ -1,5 +1,7 @@
 package be.techifutur.labo.adoptadev.services.Impl;
 
+import be.techifutur.labo.adoptadev.exceptions.NameNotFoundException;
+import be.techifutur.labo.adoptadev.exceptions.ResourceNotFoundException;
 import be.techifutur.labo.adoptadev.models.entities.JobOffer;
 import be.techifutur.labo.adoptadev.models.entities.Recruiter;
 import be.techifutur.labo.adoptadev.repositories.JobOfferRepository;
@@ -23,7 +25,8 @@ public class JobOfferServiceImpl implements JobOfferService {
 
     @Override
     public Long add(JobOffer jobOffer, String recruiterName) {
-        Recruiter recruiter = recruiterRepository.findByUsername(recruiterName).orElseThrow(()-> new RuntimeException("User doesn't exist"));
+        Recruiter recruiter = recruiterRepository.findByUsername(recruiterName)
+                .orElseThrow(()-> new NameNotFoundException(recruiterName,Recruiter.class));
         jobOffer.setRecruiter(recruiter);
         return jobOfferRepository.save(jobOffer).getId();
     }
@@ -36,7 +39,7 @@ public class JobOfferServiceImpl implements JobOfferService {
     @Override
     public JobOffer getOne(Long id) {
         return jobOfferRepository.findById(id)
-                .orElseThrow(()->new RuntimeException("Job inexistant"));
+                .orElseThrow(()->new ResourceNotFoundException(id,JobOffer.class));
     }
 
     @Override
