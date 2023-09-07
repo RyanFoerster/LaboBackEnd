@@ -126,6 +126,24 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public void updateRecruiterPassword(Long id, Recruiter recruiter) {
+        Recruiter entity = getOneRecruiter(id);
+
+        entity.setPassword(recruiter.getPassword());
+
+        userRepository.save(entity);
+    }
+
+    @Override
+    public void updateDevPassword(Long id, Dev dev) {
+        Dev entity = getOneDev(id);
+
+        entity.setPassword(dev.getPassword());
+
+        userRepository.save(entity);
+    }
+
+    @Override
     public void deleteRecruiter(Long id) {
         Recruiter recruiter = getOneRecruiter(id);
         recruiter.setEnabled(false);

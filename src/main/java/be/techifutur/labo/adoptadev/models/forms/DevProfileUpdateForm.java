@@ -25,7 +25,7 @@ public class DevProfileUpdateForm {
     private Set<TechnologyBackEnd> technologyBackEnds;
     private Set<TechnologyFrontEnd> technologyFrontEnds;
     private String gitHub;
-    private String LinkedIn;
+    private String linkedIn;
     private String cv;
     private String pseudo;
 
@@ -40,7 +40,7 @@ public class DevProfileUpdateForm {
         dev.setTechnologiesBackEnd(this.technologyBackEnds);
         dev.setTechnologiesFrontEnd(this.technologyFrontEnds);
         dev.setGitHub(this.gitHub);
-        dev.setLinkedIn(this.LinkedIn);
+        dev.setLinkedIn(this.linkedIn);
         dev.setCv(this.cv);
         dev.setPseudo(this.pseudo);
         return dev;
