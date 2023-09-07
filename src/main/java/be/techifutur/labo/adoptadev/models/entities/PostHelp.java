@@ -15,11 +15,11 @@ import java.util.Set;
 public class PostHelp {
 
     @Id
-    @Column(name = "post_help_id",nullable = false)
+    @Column(name = "post_help_id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-        @Enumerated(EnumType.STRING)
+    @Enumerated(EnumType.STRING)
     @Column(name = "post_help_techno_front")
     private TechnologyFrontEnd technologyFrontEnd;
 
@@ -38,12 +38,14 @@ public class PostHelp {
     private Boolean ouvert;
 
 
-    @ManyToOne
-    @JoinColumn(name = "post_help_id")
-    private PostHelp post;
+    @OneToMany(mappedBy = "post")
+    private Set<Comment> comments;
 
     @ManyToOne
     @JoinColumn(name = "dev_id")
     private Dev dev;
+
+    @OneToMany(mappedBy = "postHelp")
+    private Set<VoteSujet> voteSujets;
 
 }

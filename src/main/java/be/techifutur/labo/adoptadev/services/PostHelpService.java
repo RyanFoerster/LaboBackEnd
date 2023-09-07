@@ -1,4 +1,9 @@
 package be.techifutur.labo.adoptadev.services;
 
-public interface PostHelpService {
+import be.techifutur.labo.adoptadev.models.entities.PostHelp;
+
+public interface PostHelpService extends CrudService<PostHelp, Long>{
+
+
+
 }
