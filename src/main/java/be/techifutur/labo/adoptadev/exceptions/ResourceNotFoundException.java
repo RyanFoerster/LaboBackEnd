@@ -13,4 +13,5 @@ public class ResourceNotFoundException extends RuntimeException {
         this.id = id;
         this.resourceClass = resourceClass;
     }
+
 }

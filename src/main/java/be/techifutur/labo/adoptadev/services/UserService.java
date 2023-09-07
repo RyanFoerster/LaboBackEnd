@@ -2,6 +2,7 @@ package be.techifutur.labo.adoptadev.services;
 
 import be.techifutur.labo.adoptadev.models.entities.Dev;
 import be.techifutur.labo.adoptadev.models.entities.Recruiter;
+import be.techifutur.labo.adoptadev.models.entities.User;
 
 public interface UserService {
 
@@ -12,6 +13,8 @@ public interface UserService {
     Recruiter getOneRecruiter(Long id);
 
     Dev getOneDev(Long id);
+
+//    void updateUser(Long id, User user);
 
     void updateRecruiter(Long id, Recruiter recruiter);
 
