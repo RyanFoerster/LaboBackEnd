@@ -1,8 +1,13 @@
 package be.techifutur.labo.adoptadev.models.entities;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
-@Entity
+import java.util.Set;
+
+@Entity @Getter
+@Setter
 public class Comment {
 
     @Id
@@ -21,5 +26,8 @@ public class Comment {
     @ManyToOne
     @JoinColumn(name = "dev_id")
     private Dev dev;
+
+    @OneToMany(mappedBy = "comment")
+    private Set<VoteComment> voteComments;
 
 }

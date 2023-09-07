@@ -24,7 +24,6 @@ public class ProjetServiceImpl implements ProjetService {
 
     private final ProjetRepository projetRepository;
     private final DevRepository devRepository;
-
     private final ParticipantRepository participantRepository;
 
     public ProjetServiceImpl(ProjetRepository projetRepository,
