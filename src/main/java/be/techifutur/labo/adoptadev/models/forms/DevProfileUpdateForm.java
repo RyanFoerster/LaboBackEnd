@@ -4,6 +4,7 @@ import be.techifutur.labo.adoptadev.models.entities.Dev;
 import be.techifutur.labo.adoptadev.models.enums.TechnologyBackEnd;
 import be.techifutur.labo.adoptadev.models.enums.TechnologyFrontEnd;
 import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.Builder;
@@ -17,6 +18,7 @@ import java.util.Set;
 public class DevProfileUpdateForm {
 
     private String description;
+    @Past
     private LocalDate birthDate;
     private Set<TechnologyBackEnd> technologyBackEnds;
     private Set<TechnologyFrontEnd> technologyFrontEnds;
