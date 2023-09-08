@@ -14,12 +14,13 @@ public class CompanyForm {
     @NotBlank
     private String description;
     @Valid
-    private AddressForm address;
+    private AddressForm addressForm;
 
     public Company toEntity(){
         Company company = new Company();
         company.setName(this.name);
-        company.setAddress(this.address.toEntity());
+        company.setDescription(this.description);
+        company.setAddress(this.addressForm.toEntity());
         return company;
     }
 }
