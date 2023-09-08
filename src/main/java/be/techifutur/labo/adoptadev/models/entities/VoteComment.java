@@ -1,5 +1,6 @@
 package be.techifutur.labo.adoptadev.models.entities;
 
+import be.techifutur.labo.adoptadev.models.enums.VoteType;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
@@ -14,9 +15,15 @@ public class VoteComment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+//    @NotNull
+//    @Column(name = "vote_comment_score")
+//    private Integer score;
+
     @NotNull
-    @Column(name = "vote_comment_score")
-    private Integer score;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "vote_type")
+    private VoteType voteType;
+
 
     @ManyToOne
     @JoinColumn(name = "dev_id")

@@ -1,5 +1,6 @@
 package be.techifutur.labo.adoptadev.models.entities;
 
+import be.techifutur.labo.adoptadev.models.enums.VoteType;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -18,7 +19,6 @@ public class Comment {
     @Column(name = "comment_message", nullable = false)
     private String message;
 
-
     @ManyToOne
     @JoinColumn(name = "post_help_id")
     private PostHelp post;
@@ -29,5 +29,18 @@ public class Comment {
 
     @OneToMany(mappedBy = "comment")
     private Set<VoteComment> voteComments;
+
+    @Column(name = "Score")
+    private Integer score = 0;
+
+
+    public int getScore() {
+
+        for (VoteComment vote : voteComments) {
+            score += (vote.getVoteType() == VoteType.UPVOTE) ? 1 : -1;
+        }
+        setScore(score);
+        return score;
+    }
 
 }
