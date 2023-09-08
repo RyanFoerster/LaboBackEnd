@@ -1,5 +1,6 @@
 package be.techifutur.labo.adoptadev.controllers;
 
+import be.techifutur.labo.adoptadev.models.dtos.DevDTO;
 import be.techifutur.labo.adoptadev.models.dtos.RecruiterDTO;
 import be.techifutur.labo.adoptadev.models.entities.Dev;
 import be.techifutur.labo.adoptadev.models.entities.Recruiter;
@@ -24,6 +25,12 @@ public class RecruiterController {
         this.userDetailsService = userDetailsService;
     }
 
+    @GetMapping("/{id:[0-9]+}")
+    public ResponseEntity<RecruiterDTO> getOne(@PathVariable Long id){
+        Recruiter recruiter = userService.getOneRecruiter(id);
+        RecruiterDTO body = RecruiterDTO.toDTO(recruiter);
+        return ResponseEntity.ok(body);
+    }
 
     @PutMapping
     public ResponseEntity<RecruiterDTO> update(Authentication authentication, @RequestBody @Valid RecruiterProfileUpdateForm form) {

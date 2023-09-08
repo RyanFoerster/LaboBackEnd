@@ -3,6 +3,7 @@ package be.techifutur.labo.adoptadev.models.forms;
 import be.techifutur.labo.adoptadev.models.entities.Dev;
 import be.techifutur.labo.adoptadev.models.enums.TechnologyBackEnd;
 import be.techifutur.labo.adoptadev.models.enums.TechnologyFrontEnd;
+import be.techifutur.labo.adoptadev.validations.constraints.TimesAgo;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
@@ -17,6 +18,7 @@ import java.util.Set;
 public class DevProfileUpdateForm {
 
     private String description;
+    @TimesAgo(message = "should be at least 16 years old")
     private LocalDate birthDate;
     private Set<TechnologyBackEnd> technologyBackEnds;
     private Set<TechnologyFrontEnd> technologyFrontEnds;
