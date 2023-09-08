@@ -28,7 +28,7 @@ public class JobOfferServiceImpl implements JobOfferService {
         Recruiter recruiter = recruiterRepository.findByUsername(recruiterName)
                 .orElseThrow(()-> new NameNotFoundException(recruiterName,Recruiter.class));
         jobOffer.setRecruiter(recruiter);
-        recruiter.getJobOfferSet().add(jobOffer);
+//        recruiter.getJobOfferSet().add(jobOffer);
         return jobOfferRepository.save(jobOffer).getId();
     }
 

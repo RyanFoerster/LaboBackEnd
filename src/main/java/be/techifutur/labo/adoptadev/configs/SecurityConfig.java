@@ -43,7 +43,7 @@ public class SecurityConfig {
                     r
                             .requestMatchers("/swagger/**", "/swagger-ui/**", "/v3/api-docs/**").permitAll()
                             .requestMatchers("/auth/login", "/auth/register","/auth/dev-register","/auth/recruiter-register",
-                                    "/job","/job/*", "/projet" , "/projet/*","/dev","/recruiter").permitAll()
+                                    "/job","/job/*", "/projet" , "/projet/*","/dev","/dev/*","/recruiter","/recruiter/*").permitAll()
                             .requestMatchers("/**").authenticated();
                 });
 
