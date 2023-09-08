@@ -7,6 +7,10 @@ import be.techifutur.labo.adoptadev.models.enums.TechnologyFrontEnd;
 import lombok.Builder;
 import lombok.Data;
 
+import java.util.Set;
+import java.util.stream.Collectors;
+
+
 @Data @Builder
 public class PostHelpDTO {
 
@@ -16,6 +20,7 @@ public class PostHelpDTO {
     private String description;
     private String github;
     private Boolean ouvert;
+    private Set<CommentDTO> comments;
 
     public static PostHelpDTO toDTO(PostHelp postHelp){
         if(postHelp == null){
@@ -29,6 +34,7 @@ public class PostHelpDTO {
                 .description(postHelp.getDescription())
                 .github(postHelp.getGithub())
                 .ouvert(postHelp.getOuvert())
+                .comments(postHelp.getComments().stream().map(CommentDTO::toDTO).collect(Collectors.toSet()))
                 .build();
     }
 
