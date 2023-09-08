@@ -24,6 +24,12 @@ public class DevController {
         this.userDetailsService = userDetailsService;
     }
 
+    @GetMapping("/{id:[0-9]+}")
+    public ResponseEntity<DevDTO> getOne(@PathVariable Long id){
+        Dev dev = userService.getOneDev(id);
+        DevDTO body = DevDTO.toDTO(dev);
+        return ResponseEntity.ok(body);
+    }
 
     @PutMapping
     public ResponseEntity<DevDTO> update(Authentication authentication, @RequestBody @Valid DevProfileUpdateForm form) {

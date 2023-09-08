@@ -2,8 +2,10 @@ package be.techifutur.labo.adoptadev.utils;
 
 import be.techifutur.labo.adoptadev.configs.SecurityConfig;
 import be.techifutur.labo.adoptadev.models.entities.Dev;
+import be.techifutur.labo.adoptadev.models.entities.Recruiter;
 import be.techifutur.labo.adoptadev.models.enums.Role;
 import be.techifutur.labo.adoptadev.repositories.DevRepository;
+import be.techifutur.labo.adoptadev.repositories.RecruiterRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -14,11 +16,13 @@ public class DataInitializer implements CommandLineRunner {
 
     private final SecurityConfig securityConfig;
     private final DevRepository devRepository;
+    private final RecruiterRepository recruiterRepository;
 
-    public DataInitializer(SecurityConfig securityConfig, DevRepository devRepository) {
+    public DataInitializer(SecurityConfig securityConfig, DevRepository devRepository,RecruiterRepository recruiterRepository) {
 
         this.securityConfig = securityConfig;
         this.devRepository = devRepository;
+        this.recruiterRepository = recruiterRepository;
     }
 
     @Override
@@ -43,6 +47,14 @@ public class DataInitializer implements CommandLineRunner {
         dev2.getRoles().add(Role.DEVELOPER);
         devRepository.save(dev2);
 
+        Recruiter recruiter = new Recruiter();
+        recruiter.setUsername("stringRec");
+        recruiter.setPassword(passwordEncoder.encode("Test1234="));
+        recruiter.setFirstName("stringP");
+        recruiter.setLastName("stringN");
+        recruiter.setEmail("string@recruiter");
+        recruiter.setDescription("stringRecDesc");
+        recruiterRepository.save(recruiter);
 
     }
 }

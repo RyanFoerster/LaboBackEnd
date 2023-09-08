@@ -1,5 +1,6 @@
 package be.techifutur.labo.adoptadev.models.forms;
 
+import be.techifutur.labo.adoptadev.models.entities.Comment;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -16,13 +17,13 @@ public class CommentForm {
     @Size(min = 1, max = 500)
     private String message;
 
-    public CommentForm toEntity(){
+    public Comment toEntity(){
 
-        CommentForm commentForm = new CommentForm();
+        Comment comment = new Comment();
 
-        commentForm.setMessage(this.message);
+        comment.setMessage(this.message);
 
-        return commentForm;
+        return comment;
     }
 
 }

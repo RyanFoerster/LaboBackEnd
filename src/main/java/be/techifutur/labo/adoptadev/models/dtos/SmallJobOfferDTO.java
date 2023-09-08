@@ -10,7 +10,7 @@ import java.util.Set;
 
 @Data
 @Builder
-public class JobOfferDTO {
+public class SmallJobOfferDTO {
 
     private Long id;
     private String title;
@@ -18,20 +18,18 @@ public class JobOfferDTO {
     private Set<TechnologyFrontEnd> technologyFrontEnds;
     private Set<TechnologyBackEnd> technologyBackEnds;
     private String link;
-    private SmallRecruiterDTO recruiter;
 
-    public static JobOfferDTO toDTO(JobOffer entity){
+    public static SmallJobOfferDTO toDTO(JobOffer entity){
         if (entity == null)
             return null;
 
-        return JobOfferDTO.builder()
+        return SmallJobOfferDTO.builder()
                 .id(entity.getId())
                 .title(entity.getTitle())
                 .description(entity.getDescription())
                 .technologyFrontEnds(entity.getTechnologyFrontEnds())
                 .technologyBackEnds(entity.getTechnologyBackEnds())
                 .link(entity.getLink())
-                .recruiter(SmallRecruiterDTO.toDTO(entity.getRecruiter()))
                 .build();
     }
 }
