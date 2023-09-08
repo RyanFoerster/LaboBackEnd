@@ -3,6 +3,7 @@ package be.techifutur.labo.adoptadev.models.forms;
 import be.techifutur.labo.adoptadev.models.dtos.AddressDTO;
 import be.techifutur.labo.adoptadev.models.entities.Dev;
 import be.techifutur.labo.adoptadev.models.enums.Role;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
@@ -36,8 +37,10 @@ public class DevRegisterForm {
     @Email
     private String email;
 
+    @Valid
     private DevProfileUpdateForm devProfileUpdateForm;
 
+    @Valid
     private AddressForm addressForm;
 
     public Dev toEntity(){
