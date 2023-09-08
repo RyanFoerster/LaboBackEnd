@@ -24,9 +24,11 @@ public class Dev extends User {
     private LocalDate birthDate;
 
     @Column(name = "dev_technologies_back_end")
+    @Enumerated(EnumType.STRING)
     private Set<TechnologyBackEnd> technologiesBackEnd = new HashSet<>();//TODO enum Technologies
 
     @Column(name = "dev_technologies_front_end")
+    @Enumerated(EnumType.STRING)
     private Set<TechnologyFrontEnd> technologiesFrontEnd = new HashSet<>();//TODO enum Technologies
 
     @Column(name = "dev_github")

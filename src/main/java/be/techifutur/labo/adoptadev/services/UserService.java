@@ -14,12 +14,12 @@ public interface UserService {
 
     Dev getOneDev(Long id);
 
-//    void updateUser(Long id, User user);
-
     void updateRecruiter(Long id, Recruiter recruiter);
 
     void updateDev(Long id, Dev dev);
+    void updateRecruiterPassword(Long id, Recruiter recruiter);
 
+    void updateDevPassword(Long id, Dev dev);
     void deleteRecruiter(Long id);
 
     void deleteDev(Long id);
