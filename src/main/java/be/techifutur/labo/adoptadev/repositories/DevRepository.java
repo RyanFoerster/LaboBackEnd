@@ -7,6 +7,7 @@ import java.util.Optional;
 
 public interface DevRepository extends JpaRepository<Dev, Long> {
 
-    Optional<Dev> getDevByPseudo(String pseudo);
+    Optional<Dev> findByUsername(String pseudo);
+
 
 }

@@ -24,6 +24,7 @@ public class DevController {
         this.userDetailsService = userDetailsService;
     }
 
+
     @PutMapping
     public ResponseEntity<DevDTO> update(Authentication authentication, @RequestBody @Valid DevProfileUpdateForm form) {
         Dev dev = (Dev) userDetailsService.loadUserByUsername(authentication.getPrincipal().toString());

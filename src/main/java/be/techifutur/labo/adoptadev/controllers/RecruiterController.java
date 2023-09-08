@@ -24,6 +24,7 @@ public class RecruiterController {
         this.userDetailsService = userDetailsService;
     }
 
+
     @PutMapping
     public ResponseEntity<RecruiterDTO> update(Authentication authentication, @RequestBody @Valid RecruiterProfileUpdateForm form) {
         Recruiter recruiter = (Recruiter) userDetailsService.loadUserByUsername(authentication.getPrincipal().toString());
