@@ -17,7 +17,7 @@ public class RecruiterController {
         this.userService = userService;
     }
 
-    @PutMapping("/{id[0-9]+}")
+    @PutMapping("/{id:[0-9]+}")
     public ResponseEntity<RecruiterDTO> update(@PathVariable Long id, @RequestBody RecruiterProfileUpdateForm form){
         userService.updateRecruiter(id,form.toEntity());
         return ResponseEntity.noContent()

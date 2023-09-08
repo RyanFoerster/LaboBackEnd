@@ -1,16 +1,20 @@
 package be.techifutur.labo.adoptadev.services.Impl;
 
+import be.techifutur.labo.adoptadev.exceptions.NameNotFoundException;
 import be.techifutur.labo.adoptadev.exceptions.ResourceNotFoundException;
 import be.techifutur.labo.adoptadev.models.entities.Comment;
+import be.techifutur.labo.adoptadev.models.entities.Dev;
 import be.techifutur.labo.adoptadev.models.entities.PostHelp;
 import be.techifutur.labo.adoptadev.repositories.CommentRepository;
 import be.techifutur.labo.adoptadev.repositories.DevRepository;
 import be.techifutur.labo.adoptadev.repositories.PostHelpRepository;
 import be.techifutur.labo.adoptadev.repositories.VoteSujetRepository;
 import be.techifutur.labo.adoptadev.services.PostHelpService;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class PostHelpServiceImpl implements PostHelpService {
 
     private final PostHelpRepository postHelpRepository;
@@ -29,12 +33,17 @@ public class PostHelpServiceImpl implements PostHelpService {
         this.voteSujetRepository = voteSujetRepository;
     }
 
+
     @Override
-    public Long add(PostHelp entity) {
+    public Long add(PostHelp post, String devName) {
 
-        entity.setId(null);
+        Dev dev = devRepository.findByUsername(devName).orElseThrow(
+                () -> new NameNotFoundException(devName, Dev.class)
+        );
+        post.setDev(dev);
 
-        return postHelpRepository.save(entity).getId();
+        return postHelpRepository.save(post).getId();
+
     }
 
     @Override
@@ -85,6 +94,7 @@ public class PostHelpServiceImpl implements PostHelpService {
     public List<Comment> getComments(){
         return commentRepository.findAll().stream().toList();
     }
+
 
 
 }

@@ -17,7 +17,7 @@ public class DevController {
         this.userService = userService;
     }
 
-    @PutMapping("/{id[0-9]+}")
+    @PutMapping("/{id:[0-9]+}")
     public ResponseEntity<DevDTO> update(@PathVariable Long id, @RequestBody DevProfileUpdateForm form) {
         userService.updateDev(id, form.toEntity());
         return ResponseEntity.noContent()
