@@ -1,5 +1,6 @@
 package be.techifutur.labo.adoptadev.models.entities;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
@@ -14,7 +15,7 @@ import java.util.Set;
 @Setter
 public class Recruiter extends User{
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     private Company company;
 
     @OneToMany(mappedBy = "recruiter")

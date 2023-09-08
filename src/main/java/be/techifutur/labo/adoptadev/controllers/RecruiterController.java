@@ -26,8 +26,11 @@ public class RecruiterController {
 
     @PutMapping
     public ResponseEntity<RecruiterDTO> update(Authentication authentication, @RequestBody @Valid RecruiterProfileUpdateForm form) {
+
         Recruiter recruiter = (Recruiter) userDetailsService.loadUserByUsername(authentication.getPrincipal().toString());
+
         userService.updateRecruiter(recruiter.getId(), form.toEntity());
+
         return ResponseEntity.noContent()
                 .build();
     }

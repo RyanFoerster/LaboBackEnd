@@ -2,6 +2,7 @@ package be.techifutur.labo.adoptadev.models.forms;
 
 import be.techifutur.labo.adoptadev.models.entities.Recruiter;
 import be.techifutur.labo.adoptadev.models.enums.Role;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
@@ -24,15 +25,21 @@ public class RecruiterRegisterForm {
             message = "Doit contenir une majuscule, un chiffre, un caractère spécial et minimum 6 caractères"
     )
     private String password;
+
     @NotBlank
     private String firstName;
+
     @NotBlank
     private String lastName;
+
     @NotBlank
     @Email
     private String email;
-    @NotBlank
+
     private String description;
+
+    @Valid
+    private CompanyForm companyForm;
 
     public Recruiter toEntity(){
         Recruiter recruiter = new Recruiter();
@@ -42,6 +49,7 @@ public class RecruiterRegisterForm {
         recruiter.setLastName(this.lastName);
         recruiter.setEmail(this.email);
         recruiter.setDescription(this.description);
+        recruiter.setCompany(this.companyForm.toEntity());
         recruiter.setRoles(Collections.singleton(Role.RECRUITER));
         return recruiter;
     }
