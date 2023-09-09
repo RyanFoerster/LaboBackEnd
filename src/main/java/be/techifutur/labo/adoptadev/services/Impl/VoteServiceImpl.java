@@ -52,7 +52,9 @@ public class VoteServiceImpl implements VoteService {
         Dev dev = devRepository.findById(devId)
                 .orElseThrow(() -> new ResourceNotFoundException(devId, Dev.class));
 
+
         Optional<VoteComment> existingVote = voteCommentRepository.findByCommentAndDev(comment, dev);
+        // Va servir pour savoir si un vote existe déjà ou non
 
         if (existingVote.isPresent()) {
             if (existingVote.get().getVoteType() == voteType) {
