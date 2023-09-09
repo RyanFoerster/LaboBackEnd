@@ -48,4 +48,7 @@ public class PostHelp {
     @OneToMany(mappedBy = "postHelp")
     private Set<VoteSujet> voteSujets;
 
+
+
+
 }

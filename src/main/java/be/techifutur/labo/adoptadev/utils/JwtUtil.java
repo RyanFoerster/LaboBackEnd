@@ -1,5 +1,6 @@
 package be.techifutur.labo.adoptadev.utils;
 
+import be.techifutur.labo.adoptadev.models.entities.Dev;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
@@ -20,6 +21,7 @@ public class JwtUtil {
     public static String generateToken(Authentication authentication) {
 
         Assert.notNull(authentication, "auth should not be null");
+
 
         return JWT.create()
                 .withSubject(authentication.getName())
@@ -72,6 +74,11 @@ public class JwtUtil {
     }
     public String getId(String token){
         return JWT.decode(token).getId();
+    }
+
+    public Long getUserIdFromToken(String token) {
+        DecodedJWT decodedJWT = JWT.decode(token);
+        return decodedJWT.getClaim("userId").asLong();
     }
 
 }

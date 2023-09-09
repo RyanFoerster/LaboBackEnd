@@ -1,15 +1,14 @@
 package be.techifutur.labo.adoptadev.models.dtos;
 
 import be.techifutur.labo.adoptadev.models.entities.VoteComment;
+import be.techifutur.labo.adoptadev.models.enums.VoteType;
 import lombok.Builder;
 import lombok.Data;
 
 @Data @Builder
 public class VoteCommentDTO {
-
     private Long id;
-    private Integer score;
-
+    private VoteType voteType;
 
     public static VoteCommentDTO toDTO(VoteComment voteComment){
         if (voteComment == null){
@@ -18,8 +17,7 @@ public class VoteCommentDTO {
 
         return VoteCommentDTO.builder()
                 .id(voteComment.getId())
-                .score(voteComment.getScore())
+                .voteType(voteComment.getVoteType())
                 .build();
     }
-
 }
