@@ -11,6 +11,8 @@ import be.techifutur.labo.adoptadev.repositories.VoteCommentRepository;
 import be.techifutur.labo.adoptadev.services.VoteService;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class VoteServiceImpl implements VoteService {
     private final VoteCommentRepository voteCommentRepository;
@@ -27,6 +29,22 @@ public class VoteServiceImpl implements VoteService {
 
 
 
+//    public VoteComment addVote(Long commentId, Long devId, VoteType voteType) {
+//        Comment comment = commentRepository.findById(commentId)
+//                .orElseThrow(() -> new ResourceNotFoundException(commentId, Comment.class));
+//
+//        Dev dev = devRepository.findById(devId)
+//                .orElseThrow(() -> new ResourceNotFoundException(devId, Dev.class));
+//
+//        VoteComment voteComment = new VoteComment();
+//        voteComment.setDev(dev);
+//        voteComment.setComment(comment);
+//        voteComment.setVoteType(voteType);
+//
+//        return voteCommentRepository.save(voteComment);
+//    }
+
+    @Override
     public VoteComment addVote(Long commentId, Long devId, VoteType voteType) {
         Comment comment = commentRepository.findById(commentId)
                 .orElseThrow(() -> new ResourceNotFoundException(commentId, Comment.class));
@@ -34,11 +52,35 @@ public class VoteServiceImpl implements VoteService {
         Dev dev = devRepository.findById(devId)
                 .orElseThrow(() -> new ResourceNotFoundException(devId, Dev.class));
 
-        VoteComment voteComment = new VoteComment();
-        voteComment.setDev(dev);
-        voteComment.setComment(comment);
-        voteComment.setVoteType(voteType);
+        Optional<VoteComment> existingVote = voteCommentRepository.findByCommentAndDev(comment, dev);
 
-        return voteCommentRepository.save(voteComment);
+        if (existingVote.isPresent()) {
+            if (existingVote.get().getVoteType() == voteType) {
+                // annuler le vote, donc soustraire le score actuel
+                adjustScore(comment, existingVote.get().getVoteType() == VoteType.UPVOTE ? -1 : 1);
+                voteCommentRepository.delete(existingVote.get());
+                return null;
+            } else {
+                // changer le type de vote, donc ajuster le score en conséquence
+                adjustScore(comment, existingVote.get().getVoteType() == VoteType.UPVOTE ? -2 : 2);
+                existingVote.get().setVoteType(voteType);
+                return voteCommentRepository.save(existingVote.get());
+            }
+        } else {
+            // nouveau vote, donc ajouter au score
+            adjustScore(comment, voteType == VoteType.UPVOTE ? 1 : -1);
+
+            VoteComment voteComment = new VoteComment();
+            voteComment.setDev(dev);
+            voteComment.setComment(comment);
+            voteComment.setVoteType(voteType);
+
+            return voteCommentRepository.save(voteComment);
+        }
+    }
+
+    private void adjustScore(Comment comment, int adjustment) {
+        comment.setScore(comment.getScore() + adjustment);
+        commentRepository.save(comment);
     }
 }
