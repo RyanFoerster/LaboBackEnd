@@ -34,13 +34,4 @@ public class Comment {
     private Integer score = 0;
 
 
-    public int getScore() {
-
-        for (VoteComment vote : voteComments) {
-            score += (vote.getVoteType() == VoteType.UPVOTE) ? 1 : -1;
-        }
-        setScore(score);
-        return score;
-    }
-
 }

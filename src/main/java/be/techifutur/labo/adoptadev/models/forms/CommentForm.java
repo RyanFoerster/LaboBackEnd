@@ -26,7 +26,6 @@ public class CommentForm {
 
         comment.setMessage(this.message);
 
-
         return comment;
     }
 

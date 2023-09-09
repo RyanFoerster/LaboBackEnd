@@ -15,7 +15,6 @@ import be.techifutur.labo.adoptadev.utils.JwtUtil;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.*;
@@ -80,7 +79,7 @@ public class PostHelpController {
         return ResponseEntity.noContent().build();
     }
 
-    @DeleteMapping("\"/{id:[0-9]+}\"")
+    @DeleteMapping("/{id:[0-9]+}")
     public ResponseEntity<?> delete(@PathVariable Long id){
         postHelpService.delete(id);
         return ResponseEntity.noContent().build();
@@ -103,7 +102,6 @@ public class PostHelpController {
     }
 
     @PostMapping("/comment/{commentId}/vote")
-
     public ResponseEntity<?> addVote(@PathVariable Long commentId, @RequestParam VoteType voteType, Authentication authentication) {
 
         String devName = authentication.getPrincipal().toString();
