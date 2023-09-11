@@ -19,6 +19,9 @@ public class PostHelp {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "post_title", nullable = false)
+    private String title;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "post_help_techno_front")
     private TechnologyFrontEnd technologyFrontEnd;

@@ -1,14 +1,13 @@
 package be.techifutur.labo.adoptadev.utils;
 
 import be.techifutur.labo.adoptadev.configs.SecurityConfig;
-import be.techifutur.labo.adoptadev.models.entities.Dev;
-import be.techifutur.labo.adoptadev.models.entities.PostHelp;
-import be.techifutur.labo.adoptadev.models.entities.Recruiter;
+import be.techifutur.labo.adoptadev.models.entities.*;
 import be.techifutur.labo.adoptadev.models.enums.Role;
 import be.techifutur.labo.adoptadev.models.enums.TechnologyFrontEnd;
-import be.techifutur.labo.adoptadev.repositories.DevRepository;
-import be.techifutur.labo.adoptadev.repositories.PostHelpRepository;
-import be.techifutur.labo.adoptadev.repositories.RecruiterRepository;
+import be.techifutur.labo.adoptadev.models.enums.VoteType;
+import be.techifutur.labo.adoptadev.repositories.*;
+import be.techifutur.labo.adoptadev.services.VoteCommentService;
+import be.techifutur.labo.adoptadev.services.VoteSujetService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -21,17 +20,26 @@ public class DataInitializer implements CommandLineRunner {
     private final DevRepository devRepository;
     private final RecruiterRepository recruiterRepository;
     private final PostHelpRepository postHelpRepository;
+    private final CommentRepository commentRepository;
+    private final VoteSujetService voteSujetService;
+    private final VoteCommentService voteCommentService;
 
     public DataInitializer(SecurityConfig securityConfig,
                            DevRepository devRepository,
                            RecruiterRepository recruiterRepository,
-                           PostHelpRepository postHelpRepository
-    ) {
+                           PostHelpRepository postHelpRepository,
+                           CommentRepository commentRepository,
+                           VoteSujetService voteSujetService,
+                           VoteCommentService voteCommentService)
+    {
 
         this.securityConfig = securityConfig;
         this.devRepository = devRepository;
         this.recruiterRepository = recruiterRepository;
         this.postHelpRepository = postHelpRepository;
+        this.commentRepository = commentRepository;
+        this.voteSujetService = voteSujetService;
+        this.voteCommentService = voteCommentService;
     }
 
     @Override
@@ -66,10 +74,21 @@ public class DataInitializer implements CommandLineRunner {
         recruiterRepository.save(recruiter);
 
         PostHelp postHelp = new PostHelp();
+        postHelp.setTitle("Cli Angular");
         postHelp.setDev(dev);
         postHelp.setTechnologyFrontEnd(TechnologyFrontEnd.ANGULAR);
         postHelp.setDescription("J'ai besoin d'aide pour créer un component en utilisant le cli Angular");
         postHelp.setGithub("https://github.com/LoVanors/finalLab");
         postHelpRepository.save(postHelp);
+
+        Comment comment = new Comment();
+        comment.setPost(postHelp);
+        comment.setDev(dev2);
+        comment.setMessage("Tu devrais essayer en faisant 'ng g c [Nom de ton component]'");
+        commentRepository.save(comment);
+
+        voteCommentService.addVote(comment.getId(), dev.getId(), VoteType.UPVOTE);
+
+        voteSujetService.addVote(postHelp.getId(), dev2.getId(), VoteType.UPVOTE);
     }
 }
