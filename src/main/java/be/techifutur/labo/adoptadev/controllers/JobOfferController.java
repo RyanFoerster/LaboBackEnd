@@ -1,6 +1,7 @@
 package be.techifutur.labo.adoptadev.controllers;
 
 import be.techifutur.labo.adoptadev.models.dtos.JobOfferDTO;
+import be.techifutur.labo.adoptadev.models.dtos.JobOfferIndexDTO;
 import be.techifutur.labo.adoptadev.models.forms.JobOfferForm;
 import be.techifutur.labo.adoptadev.services.JobOfferService;
 import jakarta.validation.Valid;
@@ -29,12 +30,8 @@ public class JobOfferController {
     }
 
     @GetMapping
-    public ResponseEntity<List<JobOfferDTO>> findAll(){
-        return ResponseEntity.ok(
-                jobOfferService.getAll().stream()
-                        .map(JobOfferDTO::toDTO)
-                        .toList()
-        );
+    public ResponseEntity<JobOfferIndexDTO> findAll(){
+        return ResponseEntity.ok(JobOfferIndexDTO.toDTO(jobOfferService.getAll()));
     }
 
     @GetMapping("/{id:[0-9]+}")

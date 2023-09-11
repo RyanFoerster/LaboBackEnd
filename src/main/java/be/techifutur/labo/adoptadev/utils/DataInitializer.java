@@ -53,6 +53,7 @@ public class DataInitializer implements CommandLineRunner {
         recruiter.setFirstName("stringP");
         recruiter.setLastName("stringN");
         recruiter.setEmail("string@recruiter");
+        recruiter.getRoles().add(Role.RECRUITER);
         recruiter.setDescription("stringRecDesc");
         recruiterRepository.save(recruiter);
 
