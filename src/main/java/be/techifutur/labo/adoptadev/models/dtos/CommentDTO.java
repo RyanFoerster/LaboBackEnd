@@ -13,6 +13,7 @@ public class CommentDTO {
 
     private Long id;
     private String message;
+    private DevDTO dev;
     private Set<VoteCommentDTO> voteComments;
     private int score;
 
@@ -25,6 +26,7 @@ public class CommentDTO {
         return CommentDTO.builder()
                 .id(comment.getId())
                 .message(comment.getMessage())
+                .dev(DevDTO.toDTO(comment.getDev()))
                 .voteComments(comment.getVoteComments().stream().map(VoteCommentDTO::toDTO).collect(Collectors.toSet()))
                 .score(comment.getScore())
                 .build();
