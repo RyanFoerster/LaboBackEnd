@@ -71,6 +71,7 @@ public class DataInitializer implements CommandLineRunner {
         recruiter.setLastName("stringN");
         recruiter.setEmail("string@recruiter");
         recruiter.setDescription("stringRecDesc");
+        recruiter.getRoles().add(Role.RECRUITER);
         recruiterRepository.save(recruiter);
 
         PostHelp postHelp = new PostHelp();
