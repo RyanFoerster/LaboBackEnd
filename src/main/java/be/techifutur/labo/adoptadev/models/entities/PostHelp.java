@@ -35,7 +35,7 @@ public class PostHelp {
     private String github;
 
     @Column(name = "post_help_ouvert", nullable = false)
-    private Boolean ouvert;
+    private Boolean ouvert = true;
 
 
     @OneToMany(mappedBy = "post")

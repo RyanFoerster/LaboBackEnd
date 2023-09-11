@@ -2,9 +2,12 @@ package be.techifutur.labo.adoptadev.utils;
 
 import be.techifutur.labo.adoptadev.configs.SecurityConfig;
 import be.techifutur.labo.adoptadev.models.entities.Dev;
+import be.techifutur.labo.adoptadev.models.entities.PostHelp;
 import be.techifutur.labo.adoptadev.models.entities.Recruiter;
 import be.techifutur.labo.adoptadev.models.enums.Role;
+import be.techifutur.labo.adoptadev.models.enums.TechnologyFrontEnd;
 import be.techifutur.labo.adoptadev.repositories.DevRepository;
+import be.techifutur.labo.adoptadev.repositories.PostHelpRepository;
 import be.techifutur.labo.adoptadev.repositories.RecruiterRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -17,12 +20,18 @@ public class DataInitializer implements CommandLineRunner {
     private final SecurityConfig securityConfig;
     private final DevRepository devRepository;
     private final RecruiterRepository recruiterRepository;
+    private final PostHelpRepository postHelpRepository;
 
-    public DataInitializer(SecurityConfig securityConfig, DevRepository devRepository,RecruiterRepository recruiterRepository) {
+    public DataInitializer(SecurityConfig securityConfig,
+                           DevRepository devRepository,
+                           RecruiterRepository recruiterRepository,
+                           PostHelpRepository postHelpRepository
+    ) {
 
         this.securityConfig = securityConfig;
         this.devRepository = devRepository;
         this.recruiterRepository = recruiterRepository;
+        this.postHelpRepository = postHelpRepository;
     }
 
     @Override
@@ -56,5 +65,11 @@ public class DataInitializer implements CommandLineRunner {
         recruiter.setDescription("stringRecDesc");
         recruiterRepository.save(recruiter);
 
+        PostHelp postHelp = new PostHelp();
+        postHelp.setDev(dev);
+        postHelp.setTechnologyFrontEnd(TechnologyFrontEnd.ANGULAR);
+        postHelp.setDescription("J'ai besoin d'aide pour créer un component en utilisant le cli Angular");
+        postHelp.setGithub("https://github.com/LoVanors/finalLab");
+        postHelpRepository.save(postHelp);
     }
 }
