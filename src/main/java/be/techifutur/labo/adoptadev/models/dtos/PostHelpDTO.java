@@ -21,6 +21,7 @@ public class PostHelpDTO {
     private String github;
     private Boolean ouvert;
     private Set<CommentDTO> comments;
+    private int score;
 
     public static PostHelpDTO toDTO(PostHelp postHelp){
         if(postHelp == null){
@@ -35,6 +36,7 @@ public class PostHelpDTO {
                 .github(postHelp.getGithub())
                 .ouvert(postHelp.getOuvert())
                 .comments(postHelp.getComments().stream().map(CommentDTO::toDTO).collect(Collectors.toSet()))
+                .score(postHelp.getScore())
                 .build();
     }
 

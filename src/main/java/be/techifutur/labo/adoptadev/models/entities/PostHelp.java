@@ -48,6 +48,8 @@ public class PostHelp {
     @OneToMany(mappedBy = "postHelp")
     private Set<VoteSujet> voteSujets;
 
+    @Column(name = "Score")
+    private Integer score = 0;
 
 
 

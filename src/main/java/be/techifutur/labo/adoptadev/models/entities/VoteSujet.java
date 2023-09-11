@@ -1,5 +1,6 @@
 package be.techifutur.labo.adoptadev.models.entities;
 
+import be.techifutur.labo.adoptadev.models.enums.VoteType;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
@@ -14,8 +15,9 @@ public class VoteSujet {
     private Long id;
 
     @NotNull
-    @Column(name = "vote_sujet_score")
-    private Integer score;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "vote_type")
+    private VoteType voteType;
 
     @ManyToOne
     @JoinColumn(name = "dev_id")

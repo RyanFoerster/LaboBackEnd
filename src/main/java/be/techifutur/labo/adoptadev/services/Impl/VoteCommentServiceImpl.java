@@ -8,41 +8,25 @@ import be.techifutur.labo.adoptadev.models.enums.VoteType;
 import be.techifutur.labo.adoptadev.repositories.CommentRepository;
 import be.techifutur.labo.adoptadev.repositories.DevRepository;
 import be.techifutur.labo.adoptadev.repositories.VoteCommentRepository;
-import be.techifutur.labo.adoptadev.services.VoteService;
+import be.techifutur.labo.adoptadev.services.VoteCommentService;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Service
-public class VoteServiceImpl implements VoteService {
+public class VoteCommentServiceImpl implements VoteCommentService {
     private final VoteCommentRepository voteCommentRepository;
     private final CommentRepository commentRepository;
     private final DevRepository devRepository;
 
-    public VoteServiceImpl(VoteCommentRepository voteCommentRepository,
-                           CommentRepository commentRepository,
-                           DevRepository devRepository) {
+    public VoteCommentServiceImpl(VoteCommentRepository voteCommentRepository,
+                                  CommentRepository commentRepository,
+                                  DevRepository devRepository) {
         this.voteCommentRepository = voteCommentRepository;
         this.commentRepository = commentRepository;
         this.devRepository = devRepository;
     }
 
-
-
-//    public VoteComment addVote(Long commentId, Long devId, VoteType voteType) {
-//        Comment comment = commentRepository.findById(commentId)
-//                .orElseThrow(() -> new ResourceNotFoundException(commentId, Comment.class));
-//
-//        Dev dev = devRepository.findById(devId)
-//                .orElseThrow(() -> new ResourceNotFoundException(devId, Dev.class));
-//
-//        VoteComment voteComment = new VoteComment();
-//        voteComment.setDev(dev);
-//        voteComment.setComment(comment);
-//        voteComment.setVoteType(voteType);
-//
-//        return voteCommentRepository.save(voteComment);
-//    }
 
     @Override
     public VoteComment addVote(Long commentId, Long devId, VoteType voteType) {
