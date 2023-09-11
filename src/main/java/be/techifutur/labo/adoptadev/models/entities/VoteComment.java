@@ -15,15 +15,10 @@ public class VoteComment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-//    @NotNull
-//    @Column(name = "vote_comment_score")
-//    private Integer score;
-
     @NotNull
     @Enumerated(EnumType.STRING)
     @Column(name = "vote_type")
     private VoteType voteType;
-
 
     @ManyToOne
     @JoinColumn(name = "dev_id")
