@@ -29,7 +29,7 @@ public class JobOfferController {
                 .body(jobOfferService.add(form.toEntity(),recruiterName));
     }
 
-    @GetMapping
+    @GetMapping("/jobs")
     public ResponseEntity<JobOfferIndexDTO> findAll(){
         return ResponseEntity.ok(JobOfferIndexDTO.toDTO(jobOfferService.getAll()));
     }

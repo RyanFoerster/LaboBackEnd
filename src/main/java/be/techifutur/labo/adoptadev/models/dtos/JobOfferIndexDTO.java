@@ -12,7 +12,7 @@ import java.util.List;
 public class JobOfferIndexDTO {
 
     private int total;
-    private List<JobOfferDTO> jobOfferDTOList;
+    private List<JobOfferDTO> result;
 
     public static JobOfferIndexDTO toDTO(JobOffersIndex entity){
         if (entity == null)
@@ -20,7 +20,7 @@ public class JobOfferIndexDTO {
 
         return JobOfferIndexDTO.builder()
                 .total(entity.getTotal())
-                .jobOfferDTOList(
+                .result(
                         entity.getResult().stream()
                                 .map(JobOfferDTO::toDTO)
                                 .toList()
