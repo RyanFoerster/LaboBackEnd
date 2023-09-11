@@ -1,9 +1,11 @@
 package be.techifutur.labo.adoptadev.controllers;
 
 import be.techifutur.labo.adoptadev.models.dtos.PostHelpDTO;
+import be.techifutur.labo.adoptadev.models.dtos.VoteInfoDTO;
 import be.techifutur.labo.adoptadev.models.entities.Comment;
 import be.techifutur.labo.adoptadev.models.entities.Dev;
 import be.techifutur.labo.adoptadev.models.entities.PostHelp;
+import be.techifutur.labo.adoptadev.models.entities.VoteSujet;
 import be.techifutur.labo.adoptadev.models.enums.VoteType;
 import be.techifutur.labo.adoptadev.models.forms.CommentForm;
 import be.techifutur.labo.adoptadev.models.forms.PostHelpForm;
@@ -22,6 +24,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/posthelp")
@@ -90,14 +93,28 @@ public class PostHelpController {
     }
 
     @PostMapping("/{id:[0-9]+}/vote")
-    public ResponseEntity<?> addPostVote(@PathVariable Long id, @RequestParam VoteType voteType, Authentication authentication) {
+    public ResponseEntity<Integer> addPostVote(@PathVariable Long id, @RequestParam VoteType voteType, Authentication authentication) {
         String devName = authentication.getPrincipal().toString();
         Dev dev = (Dev) userDetailsService.loadUserByUsername(devName);
 
         voteSujetService.addVote(id, dev.getId(), voteType);
-        return ResponseEntity.noContent().build();
+
+        return ResponseEntity.accepted().body(postHelpService.getOne(id).getScore());
     }
 
+    @GetMapping("/{id:[0-9]+}/vote")
+    public ResponseEntity<VoteInfoDTO> getVotePost(@PathVariable Long id, Authentication authentication){
+        String devName = authentication.getPrincipal().toString();
+        Dev dev = (Dev) userDetailsService.loadUserByUsername(devName);
+        Optional<VoteSujet> existingVote = voteSujetService.getVote(id, dev.getId());
+
+        VoteInfoDTO voteInfo = VoteInfoDTO.builder()
+                .hasVoted(existingVote.isPresent())
+                .voteType(existingVote.isPresent() ? existingVote.get().getVoteType() : null)
+                .build();
+
+        return ResponseEntity.ok(voteInfo);
+    }
 
     @PostMapping("/comment/{id:[0-9]+}")
     public ResponseEntity<?> addComment(@PathVariable Long id, @RequestBody @Valid CommentForm form, Authentication authentication) {
@@ -116,13 +133,13 @@ public class PostHelpController {
     }
 
     @PostMapping("/comment/{commentId}/vote")
-    public ResponseEntity<?> addCommentVote(@PathVariable Long commentId, @RequestParam VoteType voteType, Authentication authentication) {
+    public ResponseEntity<Integer> addCommentVote(@PathVariable Long commentId, @RequestParam VoteType voteType, Authentication authentication) {
 
         String devName = authentication.getPrincipal().toString();
         Dev dev = (Dev) userDetailsService.loadUserByUsername(devName); // ! pour pouvoir get l'id
 
         voteCommentService.addVote(commentId, dev.getId(), voteType);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.accepted().body(commentService.findOne(commentId).getScore());
     }
 
 

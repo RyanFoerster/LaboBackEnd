@@ -63,6 +63,18 @@ public class VoteSujetServiceImpl implements VoteSujetService {
         }
     }
 
+    @Override
+    public Optional<VoteSujet> getVote(Long postHelpId, Long devId) {
+        PostHelp postHelp = postHelpRepository.findById(postHelpId)
+                .orElseThrow(() -> new ResourceNotFoundException(postHelpId, PostHelp.class));
+
+        Dev dev = devRepository.findById(devId)
+                .orElseThrow(() -> new ResourceNotFoundException(devId, Dev.class));
+
+        return voteSujetRepository.findByPostHelpAndDev(postHelp, dev);
+    }
+
+
     private void adjustScore(PostHelp postHelp, int adjustment) {
         postHelp.setScore(postHelp.getScore() + adjustment);
         postHelpRepository.save(postHelp);
