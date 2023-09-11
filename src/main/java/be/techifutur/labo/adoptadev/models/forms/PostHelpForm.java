@@ -3,17 +3,20 @@ package be.techifutur.labo.adoptadev.models.forms;
 import be.techifutur.labo.adoptadev.models.entities.PostHelp;
 import be.techifutur.labo.adoptadev.models.enums.TechnologyBackEnd;
 import be.techifutur.labo.adoptadev.models.enums.TechnologyFrontEnd;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Builder;
 import lombok.Data;
 
-@Data @Builder
+@Data
+@Builder
 public class PostHelpForm {
 
+    @NotBlank
+    private String title;
 
     private TechnologyFrontEnd technologyFrontEnd;
-
 
     private TechnologyBackEnd technologyBackEnd;
 
@@ -26,10 +29,11 @@ public class PostHelpForm {
     @NotNull
     private Boolean ouvert;
 
-    public PostHelp toEntity(){
+    public PostHelp toEntity() {
 
         PostHelp postHelp = new PostHelp();
 
+        postHelp.setTitle(this.title);
         postHelp.setTechnologyFrontEnd(this.technologyFrontEnd);
         postHelp.setTechnologyBackEnd(this.technologyBackEnd);
         postHelp.setDescription(this.description);

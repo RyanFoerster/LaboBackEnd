@@ -63,6 +63,7 @@ public class PostHelpServiceImpl implements PostHelpService {
 
         PostHelp entity = getOne(aLong);
 
+        entity.setTitle(postHelp.getTitle());
         entity.setTechnologyFrontEnd(postHelp.getTechnologyFrontEnd());
         entity.setTechnologyBackEnd(postHelp.getTechnologyBackEnd());
         entity.setDescription(postHelp.getDescription());
