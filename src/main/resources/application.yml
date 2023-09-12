@@ -11,7 +11,17 @@ spring:
         properties:
             hibernate:
                 format_sql: true
-
+    mail:
+        host: smtp.outlook.com
+        port: 587
+        username: adoptadev-no-reply@outlook.com
+        password: ZircaCorp1234=
+        properties:
+            mail:
+                smtp:
+                    auth: true
+                    starttls:
+                        enable: true
 springdoc:
     swagger-ui:
         path: /swagger

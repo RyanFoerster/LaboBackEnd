@@ -8,6 +8,7 @@ import be.techifutur.labo.adoptadev.models.entities.User;
 import be.techifutur.labo.adoptadev.models.forms.DevRegisterForm;
 import be.techifutur.labo.adoptadev.models.forms.LoginForm;
 import be.techifutur.labo.adoptadev.models.forms.RecruiterRegisterForm;
+import be.techifutur.labo.adoptadev.services.EmailService;
 import be.techifutur.labo.adoptadev.services.UserService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -24,10 +25,12 @@ public class AuthController {
 
     private final UserService userService;
     private final UserDetailsService userDetailsService;
+    private final EmailService emailService;
 
-    public AuthController(UserService userService, UserDetailsService userDetailsService) {
+    public AuthController(UserService userService, UserDetailsService userDetailsService, EmailService emailService) {
         this.userService = userService;
         this.userDetailsService = userDetailsService;
+        this.emailService = emailService;
     }
 
     @PostMapping("/dev-register")
@@ -35,6 +38,11 @@ public class AuthController {
 
         Dev dev = form.toEntity();
         userService.devRegister(dev);
+        String email = dev.getEmail();
+        String subject = "Confirmation d'inscription";
+        String body = "Bienvenue dans la communauté adoptAdev. Vous pouvez désormais vous connecter en tant que développeur ";
+        emailService.sendEmail(email,subject,body);
+
         return ResponseEntity.status(HttpStatus.CREATED).body(UserDTO.toDTO(dev));
     }
 
@@ -42,6 +50,10 @@ public class AuthController {
     public ResponseEntity<UserDTO> recruiterRegister(@RequestBody @Valid RecruiterRegisterForm form){
         Recruiter recruiter = form.toEntity();
         userService.recruiterRegister(recruiter);
+        String email = recruiter.getEmail();
+        String subject = "Confirmation d'inscription";
+        String body = "Bienvenue dans la communauté adoptAdev. Vous pouvez désormais vous connecter en tant que recruteur ";
+        emailService.sendEmail(email,subject,body);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
