@@ -60,12 +60,16 @@ public class JobOfferServiceImpl implements JobOfferService {
 
         JobOffer entity = getOne(id);
 
+        if (!jobOffer.getTitle().isBlank() && !jobOffer.getTitle().isEmpty())
         entity.setTitle(jobOffer.getTitle());
+        if (!jobOffer.getDescription().isBlank() && !jobOffer.getDescription().isEmpty())
         entity.setDescription(jobOffer.getDescription());
+        if (!jobOffer.getTitle().isEmpty())
         entity.setTechnologyFrontEnds(jobOffer.getTechnologyFrontEnds());
+        if (!jobOffer.getTechnologyBackEnds().isEmpty())
         entity.setTechnologyBackEnds(jobOffer.getTechnologyBackEnds());
+        if (!jobOffer.getLink().isBlank() && !jobOffer.getLink().isEmpty())
         entity.setLink(jobOffer.getLink());
-        entity.setRecruiter(jobOffer.getRecruiter());
 
         jobOfferRepository.save(entity);
     }

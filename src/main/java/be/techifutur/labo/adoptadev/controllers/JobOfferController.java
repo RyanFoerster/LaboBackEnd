@@ -3,6 +3,7 @@ package be.techifutur.labo.adoptadev.controllers;
 import be.techifutur.labo.adoptadev.models.dtos.JobOfferDTO;
 import be.techifutur.labo.adoptadev.models.dtos.JobOfferIndexDTO;
 import be.techifutur.labo.adoptadev.models.forms.JobOfferForm;
+import be.techifutur.labo.adoptadev.models.forms.JobOfferToUpdateForm;
 import be.techifutur.labo.adoptadev.services.JobOfferService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -40,7 +41,7 @@ public class JobOfferController {
     }
 
     @PutMapping("/{id:[0-9]+}")
-    public ResponseEntity<?> update(@PathVariable Long id, @RequestBody @Valid JobOfferForm form){
+    public ResponseEntity<?> update(@PathVariable Long id, @RequestBody JobOfferToUpdateForm form){
         jobOfferService.update(id,form.toEntity());
         return ResponseEntity.noContent()
                 .build();
