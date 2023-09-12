@@ -28,9 +28,11 @@ public class JobOffer {
     @Column(name = "job_offer_description", nullable = false)
     private String description;
 
+    @Column(name = "job_offer_front_technologies")
     @Enumerated(EnumType.STRING)
     private Set<TechnologyFrontEnd> technologyFrontEnds = new HashSet<>();
 
+    @Column(name = "job_offer_back_technologies")
     @Enumerated(EnumType.STRING)
     private Set<TechnologyBackEnd> technologyBackEnds = new HashSet<>();
 
