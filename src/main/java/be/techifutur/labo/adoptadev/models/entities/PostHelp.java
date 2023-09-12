@@ -54,6 +54,4 @@ public class PostHelp {
     @Column(name = "Score")
     private Integer score = 0;
 
-
-
 }

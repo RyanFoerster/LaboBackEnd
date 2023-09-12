@@ -93,13 +93,17 @@ public class PostHelpController {
     }
 
     @PostMapping("/{id:[0-9]+}/vote")
-    public ResponseEntity<Integer> addPostVote(@PathVariable Long id, @RequestParam VoteType voteType, Authentication authentication) {
+    public ResponseEntity<VoteInfoDTO> addPostVote(@PathVariable Long id, @RequestParam VoteType voteType, Authentication authentication) {
         String devName = authentication.getPrincipal().toString();
         Dev dev = (Dev) userDetailsService.loadUserByUsername(devName);
 
-        voteSujetService.addVote(id, dev.getId(), voteType);
+        VoteSujet voteSujet = voteSujetService.addVote(id, dev.getId(), voteType);
 
-        return ResponseEntity.accepted().body(postHelpService.getOne(id).getScore());
+        return ResponseEntity.accepted().body(
+                voteSujet != null ?
+                        VoteInfoDTO.toDTO(voteSujet)
+                        : VoteInfoDTO.toEmptyDTO( postHelpService.getOne(id).getScore() )
+        );
     }
 
     @GetMapping("/{id:[0-9]+}/vote")
@@ -109,8 +113,9 @@ public class PostHelpController {
         Optional<VoteSujet> existingVote = voteSujetService.getVote(id, dev.getId());
 
         VoteInfoDTO voteInfo = VoteInfoDTO.builder()
-                .hasVoted(existingVote.isPresent())
-                .voteType(existingVote.isPresent() ? existingVote.get().getVoteType() : null)
+                .hasVoted( existingVote.isPresent() )
+                .voteType( existingVote.map(VoteSujet::getVoteType).orElse(null) )
+                .score( existingVote.map(vote -> vote.getPostHelp().getScore()).orElseGet( () -> postHelpService.getOne(id).getScore() ) )
                 .build();
 
         return ResponseEntity.ok(voteInfo);
@@ -141,6 +146,7 @@ public class PostHelpController {
         voteCommentService.addVote(commentId, dev.getId(), voteType);
         return ResponseEntity.accepted().body(commentService.findOne(commentId).getScore());
     }
+
 
 
 }
