@@ -1,34 +1,50 @@
 package be.techifutur.labo.adoptadev.controllers;
 
 import be.techifutur.labo.adoptadev.models.entities.Message;
-import be.techifutur.labo.adoptadev.models.entities.User;
+import be.techifutur.labo.adoptadev.repositories.MessageRepository;
+import be.techifutur.labo.adoptadev.repositories.UserRepository;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.event.EventListener;
 import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.handler.annotation.SendTo;
-import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
-
-import java.util.Objects;
+import org.springframework.web.socket.messaging.SessionConnectEvent;
 
 @Controller
+@Slf4j
 public class ChatController {
 
-    @MessageMapping("/chat.sendMessage")
-    @SendTo("/topic/<topicName>")
-    public Message sendMessage(@Payload Message chatMessage, SimpMessageHeaderAccessor headerAccessor) {
-        User emitter = (User) headerAccessor.getSessionAttributes().get("emitter");
-        User receptor = (User) headerAccessor.getSessionAttributes().get("receptor");
-        String topicName = emitter.getUsername() + "/" + receptor.getUsername();
-        chatMessage.setEmitter(emitter);
-        chatMessage.setReceptor(receptor);
-        return chatMessage;
+    private final UserRepository userRepository;
+    private final SimpMessagingTemplate simpMessagingTemplate;
+    private final MessageRepository messageRepository;
+
+    public ChatController(UserRepository userRepository, SimpMessagingTemplate simpMessagingTemplate, MessageRepository messageRepository) {
+        this.userRepository = userRepository;
+        this.simpMessagingTemplate = simpMessagingTemplate;
+        this.messageRepository = messageRepository;
     }
 
-    @MessageMapping("/chat.addUser")
-    @SendTo("/topic/public")
-    public Message addUser(@Payload Message chatMessage, SimpMessageHeaderAccessor headerAccessor){
-        headerAccessor.getSessionAttributes().put("emitter", chatMessage.getEmitter());
-        headerAccessor.getSessionAttributes().put("receptor", chatMessage.getReceptor());
-        return chatMessage;
+    @EventListener
+    public void handleSessionConnectEvent(SessionConnectEvent event){
+        System.out.println("event = " + event.getUser().getName());
+    }
+
+    @MessageMapping("/message")
+    @SendTo("/topic/messages")
+    public String send(String message, SessionConnectEvent sessionConnectEvent){
+        log.info("Ici");
+        System.out.println("ici");
+        return message;
+//        User emitter = (User) sessionConnectEvent.getUser();
+//        User receptor = userRepository.findById(2L).orElseThrow();
+//        log.info("receptor {}", receptor.getUsername());
+//        log.info("emitter {}", emitter.getUsername());
+//        message.setEmitter(emitter);
+//        message.setReceptor(receptor);
+//        emitter.getMessagesEmitter().add(message);
+//        receptor.getMessagesReceptor().add(message);
+//        log.info("message {}", message.getMessage());
+//        simpMessagingTemplate.convertAndSendToUser(receptor.getUsername(), "/topic/messages", message);
     }
 }
