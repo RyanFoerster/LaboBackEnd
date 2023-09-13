@@ -47,16 +47,16 @@ public class User implements UserDetails {
     @Column(name = "user_enabled")
     private boolean isEnabled = true;
 
-    @OneToMany(mappedBy = "emitter")
+    @OneToMany(mappedBy = "emitter", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     private Set<Message> messagesEmitter = new LinkedHashSet<>();
 
-    @OneToMany(mappedBy = "receptor")
+    @OneToMany(mappedBy = "receptor", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     private Set<Message> messagesReceptor = new LinkedHashSet<>();
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return this.roles.stream()
-                .map(role -> new SimpleGrantedAuthority(role.name()))
+                .map(role -> new SimpleGrantedAuthority("ROLE_" + role.name()))
                 .collect(Collectors.toSet());
     }
 

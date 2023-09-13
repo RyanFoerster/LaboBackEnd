@@ -40,6 +40,7 @@ public class AuthController {
 
     @PostMapping("/recruiter-register")
     public ResponseEntity<UserDTO> recruiterRegister(@RequestBody @Valid RecruiterRegisterForm form){
+        System.out.println(form.toString());
         Recruiter recruiter = form.toEntity();
         userService.recruiterRegister(recruiter);
         return ResponseEntity.status(HttpStatus.CREATED).build();
