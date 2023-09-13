@@ -2,6 +2,7 @@ package be.techifutur.labo.adoptadev.controllers;
 
 import be.techifutur.labo.adoptadev.models.dtos.DevDTO;
 import be.techifutur.labo.adoptadev.models.entities.Dev;
+import be.techifutur.labo.adoptadev.models.entities.User;
 import be.techifutur.labo.adoptadev.models.forms.DevPasswordUpdateForm;
 import be.techifutur.labo.adoptadev.models.forms.DevProfileUpdateForm;
 import be.techifutur.labo.adoptadev.services.UserService;
@@ -25,10 +26,20 @@ public class DevController {
     }
 
     @GetMapping("/{id:[0-9]+}")
-    public ResponseEntity<DevDTO> getOne(@PathVariable Long id){
+    public ResponseEntity<DevDTO> getOne(@PathVariable Long id) {
         Dev dev = userService.getOneDev(id);
         DevDTO body = DevDTO.toDTO(dev);
         return ResponseEntity.ok(body);
+    }
+
+    @PatchMapping("/{confirmationToken}")
+    public ResponseEntity<?> confirmRegister(@PathVariable String confirmationToken) {
+        Dev dev = userService.getDevByConfirmationToken(confirmationToken);
+        dev.setEnabled(true);
+        dev.setConfirmationToken(null);
+        userService.updateDev(dev.getId(), dev);
+        return ResponseEntity.noContent()
+                .build();
     }
 
     @PutMapping
@@ -40,10 +51,10 @@ public class DevController {
     }
 
     @PatchMapping
-    public ResponseEntity<DevDTO> updatePassword(Authentication authentication, @RequestBody @Valid DevPasswordUpdateForm form){
+    public ResponseEntity<DevDTO> updatePassword(Authentication authentication, @RequestBody @Valid DevPasswordUpdateForm form) {
         Dev dev = (Dev) userDetailsService.loadUserByUsername(authentication.getPrincipal().toString());
-        userService.updateDevPassword(dev.getId(),form.toEntity());
-        return  ResponseEntity.noContent()
+        userService.updateDevPassword(dev.getId(), form.toEntity());
+        return ResponseEntity.noContent()
                 .build();
     }
 

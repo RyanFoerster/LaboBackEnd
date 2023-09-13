@@ -31,7 +31,15 @@ public class RecruiterController {
         RecruiterDTO body = RecruiterDTO.toDTO(recruiter);
         return ResponseEntity.ok(body);
     }
-
+    @PatchMapping("/{confirmationToken}")
+    public ResponseEntity<?> confirmRegister(@PathVariable String confirmationToken){
+        Recruiter recruiter = userService.getRecByConfirmationToken(confirmationToken);
+        recruiter.setEnabled(true);
+        recruiter.setConfirmationToken(null);
+        userService.updateRecruiter(recruiter.getId(), recruiter);
+        return ResponseEntity.noContent()
+                .build();
+    }
     @PutMapping
     public ResponseEntity<RecruiterDTO> update(Authentication authentication, @RequestBody @Valid RecruiterProfileUpdateForm form) {
 

@@ -47,6 +47,7 @@ public class DataInitializer implements CommandLineRunner {
         PasswordEncoder passwordEncoder = securityConfig.passwordEncoder();
 
         Dev dev = new Dev();
+        dev.setEnabled(true);
         dev.setUsername("string");
         dev.setPassword(passwordEncoder.encode("Test1234="));
         dev.setFirstName("string");
@@ -56,6 +57,7 @@ public class DataInitializer implements CommandLineRunner {
         devRepository.save(dev);
 
         Dev dev2 = new Dev();
+        dev2.setEnabled(true);
         dev2.setUsername("string2");
         dev2.setPassword(passwordEncoder.encode("Test1234="));
         dev2.setFirstName("string");
@@ -65,6 +67,7 @@ public class DataInitializer implements CommandLineRunner {
         devRepository.save(dev2);
 
         Recruiter recruiter = new Recruiter();
+        recruiter.setEnabled(true);
         recruiter.setUsername("stringRec");
         recruiter.setPassword(passwordEncoder.encode("Test1234="));
         recruiter.setFirstName("stringP");
