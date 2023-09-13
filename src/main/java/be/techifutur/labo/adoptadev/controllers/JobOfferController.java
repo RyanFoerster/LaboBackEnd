@@ -26,6 +26,7 @@ public class JobOfferController {
     @PostMapping
     public ResponseEntity<Long> add(@RequestBody @Valid JobOfferForm form,Authentication authentication){
         String recruiterName = authentication.getName();
+        System.out.println(recruiterName+"RECRUTEURNAME");
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(jobOfferService.add(form.toEntity(),recruiterName));
     }

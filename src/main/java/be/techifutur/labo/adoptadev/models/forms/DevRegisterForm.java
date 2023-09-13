@@ -52,6 +52,8 @@ public class DevRegisterForm {
         dev.setEmail(this.email);
         dev.setRoles(Collections.singleton(Role.DEVELOPER));
         dev.setBirthDate(devProfileUpdateForm.getBirthDate());
+        dev.setDescription(devProfileUpdateForm.getDescription());
+        dev.setCv(devProfileUpdateForm.getCv());
         dev.setTechnologiesBackEnd(devProfileUpdateForm.getTechnologyBackEnds());
         dev.setTechnologiesFrontEnd(devProfileUpdateForm.getTechnologyFrontEnds());
         dev.setGitHub(devProfileUpdateForm.getGitHub());

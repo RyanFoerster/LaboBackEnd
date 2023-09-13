@@ -14,12 +14,18 @@ public interface UserService {
 
     Dev getOneDev(Long id);
 
+    Recruiter getRecByConfirmationToken(String confirmationToken);
+
+    Dev getDevByConfirmationToken(String confirmationToken);
+
     void updateRecruiter(Long id, Recruiter recruiter);
 
     void updateDev(Long id, Dev dev);
+
     void updateRecruiterPassword(Long id, Recruiter recruiter);
 
     void updateDevPassword(Long id, Dev dev);
+
     void deleteRecruiter(Long id);
 
     void deleteDev(Long id);
