@@ -13,9 +13,9 @@ public class CommentDTO {
 
     private Long id;
     private String message;
+    private int score;
     private DevDTO dev;
     private Set<VoteCommentDTO> voteComments;
-    private int score;
 
 
     public static CommentDTO toDTO(Comment comment){

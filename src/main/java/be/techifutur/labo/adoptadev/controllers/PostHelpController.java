@@ -2,10 +2,7 @@ package be.techifutur.labo.adoptadev.controllers;
 
 import be.techifutur.labo.adoptadev.models.dtos.PostHelpDTO;
 import be.techifutur.labo.adoptadev.models.dtos.VoteInfoDTO;
-import be.techifutur.labo.adoptadev.models.entities.Comment;
-import be.techifutur.labo.adoptadev.models.entities.Dev;
-import be.techifutur.labo.adoptadev.models.entities.PostHelp;
-import be.techifutur.labo.adoptadev.models.entities.VoteSujet;
+import be.techifutur.labo.adoptadev.models.entities.*;
 import be.techifutur.labo.adoptadev.models.enums.VoteType;
 import be.techifutur.labo.adoptadev.models.forms.CommentForm;
 import be.techifutur.labo.adoptadev.models.forms.PostHelpForm;
@@ -102,23 +99,38 @@ public class PostHelpController {
         return ResponseEntity.accepted().body(
                 voteSujet != null ?
                         VoteInfoDTO.toDTO(voteSujet)
-                        : VoteInfoDTO.toEmptyDTO( postHelpService.getOne(id).getScore() )
+                        : VoteInfoDTO.toEmptyDTO(postHelpService.getOne(id).getScore())
         );
     }
 
     @GetMapping("/{id:[0-9]+}/vote")
-    public ResponseEntity<VoteInfoDTO> getVotePost(@PathVariable Long id, Authentication authentication){
+    public ResponseEntity<VoteInfoDTO> getVotePost(@PathVariable Long id, Authentication authentication) {
         String devName = authentication.getPrincipal().toString();
         Dev dev = (Dev) userDetailsService.loadUserByUsername(devName);
         Optional<VoteSujet> existingVote = voteSujetService.getVote(id, dev.getId());
 
         VoteInfoDTO voteInfo = VoteInfoDTO.builder()
-                .hasVoted( existingVote.isPresent() )
-                .voteType( existingVote.map(VoteSujet::getVoteType).orElse(null) )
-                .score( existingVote.map(vote -> vote.getPostHelp().getScore()).orElseGet( () -> postHelpService.getOne(id).getScore() ) )
+                .hasVoted(existingVote.isPresent())
+                .voteType(existingVote.map(VoteSujet::getVoteType).orElse(null))
+                .score(existingVote.map(vote -> vote.getPostHelp().getScore()).orElseGet(() -> postHelpService.getOne(id).getScore()))
                 .build();
 
         return ResponseEntity.ok(voteInfo);
+    }
+
+    @GetMapping("/comment/{commentId:[0-9]+}/vote")
+    public ResponseEntity<VoteInfoDTO> getCommentVote(@PathVariable Long commentId, Authentication authentication) {
+        String devName = authentication.getPrincipal().toString();
+        Dev dev = (Dev) userDetailsService.loadUserByUsername(devName);
+        Optional<VoteComment> existingVote = voteCommentService.getVote(commentId, dev.getId());
+
+        VoteInfoDTO voteInfo = VoteInfoDTO.builder()
+                .hasVoted(existingVote.isPresent())
+                .voteType(existingVote.map(VoteComment::getVoteType).orElse(null))
+                .score(existingVote.map(vote -> vote.getComment().getScore()).orElseGet(() -> commentService.findOne(commentId).getScore()))
+                .build();
+
+        return  ResponseEntity.ok(voteInfo);
     }
 
     @PostMapping("/comment/{id:[0-9]+}")
@@ -132,20 +144,26 @@ public class PostHelpController {
         postHelp.getComments().add(commentService.findOne(commentId));
         postHelpService.update(id, postHelp);
 
-
         return ResponseEntity.noContent().build();
 
     }
 
     @PostMapping("/comment/{commentId}/vote")
-    public ResponseEntity<Integer> addCommentVote(@PathVariable Long commentId, @RequestParam VoteType voteType, Authentication authentication) {
+    public ResponseEntity<VoteInfoDTO> addCommentVote(@PathVariable Long commentId, @RequestParam VoteType voteType, Authentication authentication) {
 
         String devName = authentication.getPrincipal().toString();
         Dev dev = (Dev) userDetailsService.loadUserByUsername(devName); // ! pour pouvoir get l'id
 
-        voteCommentService.addVote(commentId, dev.getId(), voteType);
-        return ResponseEntity.accepted().body(commentService.findOne(commentId).getScore());
+        VoteComment voteComment = voteCommentService.addVote(commentId, dev.getId(), voteType);
+
+        return ResponseEntity.accepted().body(
+                voteComment != null ?
+                    VoteInfoDTO.toDto( voteComment )
+                    : VoteInfoDTO.toEmptyDTO( commentService.findOne(commentId).getScore() )
+        );
     }
+
+
 
 
 

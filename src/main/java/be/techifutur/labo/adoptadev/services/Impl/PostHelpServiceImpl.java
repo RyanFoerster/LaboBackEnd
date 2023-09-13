@@ -41,7 +41,6 @@ public class PostHelpServiceImpl implements PostHelpService {
                 () -> new NameNotFoundException(devName, Dev.class)
         );
         post.setDev(dev);
-
         return postHelpRepository.save(post).getId();
 
     }
@@ -62,7 +61,6 @@ public class PostHelpServiceImpl implements PostHelpService {
     public void update(Long aLong, PostHelp postHelp) {
 
         PostHelp entity = getOne(aLong);
-
         entity.setTitle(postHelp.getTitle());
         entity.setTechnologyFrontEnd(postHelp.getTechnologyFrontEnd());
         entity.setTechnologyBackEnd(postHelp.getTechnologyBackEnd());
@@ -70,7 +68,6 @@ public class PostHelpServiceImpl implements PostHelpService {
         entity.setGithub(postHelp.getGithub());
         entity.setOuvert(postHelp.getOuvert());
         postHelpRepository.save(entity);
-
     }
 
     @Override
@@ -83,19 +80,16 @@ public class PostHelpServiceImpl implements PostHelpService {
     }
 
 
-    public void isActive(Long aLong, PostHelp postHelp){
+    public void isActive(Long aLong, PostHelp postHelp) {
 
         PostHelp entity = getOne(aLong);
-
         entity.setOuvert(!postHelp.getOuvert());
-
         postHelpRepository.save(entity);
     }
 
-    public List<Comment> getComments(){
+    public List<Comment> getComments() {
         return commentRepository.findAll().stream().toList();
     }
-
 
 
 }
