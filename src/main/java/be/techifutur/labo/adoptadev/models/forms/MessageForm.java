@@ -7,7 +7,7 @@ public class MessageForm {
 
     private String message;
 
-    private Long receptorId;
+    private String receptor;
 
-    private Long emitterId;
+    private String emitter;
 }

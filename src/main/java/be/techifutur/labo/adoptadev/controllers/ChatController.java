@@ -9,7 +9,9 @@ import be.techifutur.labo.adoptadev.repositories.UserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.event.EventListener;
+import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.messaging.simp.annotation.SendToUser;
@@ -18,6 +20,7 @@ import org.springframework.web.socket.messaging.SessionConnectEvent;
 
 import java.io.DataInput;
 import java.io.IOException;
+import java.security.Principal;
 
 @Controller
 @Slf4j
@@ -38,24 +41,33 @@ public class ChatController {
         System.out.println("event = " + session.toString());
     }
 
-    @MessageMapping("/message")
-    @SendTo("/topic/messages")
-    public void send(MessageForm messageForm) throws IOException {
-        User emitter = userRepository.findById(messageForm.getEmitterId()).orElseThrow();
-        User receptor = userRepository.findById(messageForm.getReceptorId()).orElseThrow();
-        Message message = new Message();
-        message.setMessage(messageForm.getMessage());
-        message.setEmitter(emitter);
-        message.setReceptor(receptor);
-        message = messageRepository.save(message);
-        emitter.getMessagesEmitter().add(message);
-        receptor.getMessagesReceptor().add(message);
-        userRepository.save(emitter);
-        userRepository.save(receptor);
+//    @MessageMapping("/message")
+//    @SendTo("/topic/messages")
+//    public void send(MessageForm messageForm) throws IOException {
+//        User emitter = userRepository.findById(messageForm.getEmitterId()).orElseThrow();
+//        User receptor = userRepository.findById(messageForm.getReceptorId()).orElseThrow();
+//        Message message = new Message();
+//        message.setMessage(messageForm.getMessage());
+//        message.setEmitter(emitter);
+//        message.setReceptor(receptor);
+//        message = messageRepository.save(message);
+//        emitter.getMessagesEmitter().add(message);
+//        receptor.getMessagesReceptor().add(message);
+//        userRepository.save(emitter);
+//        userRepository.save(receptor);
+//
+//        simpMessagingTemplate.convertAndSend("/topic/messages", message.getMessage());
+//    }
 
-        ObjectMapper jsonMapper = new ObjectMapper();
-        WebSocketJson webSocketJson = jsonMapper.readValue(message.toString(), WebSocketJson.class );
+    @MessageMapping("/private-message")
+    public void handlePrivateMessage(MessageForm privateMessage) {
+        String recipient = privateMessage.getReceptor();
+        String message = privateMessage.getMessage();
 
-        simpMessagingTemplate.convertAndSend("/topic/messages", webSocketJson);
+        System.out.println(recipient);
+        System.out.println(message);
+        // Diffuse le message uniquement au destinataire spécifié
+        simpMessagingTemplate.convertAndSendToUser(recipient, "/queue/private-reply", message);
     }
+
 }

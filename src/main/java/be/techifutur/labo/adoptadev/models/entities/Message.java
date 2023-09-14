@@ -30,5 +30,8 @@ public class Message {
     @ManyToOne
     private Match match;
 
-
+    public Message(String message, User emitter) {
+        this.message = message;
+        this.emitter = emitter;
+    }
 }
