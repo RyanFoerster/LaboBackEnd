@@ -2,6 +2,9 @@ package be.techifutur.labo.adoptadev.models.entities;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
+
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -29,6 +32,10 @@ public class Message {
 
     @ManyToOne
     private Match match;
+
+    @Column(name = "created_at")
+    @CreatedDate
+    private LocalDateTime createdAt;
 
     public Message(String message, User emitter) {
         this.message = message;

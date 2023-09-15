@@ -2,9 +2,16 @@ package be.techifutur.labo.adoptadev.models.dtos;
 
 import be.techifutur.labo.adoptadev.models.entities.Dev;
 import be.techifutur.labo.adoptadev.models.enums.Role;
+import be.techifutur.labo.adoptadev.models.enums.TechnologyBackEnd;
+import be.techifutur.labo.adoptadev.models.enums.TechnologyFrontEnd;
+import jakarta.persistence.Column;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import lombok.Builder;
 import lombok.Data;
 
+import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.Set;
 
 @Data
@@ -17,7 +24,12 @@ public class DevDTO {
     private String lastName;
     private String email;
     private String pseudo;
-    private Set<Role> roles;
+    private LocalDate birthDate;
+    private Set<TechnologyBackEnd> technologiesBackEnd;
+    private Set<TechnologyFrontEnd> technologiesFrontEnd;
+    private String gitHub;
+    private String linkedIn;
+    private Role role;
 
     public static DevDTO toDTO(Dev entity) {
         if (entity == null) {
@@ -31,7 +43,12 @@ public class DevDTO {
                 .lastName(entity.getLastName())
                 .email(entity.getEmail())
                 .pseudo(entity.getPseudo())
-                .roles(entity.getRoles())
+                .birthDate(entity.getBirthDate())
+                .technologiesBackEnd(entity.getTechnologiesBackEnd())
+                .technologiesFrontEnd(entity.getTechnologiesFrontEnd())
+                .gitHub(entity.getGitHub())
+                .linkedIn(entity.getLinkedIn())
+                .role(entity.getRole())
                 .build();
     }
 }

@@ -75,7 +75,7 @@ public class MatchServiceImpl implements MatchService {
     public List<Match> getMatchByUser(String username) {
 
         User user = userRepository.findByUsername(username).orElseThrow();
-        boolean isRecruiter = user.getRoles().stream().anyMatch(role -> role == Role.RECRUITER);
+        boolean isRecruiter = user.getRole() == Role.RECRUITER;
 
         return isRecruiter ? matchRepository.findByRecruiterId(user.getId()) : matchRepository.findByDevId(user.getId());
     }

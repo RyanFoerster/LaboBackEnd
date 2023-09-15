@@ -12,6 +12,9 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
+import java.util.List;
+
 @Component
 public class DataInitializer implements CommandLineRunner {
 
@@ -23,6 +26,8 @@ public class DataInitializer implements CommandLineRunner {
     private final CommentRepository commentRepository;
     private final VoteSujetService voteSujetService;
     private final VoteCommentService voteCommentService;
+    private final MatchRepository matchRepository;
+    private final MessageRepository messageRepository;
 
     public DataInitializer(SecurityConfig securityConfig,
                            DevRepository devRepository,
@@ -30,8 +35,7 @@ public class DataInitializer implements CommandLineRunner {
                            PostHelpRepository postHelpRepository,
                            CommentRepository commentRepository,
                            VoteSujetService voteSujetService,
-                           VoteCommentService voteCommentService)
-    {
+                           VoteCommentService voteCommentService, MatchRepository matchRepository, MessageRepository messageRepository) {
 
         this.securityConfig = securityConfig;
         this.devRepository = devRepository;
@@ -40,6 +44,8 @@ public class DataInitializer implements CommandLineRunner {
         this.commentRepository = commentRepository;
         this.voteSujetService = voteSujetService;
         this.voteCommentService = voteCommentService;
+        this.matchRepository = matchRepository;
+        this.messageRepository = messageRepository;
     }
 
     @Override
@@ -52,7 +58,7 @@ public class DataInitializer implements CommandLineRunner {
         dev.setFirstName("string");
         dev.setLastName("string");
         dev.setEmail("string@string");
-        dev.getRoles().add(Role.DEVELOPER);
+        dev.setRole(Role.DEVELOPER);
         devRepository.save(dev);
 
         Dev dev2 = new Dev();
@@ -61,7 +67,7 @@ public class DataInitializer implements CommandLineRunner {
         dev2.setFirstName("string");
         dev2.setLastName("string");
         dev2.setEmail("string2@string");
-        dev2.getRoles().add(Role.DEVELOPER);
+        dev2.setRole(Role.DEVELOPER);
         devRepository.save(dev2);
 
         Recruiter recruiter = new Recruiter();
@@ -70,9 +76,8 @@ public class DataInitializer implements CommandLineRunner {
         recruiter.setFirstName("stringP");
         recruiter.setLastName("stringN");
         recruiter.setEmail("string@recruiter");
-        recruiter.getRoles().add(Role.RECRUITER);
+        recruiter.setRole(Role.RECRUITER);
         recruiter.setDescription("stringRecDesc");
-        recruiter.getRoles().add(Role.RECRUITER);
         recruiterRepository.save(recruiter);
 
         PostHelp postHelp = new PostHelp();
@@ -92,5 +97,28 @@ public class DataInitializer implements CommandLineRunner {
         voteCommentService.addVote(comment.getId(), dev.getId(), VoteType.UPVOTE);
 
         voteSujetService.addVote(postHelp.getId(), dev2.getId(), VoteType.UPVOTE);
+
+        Match match = new Match();
+        match.setRecruiter(recruiter);
+        match.setDev(dev);
+
+        match = matchRepository.save(match);
+
+        Message message = new Message();
+        message.setMatch(match);
+        message.setEmitter(recruiter);
+        message.setReceptor(dev);
+        message.setMessage("Salut");
+        message.setCreatedAt(LocalDateTime.now());
+
+        Message message2 = new Message();
+        message2.setMatch(match);
+        message2.setEmitter(dev);
+        message2.setReceptor(recruiter);
+        message2.setMessage("Salut ça va ?");
+        message2.setCreatedAt(LocalDateTime.now());
+
+        messageRepository.saveAll(List.of(message, message2));
+
     }
 }

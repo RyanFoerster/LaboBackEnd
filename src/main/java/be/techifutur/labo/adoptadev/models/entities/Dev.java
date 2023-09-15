@@ -23,11 +23,11 @@ public class Dev extends User {
 
     @Column(name = "dev_technologies_back_end")
     @Enumerated(EnumType.STRING)
-    private Set<TechnologyBackEnd> technologiesBackEnd = new HashSet<>();//TODO enum Technologies
+    private Set<TechnologyBackEnd> technologiesBackEnd = new HashSet<>();
 
     @Column(name = "dev_technologies_front_end")
     @Enumerated(EnumType.STRING)
-    private Set<TechnologyFrontEnd> technologiesFrontEnd = new HashSet<>();//TODO enum Technologies
+    private Set<TechnologyFrontEnd> technologiesFrontEnd = new HashSet<>();
 
     @Column(name = "dev_github")
     private String gitHub;
@@ -36,7 +36,7 @@ public class Dev extends User {
     private String linkedIn;
 
     @Column(name = "dev_cv")
-    private String cv; //TODO à revoir
+    private String cv;
 
     @Column(name = "dev_pseudo", unique = true)
     private String pseudo;

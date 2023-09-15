@@ -1,7 +1,9 @@
 package be.techifutur.labo.adoptadev.controllers;
 
 import be.techifutur.labo.adoptadev.models.dtos.DevDTO;
+import be.techifutur.labo.adoptadev.models.dtos.UserDTO;
 import be.techifutur.labo.adoptadev.models.entities.Dev;
+import be.techifutur.labo.adoptadev.models.entities.User;
 import be.techifutur.labo.adoptadev.models.forms.DevPasswordUpdateForm;
 import be.techifutur.labo.adoptadev.models.forms.DevProfileUpdateForm;
 import be.techifutur.labo.adoptadev.services.UserService;
@@ -11,6 +13,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/dev")
@@ -22,6 +26,11 @@ public class DevController {
     public DevController(UserService userService, UserDetailsService userDetailsService) {
         this.userService = userService;
         this.userDetailsService = userDetailsService;
+    }
+
+    @GetMapping
+    public ResponseEntity<List<UserDTO>> getAll(){
+        return ResponseEntity.ok(userService.getAllDev().stream().map(UserDTO::toDTO).toList());
     }
 
     @GetMapping("/{id:[0-9]+}")

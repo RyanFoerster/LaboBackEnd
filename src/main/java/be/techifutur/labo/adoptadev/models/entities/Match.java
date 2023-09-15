@@ -27,6 +27,6 @@ public class Match {
     @ManyToOne
     private Recruiter recruiter;
 
-    @OneToMany(mappedBy = "match")
+    @OneToMany(mappedBy = "match", fetch = FetchType.EAGER)
     private Set<Message> messages = new HashSet<>();
 }

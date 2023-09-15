@@ -1,7 +1,7 @@
 package be.techifutur.labo.adoptadev.repositories;
 
-import be.techifutur.labo.adoptadev.models.entities.Match;
 import be.techifutur.labo.adoptadev.models.entities.User;
+import be.techifutur.labo.adoptadev.models.enums.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
@@ -15,6 +15,7 @@ public interface UserRepository extends JpaRepository<User,Long> {
 
     boolean existsByUsername(String username);
 
+    List<User> findAllByRole(Role role);
 
 
 }

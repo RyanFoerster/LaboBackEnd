@@ -29,7 +29,7 @@ public class MatchController {
 
     @PreAuthorize("hasRole('RECRUITER')")
     @PostMapping
-    public ResponseEntity<Long> create(@RequestParam Long devId, Authentication authentication) {
+    public ResponseEntity<Long> create(@RequestBody Long devId, Authentication authentication) {
         String username = authentication.getPrincipal().toString();
 
         Recruiter recruiter = (Recruiter) userDetailsService.loadUserByUsername(username);
