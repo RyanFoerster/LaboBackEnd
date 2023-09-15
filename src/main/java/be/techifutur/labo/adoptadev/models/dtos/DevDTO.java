@@ -18,6 +18,7 @@ public class DevDTO {
     private String email;
     private String pseudo;
     private Set<Role> roles;
+    private AddressDTO address;
 
     public static DevDTO toDTO(Dev entity) {
         if (entity == null) {
@@ -32,6 +33,7 @@ public class DevDTO {
                 .email(entity.getEmail())
                 .pseudo(entity.getPseudo())
                 .roles(entity.getRoles())
+                .address(AddressDTO.toDTO(entity.getAddress()))
                 .build();
     }
 }
