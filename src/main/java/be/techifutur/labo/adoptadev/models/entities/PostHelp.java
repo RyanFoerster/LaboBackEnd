@@ -23,7 +23,6 @@ public class PostHelp {
     @Column(name = "post_help_techno_front")
     private TechnologyFrontEnd technologyFrontEnd;
 
-
     @Enumerated(EnumType.STRING)
     @Column(name = "post_help_techno_back")
     private TechnologyBackEnd technologyBackEnd;

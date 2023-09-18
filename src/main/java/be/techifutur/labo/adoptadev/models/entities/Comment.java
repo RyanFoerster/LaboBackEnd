@@ -1,6 +1,5 @@
 package be.techifutur.labo.adoptadev.models.entities;
 
-import be.techifutur.labo.adoptadev.models.enums.VoteType;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;

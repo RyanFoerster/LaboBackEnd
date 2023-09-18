@@ -91,6 +91,7 @@ public class PostHelpController {
         String devName = authentication.getName();
         Comment comment = form.toEntity();
         PostHelp postHelp = postHelpService.getOne(id);
+
         comment.setPost(postHelp);
         Long commentId = commentService.add(comment, devName);
         postHelp.getComments().add(commentService.findOne(commentId));
