@@ -19,6 +19,9 @@ public class PostHelp {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "post_title", nullable = false)
+    private String title;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "post_help_techno_front")
     private TechnologyFrontEnd technologyFrontEnd;
@@ -34,7 +37,7 @@ public class PostHelp {
     private String github;
 
     @Column(name = "post_help_ouvert", nullable = false)
-    private Boolean ouvert;
+    private Boolean ouvert = true;
 
 
     @OneToMany(mappedBy = "post")
@@ -47,7 +50,7 @@ public class PostHelp {
     @OneToMany(mappedBy = "postHelp")
     private Set<VoteSujet> voteSujets;
 
-
-
+    @Column(name = "Score")
+    private Integer score = 0;
 
 }

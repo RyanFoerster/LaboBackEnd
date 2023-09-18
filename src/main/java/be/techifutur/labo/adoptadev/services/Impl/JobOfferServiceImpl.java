@@ -3,13 +3,16 @@ package be.techifutur.labo.adoptadev.services.Impl;
 import be.techifutur.labo.adoptadev.exceptions.NameNotFoundException;
 import be.techifutur.labo.adoptadev.exceptions.ResourceNotFoundException;
 import be.techifutur.labo.adoptadev.models.entities.JobOffer;
+import be.techifutur.labo.adoptadev.models.entities.JobOffersIndex;
 import be.techifutur.labo.adoptadev.models.entities.Recruiter;
 import be.techifutur.labo.adoptadev.repositories.JobOfferRepository;
 import be.techifutur.labo.adoptadev.repositories.RecruiterRepository;
 import be.techifutur.labo.adoptadev.services.JobOfferService;
+import jakarta.mail.search.SearchTerm;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class JobOfferServiceImpl implements JobOfferService {
@@ -33,8 +36,17 @@ public class JobOfferServiceImpl implements JobOfferService {
     }
 
     @Override
-    public List<JobOffer> getAll() {
-        return jobOfferRepository.findAll();
+    public JobOffersIndex getAll() {
+        int total=0;
+        List<JobOffer> jobOfferList = jobOfferRepository.findAll();
+        for (JobOffer element: jobOfferList) {
+            total++;
+        } 
+        
+        JobOffersIndex list = new JobOffersIndex();
+        list.setTotal(total);
+        list.setResult(jobOfferList);
+        return list;
     }
 
     @Override
@@ -48,12 +60,16 @@ public class JobOfferServiceImpl implements JobOfferService {
 
         JobOffer entity = getOne(id);
 
+        if (!jobOffer.getTitle().isBlank() && !jobOffer.getTitle().isEmpty())
         entity.setTitle(jobOffer.getTitle());
+        if (!jobOffer.getDescription().isBlank() && !jobOffer.getDescription().isEmpty())
         entity.setDescription(jobOffer.getDescription());
+        if (!jobOffer.getTitle().isEmpty())
         entity.setTechnologyFrontEnds(jobOffer.getTechnologyFrontEnds());
+        if (!jobOffer.getTechnologyBackEnds().isEmpty())
         entity.setTechnologyBackEnds(jobOffer.getTechnologyBackEnds());
+        if (!jobOffer.getLink().isBlank() && !jobOffer.getLink().isEmpty())
         entity.setLink(jobOffer.getLink());
-        entity.setRecruiter(jobOffer.getRecruiter());
 
         jobOfferRepository.save(entity);
     }

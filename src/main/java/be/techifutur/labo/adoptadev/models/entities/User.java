@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -45,6 +46,12 @@ public class User implements UserDetails {
 
     @Column(name = "user_enabled")
     private boolean isEnabled = true;
+
+    @OneToMany(mappedBy = "emitter")
+    private Set<Message> messagesEmitter = new LinkedHashSet<>();
+
+    @OneToMany(mappedBy = "receptor")
+    private Set<Message> messagesReceptor = new LinkedHashSet<>();
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

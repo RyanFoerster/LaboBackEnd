@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 @Entity
@@ -20,5 +21,8 @@ public class Recruiter extends User{
 
     @OneToMany(mappedBy = "recruiter")
     private Set<JobOffer> jobOfferSet = new HashSet<>();
+
+    @OneToMany(mappedBy = "recruiter")
+    private Set<Match> matches = new LinkedHashSet<>();
 
 }

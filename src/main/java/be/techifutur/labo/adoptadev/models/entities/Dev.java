@@ -9,9 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Getter
@@ -54,7 +52,9 @@ public class Dev extends User {
 
 
     @OneToMany(mappedBy = "dev")
-    private List<PostHelp> posts;
+    private List<PostHelp> posts = new ArrayList<>();
 
+    @OneToMany(mappedBy = "dev")
+    private Set<Match> matches = new LinkedHashSet<>();
 
 }
