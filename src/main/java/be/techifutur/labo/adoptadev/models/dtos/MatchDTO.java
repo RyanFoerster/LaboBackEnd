@@ -47,7 +47,7 @@ public class MatchDTO {
         return MatchDTO.builder()
                 .id(match.getId())
                 .name(match.getDev().getFirstName() + " " + match.getDev().getLastName())
-                .messages(match.getMessages().stream().map(MessageDTO::toDTO).toList())
+                .messages(match.getMessages().stream().map(MessageDTO::toDTO).sorted(Comparator.comparing(MessageDTO::getCreatedAt)).toList())
                 .build();
     }
 }

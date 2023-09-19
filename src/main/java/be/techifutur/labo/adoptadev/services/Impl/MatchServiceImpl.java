@@ -79,4 +79,9 @@ public class MatchServiceImpl implements MatchService {
 
         return isRecruiter ? matchRepository.findByRecruiterId(user.getId()) : matchRepository.findByDevId(user.getId());
     }
+
+    @Override
+    public Match findById(Long matchId) {
+        return matchRepository.findById(matchId).orElseThrow();
+    }
 }

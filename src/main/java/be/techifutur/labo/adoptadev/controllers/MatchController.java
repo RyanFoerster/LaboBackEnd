@@ -57,4 +57,18 @@ public class MatchController {
 
         return ResponseEntity.ok(matches);
     }
+
+    @GetMapping("/{matchId:[0-9]+}")
+    public ResponseEntity<MatchDTO> getMatchById(@PathVariable Long matchId, Authentication authentication){
+
+        String username = authentication.getPrincipal().toString();
+
+        Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
+
+        MatchDTO match = authorities.contains(Role.DEVELOPER.getAuthority()) ?
+                MatchDTO.toDevDTO(matchService.findById(matchId)) :
+                MatchDTO.toRecruiterDTO(matchService.findById(matchId));
+
+        return ResponseEntity.ok(match);
+    }
 }

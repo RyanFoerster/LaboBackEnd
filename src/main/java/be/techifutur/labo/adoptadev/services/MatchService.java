@@ -20,4 +20,6 @@ public interface MatchService {
     void delete(Long devId, Long recruiterId);
 
     List<Match> getMatchByUser(String username);
+
+    Match findById(Long matchId);
 }
