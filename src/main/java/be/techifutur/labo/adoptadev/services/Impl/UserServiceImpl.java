@@ -139,7 +139,7 @@ public class UserServiceImpl implements UserService {
     public void updateRecruiterPassword(Long id, Recruiter recruiter) {
         Recruiter entity = getOneRecruiter(id);
 
-        entity.setPassword(recruiter.getPassword());
+        entity.setPassword(passwordEncoder.encode(recruiter.getPassword()));
 
         userRepository.save(entity);
     }
@@ -148,7 +148,7 @@ public class UserServiceImpl implements UserService {
     public void updateDevPassword(Long id, Dev dev) {
         Dev entity = getOneDev(id);
 
-        entity.setPassword(dev.getPassword());
+        entity.setPassword(passwordEncoder.encode(dev.getPassword()));
 
         userRepository.save(entity);
     }
