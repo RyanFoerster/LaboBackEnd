@@ -10,7 +10,6 @@ import lombok.Data;
 @Data
 public class DevPasswordUpdateForm {
 
-    private String oldPassword;
     @NotBlank
     @Size(min = 6)
     @Pattern(

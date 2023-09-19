@@ -2,11 +2,9 @@ package be.techifutur.labo.adoptadev.controllers;
 
 import be.techifutur.labo.adoptadev.models.dtos.DevDTO;
 import be.techifutur.labo.adoptadev.models.entities.Dev;
-import be.techifutur.labo.adoptadev.models.entities.User;
 import be.techifutur.labo.adoptadev.models.forms.DevPasswordUpdateForm;
 import be.techifutur.labo.adoptadev.models.forms.DevProfileUpdateForm;
 import be.techifutur.labo.adoptadev.services.UserService;
-import be.techifutur.labo.adoptadev.utils.JwtUtil;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
