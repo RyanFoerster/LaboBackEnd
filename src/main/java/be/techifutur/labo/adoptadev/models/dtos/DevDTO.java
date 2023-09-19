@@ -7,6 +7,7 @@ import be.techifutur.labo.adoptadev.models.enums.TechnologyFrontEnd;
 import lombok.Builder;
 import lombok.Data;
 
+import java.time.LocalDate;
 import java.util.Set;
 
 @Data
@@ -22,6 +23,7 @@ public class DevDTO {
     private String gitHub;
     private String linkedIn;
     private String cv;
+    private LocalDate birthDate;
     private Set<TechnologyBackEnd> technologyBackEnds;
     private Set<TechnologyFrontEnd> technologyFrontEnds;
     private Set<Role> roles;
@@ -42,6 +44,7 @@ public class DevDTO {
                 .gitHub(entity.getGitHub())
                 .linkedIn(entity.getLinkedIn())
                 .cv(entity.getCv())
+                .birthDate(entity.getBirthDate())
                 .technologyBackEnds(entity.getTechnologiesBackEnd())
                 .technologyFrontEnds(entity.getTechnologiesFrontEnd())
                 .roles(entity.getRoles())
