@@ -12,7 +12,9 @@ import org.springframework.context.event.EventListener;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.socket.messaging.SessionConnectEvent;
+import org.springframework.web.socket.messaging.SessionDisconnectEvent;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -26,7 +28,11 @@ public class ChatController {
     private final MessageRepository messageRepository;
     private final MatchRepository matchRepository;
 
-    public ChatController(UserRepository userRepository, SimpMessagingTemplate simpMessagingTemplate, MessageRepository messageRepository, MatchRepository matchRepository) {
+    public ChatController(UserRepository userRepository,
+                          SimpMessagingTemplate simpMessagingTemplate,
+                          MessageRepository messageRepository,
+                          MatchRepository matchRepository)
+    {
         this.userRepository = userRepository;
         this.simpMessagingTemplate = simpMessagingTemplate;
         this.messageRepository = messageRepository;
@@ -34,56 +40,62 @@ public class ChatController {
     }
 
     @EventListener
-    public void handleSessionConnectEvent(SessionConnectEvent session) {
-        System.out.println("event = " + session.toString());
+    public void handleSessionConnectEvent(SessionConnectEvent event) {
+        log.info("Un nouveau client s'est connecté");
     }
 
+    @EventListener
+    public void handleSessionDisconnectEvent(SessionDisconnectEvent event) {
+        log.info("Un client s'est déconnecté");
+    }
+
+    private final String PRIVATE_REPLY_QUEUE = "/topic/private-reply";
+
+    @Transactional
     @MessageMapping("/private-message")
     public void handlePrivateMessage(MessageForm privateMessage) {
-        Long matchId = privateMessage.getReceptorId();
+        Long matchId = privateMessage.getMatchId();
         String emitter = privateMessage.getEmitter();
-        String message = privateMessage.getMessage();
+        String messageText = privateMessage.getMessage();
 
-        User emitterObject = userRepository.findByUsername(emitter).orElseThrow();
+        User emitterUser = userRepository.findByUsername(emitter)
+                .orElseThrow(() -> new IllegalArgumentException("Émetteur introuvable"));
 
-        Match match = matchRepository.findById(matchId).orElseThrow();
+        Match match = matchRepository.findById(matchId)
+                .orElseThrow(() -> new IllegalArgumentException("Match introuvable"));
 
-        User receptorObject;
+        User receptorUser = (privateMessage.getEmitter().equals(match.getDev().getUsername()))
+                ? match.getRecruiter()
+                : match.getDev();
 
-        if(privateMessage.getEmitter().equals(match.getDev().getUsername())){
-            receptorObject = match.getRecruiter();
-        }else{
-            receptorObject = match.getDev();
-        }
+        Message message = new Message();
+        message.setReceptor(receptorUser);
+        message.setEmitter(emitterUser);
+        message.setMessage(messageText);
+        message.setMatch(match);
+        message.setCreatedAt(LocalDateTime.now());
 
-        Message messageObject = new Message();
-        messageObject.setReceptor(receptorObject);
-        messageObject.setEmitter(emitterObject);
-        messageObject.setMessage(message);
-        messageObject.setMatch(match);
-        messageObject.setCreatedAt(LocalDateTime.now());
+        message = messageRepository.save(message);
 
-        messageObject = messageRepository.save(messageObject);
+        match.getMessages().add(message);
+        receptorUser.getMessagesReceptor().add(message);
+        emitterUser.getMessagesEmitter().add(message);
 
-        match.getMessages().add(messageObject);
         matchRepository.save(match);
+        userRepository.saveAll(List.of(receptorUser, emitterUser));
 
-        receptorObject.getMessagesReceptor().add(messageObject);
-        emitterObject.getMessagesEmitter().add(messageObject);
-        userRepository.saveAll(List.of(receptorObject, emitterObject));
-
-        // Diffuse le message uniquement au destinataire spécifié
         simpMessagingTemplate.convertAndSendToUser(
-                receptorObject.getUsername(),
-                "/queue/private-reply",
-                MessageDTO.toDTO(messageObject)
+                "string",
+                PRIVATE_REPLY_QUEUE,
+                MessageDTO.toDTO(message)
         );
 
         simpMessagingTemplate.convertAndSendToUser(
-                emitterObject.getUsername(),
-                "/queue/private-reply",
-                MessageDTO.toDTO(messageObject)
+                "stringRec",
+                PRIVATE_REPLY_QUEUE,
+                MessageDTO.toDTO(message)
         );
     }
+
 
 }

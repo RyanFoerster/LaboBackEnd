@@ -15,8 +15,8 @@ public class MessageDTO {
     private String message;
     private LocalDateTime createdAt;
     private Long matchId;
-    private CorrespondantDTO receptor;
-    private CorrespondantDTO emitter;
+    private String receptor;
+    private String emitter;
 
     public static MessageDTO toDTO(Message message){
         if( message == null )
@@ -26,28 +26,28 @@ public class MessageDTO {
                 .id( message.getId() )
                 .matchId( message.getMatch().getId() )
                 .message( message.getMessage() )
-                .emitter( CorrespondantDTO.toDTO( message.getEmitter() ) )
-                .receptor( CorrespondantDTO.toDTO( message.getReceptor() ) )
+                .emitter( message.getEmitter().getUsername()  )
+                .receptor(  message.getReceptor().getUsername()  )
                 .createdAt(message.getCreatedAt())
                 .build();
     }
 
-    @Data
-    @Builder
-    public static class CorrespondantDTO {
-        private String username;
-        private Long userId;
-
-        public static CorrespondantDTO toDTO(User user){
-            if( user == null )
-                return null;
-
-            return CorrespondantDTO.builder()
-                    .userId(user.getId())
-                    .username(user.getUsername())
-                    .build();
-        }
-
-    }
+//    @Data
+//    @Builder
+//    public static class CorrespondantDTO {
+//        private String username;
+//        private Long userId;
+//
+//        public static CorrespondantDTO toDTO(User user){
+//            if( user == null )
+//                return null;
+//
+//            return CorrespondantDTO.builder()
+//                    .userId(user.getId())
+//                    .username(user.getUsername())
+//                    .build();
+//        }
+//
+//    }
 
 }
