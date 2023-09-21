@@ -109,27 +109,25 @@ public class UserServiceImpl implements UserService {
     public void updateDev(Long id, Dev dev) {
         Dev entity = getOneDev(id);
 
-        if (!dev.getFirstName().isEmpty() && !dev.getFirstName().isBlank() && dev.getFirstName() != null)
+        System.out.println(dev);
+
+        if (!dev.getFirstName().isEmpty() && !dev.getFirstName().isBlank())
             entity.setFirstName(dev.getFirstName());
-        if (!dev.getLastName().isEmpty() && !dev.getLastName().isBlank() && dev.getLastName() != null)
+        if (!dev.getLastName().isEmpty() && !dev.getLastName().isBlank())
             entity.setLastName(dev.getLastName());
-        if (!dev.getEmail().isEmpty() && !dev.getEmail().isBlank() && dev.getEmail() != null)
-            entity.setEmail(dev.getEmail());
-        if (!dev.getDescription().isEmpty() && !dev.getDescription().isBlank() && dev.getDescription() != null)
+        if (!dev.getDescription().isEmpty() && !dev.getDescription().isBlank())
             entity.setDescription(dev.getDescription());
-        if (dev.getBirthDate() != null)
-            entity.setBirthDate(dev.getBirthDate());
-        if (!dev.getTechnologiesBackEnd().isEmpty() && dev.getTechnologiesBackEnd() != null)
-            entity.setTechnologiesBackEnd(dev.getTechnologiesBackEnd());
-        if (!dev.getTechnologiesFrontEnd().isEmpty() && dev.getTechnologiesFrontEnd() != null)
-            entity.setTechnologiesFrontEnd(dev.getTechnologiesFrontEnd());
-        if (!dev.getGitHub().isEmpty() && !dev.getGitHub().isBlank() && dev.getGitHub() != null)
+        if (!dev.getTechnologyBackEnds().isEmpty() )
+            entity.setTechnologyBackEnds(dev.getTechnologyBackEnds());
+        if (!dev.getTechnologyFrontEnds().isEmpty())
+            entity.setTechnologyFrontEnds(dev.getTechnologyFrontEnds());
+        if (!dev.getGitHub().isEmpty() && !dev.getGitHub().isBlank())
             entity.setGitHub(dev.getGitHub());
-        if (!dev.getLinkedIn().isEmpty() && !dev.getLinkedIn().isBlank() && dev.getLinkedIn() != null)
+        if (!dev.getLinkedIn().isEmpty() && !dev.getLinkedIn().isBlank())
             entity.setLinkedIn(dev.getLinkedIn());
-        if (!dev.getCv().isEmpty() && !dev.getCv().isBlank() && dev.getCv() != null)
+        if (!dev.getCv().isEmpty() && !dev.getCv().isBlank())
             entity.setCv(dev.getCv());
-        if (!dev.getPseudo().isEmpty() && !dev.getPseudo().isBlank() && dev.getPseudo() != null)
+        if (!dev.getPseudo().isEmpty() && !dev.getPseudo().isBlank())
             entity.setPseudo(dev.getPseudo());
 
         userRepository.save(entity);

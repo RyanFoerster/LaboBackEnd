@@ -42,6 +42,7 @@ public class DevController {
 
     @PutMapping
     public ResponseEntity<DevDTO> update(Authentication authentication, @RequestBody @Valid DevProfileUpdateForm form) {
+        System.out.println(form);
         Dev dev = (Dev) userDetailsService.loadUserByUsername(authentication.getPrincipal().toString());
         userService.updateDev(dev.getId(), form.toEntity());
         return ResponseEntity.noContent()
