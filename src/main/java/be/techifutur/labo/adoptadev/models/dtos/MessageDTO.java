@@ -15,8 +15,11 @@ public class MessageDTO {
     private String message;
     private LocalDateTime createdAt;
     private Long matchId;
+//    private String receptor;
+//    private String emitter;
+
     private String receptor;
-    private String emitter;
+    private Long emitterId;
 
     public static MessageDTO toDTO(Message message){
         if( message == null )
@@ -26,8 +29,8 @@ public class MessageDTO {
                 .id( message.getId() )
                 .matchId( message.getMatch().getId() )
                 .message( message.getMessage() )
-                .emitter( message.getEmitter().getUsername()  )
-                .receptor(  message.getReceptor().getUsername()  )
+                .emitterId( message.getEmitterId() )
+                .receptor(  message.getReceptor() )
                 .createdAt(message.getCreatedAt())
                 .build();
     }

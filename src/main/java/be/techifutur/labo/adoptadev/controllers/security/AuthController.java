@@ -50,7 +50,6 @@ public class AuthController {
     public ResponseEntity<AuthDTO> login(@RequestBody @Valid LoginForm loginForm){
         String token = userService.login(loginForm.getUsername(), loginForm.getPassword());
         User user = (User) userDetailsService.loadUserByUsername(loginForm.getUsername());
-
         return ResponseEntity.ok(AuthDTO.toDTO(token, user));
     }
 }

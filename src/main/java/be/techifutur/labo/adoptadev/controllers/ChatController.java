@@ -69,8 +69,8 @@ public class ChatController {
                 : match.getDev();
 
         Message message = new Message();
-        message.setReceptor(receptorUser);
-        message.setEmitter(emitterUser);
+        message.setReceptor(receptorUser.getUsername());
+        message.setEmitterId(emitterUser.getId());
         message.setMessage(messageText);
         message.setMatch(match);
         message.setCreatedAt(LocalDateTime.now());
@@ -78,20 +78,20 @@ public class ChatController {
         message = messageRepository.save(message);
 
         match.getMessages().add(message);
-        receptorUser.getMessagesReceptor().add(message);
-        emitterUser.getMessagesEmitter().add(message);
+//        receptorUser.getMessagesReceptor().add(message);
+//        emitterUser.getMessagesEmitter().add(message);
 
         matchRepository.save(match);
         userRepository.saveAll(List.of(receptorUser, emitterUser));
 
         simpMessagingTemplate.convertAndSendToUser(
-                "string",
+                receptorUser.getUsername(),
                 PRIVATE_REPLY_QUEUE,
                 MessageDTO.toDTO(message)
         );
 
         simpMessagingTemplate.convertAndSendToUser(
-                "stringRec",
+                emitterUser.getUsername(),
                 PRIVATE_REPLY_QUEUE,
                 MessageDTO.toDTO(message)
         );

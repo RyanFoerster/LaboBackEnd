@@ -106,16 +106,16 @@ public class DataInitializer implements CommandLineRunner {
 
         Message message = new Message();
         message.setMatch(match);
-        message.setEmitter(recruiter);
-        message.setReceptor(dev);
+        message.setEmitterId(recruiter.getId());
+        message.setReceptor(dev.getUsername());
         message.setMessage("Salut");
         message.setCreatedAt(LocalDateTime.now());
 
         Thread.sleep(1000);
         Message message2 = new Message();
         message2.setMatch(match);
-        message2.setEmitter(dev);
-        message2.setReceptor(recruiter);
+        message2.setEmitterId(dev.getId());
+        message2.setReceptor(recruiter.getUsername());
         message2.setMessage("Salut ça va ?");
         message2.setCreatedAt(LocalDateTime.now());
 

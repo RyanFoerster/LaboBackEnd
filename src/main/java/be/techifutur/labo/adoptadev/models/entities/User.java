@@ -44,11 +44,11 @@ public class User implements UserDetails {
     @Column(name = "user_enabled")
     private boolean isEnabled = true;
 
-    @OneToMany(mappedBy = "emitter", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
-    private Set<Message> messagesEmitter = new LinkedHashSet<>();
-
-    @OneToMany(mappedBy = "receptor", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
-    private Set<Message> messagesReceptor = new LinkedHashSet<>();
+//    @OneToMany(mappedBy = "emitter", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+//    private Set<Message> messagesEmitter = new LinkedHashSet<>();
+//
+//    @OneToMany(mappedBy = "receptor", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+//    private Set<Message> messagesReceptor = new LinkedHashSet<>();
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

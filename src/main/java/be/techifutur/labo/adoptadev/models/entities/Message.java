@@ -24,13 +24,17 @@ public class Message {
     @Column(name = "message_content")
     private String message;
 
-    @ManyToOne
-    @JoinColumn(name = "emitter_id")
-    private User emitter;
+//    @ManyToOne
+//    @JoinColumn(name = "emitter_id")
+//    private User emitter;
+//
+//    @ManyToOne
+//    @JoinColumn(name = "receptor_id")
+//    private User receptor;
 
-    @ManyToOne
-    @JoinColumn(name = "receptor_id")
-    private User receptor;
+    private Long emitterId;
+
+    private String receptor;
 
     @ManyToOne
     private Match match;
@@ -38,11 +42,6 @@ public class Message {
     @Column(name = "created_at")
     @CreatedDate
     private LocalDateTime createdAt;
-
-    public Message(String message, User emitter) {
-        this.message = message;
-        this.emitter = emitter;
-    }
 
     @Override
     public final boolean equals(Object o) {
