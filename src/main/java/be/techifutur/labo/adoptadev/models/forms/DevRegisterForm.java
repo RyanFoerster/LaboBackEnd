@@ -52,8 +52,8 @@ public class DevRegisterForm {
         dev.setRoles(Collections.singleton(Role.DEVELOPER));
         dev.setDescription(devProfileUpdateForm.getDescription());
         dev.setCv(devProfileUpdateForm.getCv());
-        dev.setTechnologiesBackEnd(devProfileUpdateForm.getTechnologiesBackEnd());
-        dev.setTechnologiesFrontEnd(devProfileUpdateForm.getTechnologiesFrontEnd());
+        dev.setTechnologyBackEnds(devProfileUpdateForm.getTechnologyBackEnds());
+        dev.setTechnologyFrontEnds(devProfileUpdateForm.getTechnologyFrontEnds());
         dev.setGitHub(devProfileUpdateForm.getGitHub());
         dev.setLinkedIn(devProfileUpdateForm.getLinkedIn());
         dev.setPseudo(devProfileUpdateForm.getPseudo());

@@ -18,6 +18,7 @@ public class DevDTO {
     private String username;
     private String firstName;
     private String lastName;
+    private String description;
     private String email;
     private String pseudo;
     private String gitHub;
@@ -38,6 +39,7 @@ public class DevDTO {
                 .id(entity.getId())
                 .username(entity.getUsername())
                 .firstName(entity.getFirstName())
+                .description(entity.getDescription())
                 .lastName(entity.getLastName())
                 .email(entity.getEmail())
                 .pseudo(entity.getPseudo())
@@ -45,8 +47,8 @@ public class DevDTO {
                 .linkedIn(entity.getLinkedIn())
                 .cv(entity.getCv())
                 .birthDate(entity.getBirthDate())
-                .technologyBackEnds(entity.getTechnologiesBackEnd())
-                .technologyFrontEnds(entity.getTechnologiesFrontEnd())
+                .technologyBackEnds(entity.getTechnologyBackEnds())
+                .technologyFrontEnds(entity.getTechnologyFrontEnds())
                 .roles(entity.getRoles())
                 .address(AddressDTO.toDTO(entity.getAddress()))
                 .build();

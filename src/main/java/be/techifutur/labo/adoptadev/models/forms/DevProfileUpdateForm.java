@@ -15,8 +15,8 @@ public class DevProfileUpdateForm {
     private String firstName;
     private String lastName;
     private String description;
-    private Set<TechnologyBackEnd> technologiesBackEnd;
-    private Set<TechnologyFrontEnd> technologiesFrontEnd;
+    private Set<TechnologyBackEnd> technologyBackEnds;
+    private Set<TechnologyFrontEnd> technologyFrontEnds;
     private String gitHub;
     private String linkedIn;
     private String cv;
@@ -28,8 +28,8 @@ public class DevProfileUpdateForm {
         dev.setFirstName(this.firstName);
         dev.setLastName(this.lastName);
         dev.setDescription(this.description);
-        dev.setTechnologiesBackEnd(this.technologiesBackEnd);
-        dev.setTechnologiesFrontEnd(this.technologiesFrontEnd);
+        dev.setTechnologyBackEnds(this.technologyBackEnds);
+        dev.setTechnologyFrontEnds(this.technologyFrontEnds);
         dev.setGitHub(this.gitHub);
         dev.setLinkedIn(this.linkedIn);
         dev.setCv(this.cv);

@@ -117,10 +117,10 @@ public class UserServiceImpl implements UserService {
             entity.setLastName(dev.getLastName());
         if (!dev.getDescription().isEmpty() && !dev.getDescription().isBlank())
             entity.setDescription(dev.getDescription());
-        if (!dev.getTechnologiesBackEnd().isEmpty() )
-            entity.setTechnologiesBackEnd(dev.getTechnologiesBackEnd());
-        if (!dev.getTechnologiesFrontEnd().isEmpty())
-            entity.setTechnologiesFrontEnd(dev.getTechnologiesFrontEnd());
+        if (!dev.getTechnologyBackEnds().isEmpty() )
+            entity.setTechnologyBackEnds(dev.getTechnologyBackEnds());
+        if (!dev.getTechnologyFrontEnds().isEmpty())
+            entity.setTechnologyFrontEnds(dev.getTechnologyFrontEnds());
         if (!dev.getGitHub().isEmpty() && !dev.getGitHub().isBlank())
             entity.setGitHub(dev.getGitHub());
         if (!dev.getLinkedIn().isEmpty() && !dev.getLinkedIn().isBlank())
