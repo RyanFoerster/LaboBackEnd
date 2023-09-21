@@ -46,54 +46,54 @@ public class DataInitializer implements CommandLineRunner {
     public void run(String... args) throws Exception {
         PasswordEncoder passwordEncoder = securityConfig.passwordEncoder();
 
-        Dev dev = new Dev();
-        dev.setEnabled(true);
-        dev.setUsername("string");
-        dev.setPassword(passwordEncoder.encode("Test1234="));
-        dev.setFirstName("string");
-        dev.setLastName("string");
-        dev.setEmail("string@string");
-        dev.getRoles().add(Role.DEVELOPER);
-        devRepository.save(dev);
-
-        Dev dev2 = new Dev();
-        dev2.setEnabled(true);
-        dev2.setUsername("string2");
-        dev2.setPassword(passwordEncoder.encode("Test1234="));
-        dev2.setFirstName("string");
-        dev2.setLastName("string");
-        dev2.setEmail("string2@string");
-        dev2.getRoles().add(Role.DEVELOPER);
-        devRepository.save(dev2);
-
-        Recruiter recruiter = new Recruiter();
-        recruiter.setEnabled(true);
-        recruiter.setUsername("stringRec");
-        recruiter.setPassword(passwordEncoder.encode("Test1234="));
-        recruiter.setFirstName("stringP");
-        recruiter.setLastName("stringN");
-        recruiter.setEmail("string@recruiter");
-        recruiter.getRoles().add(Role.RECRUITER);
-        recruiter.setDescription("stringRecDesc");
-        recruiter.getRoles().add(Role.RECRUITER);
-        recruiterRepository.save(recruiter);
-
-        PostHelp postHelp = new PostHelp();
-        postHelp.setTitle("Cli Angular");
-        postHelp.setDev(dev);
-        postHelp.setTechnologyFrontEnd(TechnologyFrontEnd.ANGULAR);
-        postHelp.setDescription("J'ai besoin d'aide pour créer un component en utilisant le cli Angular");
-        postHelp.setGithub("https://github.com/LoVanors/finalLab");
-        postHelpRepository.save(postHelp);
-
-        Comment comment = new Comment();
-        comment.setPost(postHelp);
-        comment.setDev(dev2);
-        comment.setMessage("Tu devrais essayer en faisant 'ng g c [Nom de ton component]'");
-        commentRepository.save(comment);
-
-        voteCommentService.addVote(comment.getId(), dev.getId(), VoteType.UPVOTE);
-
-        voteSujetService.addVote(postHelp.getId(), dev2.getId(), VoteType.UPVOTE);
+//        Dev dev = new Dev();
+//        dev.setEnabled(true);
+//        dev.setUsername("string");
+//        dev.setPassword(passwordEncoder.encode("Test1234="));
+//        dev.setFirstName("string");
+//        dev.setLastName("string");
+//        dev.setEmail("string@string");
+//        dev.getRoles().add(Role.DEVELOPER);
+//        devRepository.save(dev);
+//
+//        Dev dev2 = new Dev();
+//        dev2.setEnabled(true);
+//        dev2.setUsername("string2");
+//        dev2.setPassword(passwordEncoder.encode("Test1234="));
+//        dev2.setFirstName("string");
+//        dev2.setLastName("string");
+//        dev2.setEmail("string2@string");
+//        dev2.getRoles().add(Role.DEVELOPER);
+//        devRepository.save(dev2);
+//
+//        Recruiter recruiter = new Recruiter();
+//        recruiter.setEnabled(true);
+//        recruiter.setUsername("stringRec");
+//        recruiter.setPassword(passwordEncoder.encode("Test1234="));
+//        recruiter.setFirstName("stringP");
+//        recruiter.setLastName("stringN");
+//        recruiter.setEmail("string@recruiter");
+//        recruiter.getRoles().add(Role.RECRUITER);
+//        recruiter.setDescription("stringRecDesc");
+//        recruiter.getRoles().add(Role.RECRUITER);
+//        recruiterRepository.save(recruiter);
+//
+//        PostHelp postHelp = new PostHelp();
+//        postHelp.setTitle("Cli Angular");
+//        postHelp.setDev(dev);
+//        postHelp.setTechnologyFrontEnd(TechnologyFrontEnd.ANGULAR);
+//        postHelp.setDescription("J'ai besoin d'aide pour créer un component en utilisant le cli Angular");
+//        postHelp.setGithub("https://github.com/LoVanors/finalLab");
+//        postHelpRepository.save(postHelp);
+//
+//        Comment comment = new Comment();
+//        comment.setPost(postHelp);
+//        comment.setDev(dev2);
+//        comment.setMessage("Tu devrais essayer en faisant 'ng g c [Nom de ton component]'");
+//        commentRepository.save(comment);
+//
+//        voteCommentService.addVote(comment.getId(), dev.getId(), VoteType.UPVOTE);
+//
+//        voteSujetService.addVote(postHelp.getId(), dev2.getId(), VoteType.UPVOTE);
     }
 }
