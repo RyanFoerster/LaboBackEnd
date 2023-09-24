@@ -14,31 +14,40 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 @Service
-public class FileServiceImpl implements FileService{
-
+public class FileServiceImpl implements FileService {
 
     @Value("${file.path}")
     private String filePath;
 
     @Override
-    public void save(MultipartFile file) {
-        String dir = System.getProperty("user.dir") + "/" + filePath;
+    public String save(MultipartFile file, String subDirectory) {
         try {
-            file.transferTo(new File(dir + "/" + file.getOriginalFilename()));
+            String dir = System.getProperty("user.dir") + "/" + filePath + "/" + subDirectory;
+            File directory = new File(dir);
+            if (!directory.exists()) {
+                directory.mkdirs();
+            }
+            String fullFilePath = dir + "/" + file.getOriginalFilename();
+            file.transferTo(new File(fullFilePath));
+            return fullFilePath;
         } catch (IOException e) {
-            System.out.println(e.getMessage());
+            throw new RuntimeException("Could not save the file. Error: " + e.getMessage());
         }
     }
 
-    public Resource getFile(String fileName){
-        String dir = System.getProperty("user.dir") + "/" + filePath + "/" + fileName;
-        Path path = Paths.get(dir);
-
+    @Override
+    public Resource getFile(String fileName, String subDirectory) {
         try {
-            return new UrlResource(path.toUri());
+            String dir = System.getProperty("user.dir") + "/" + filePath + "/" + subDirectory;
+            Path path = Paths.get(dir + "/" + fileName);
+            Resource resource = new UrlResource(path.toUri());
+            if (resource.exists()) {
+                return resource;
+            } else {
+                throw new RuntimeException("File not found.");
+            }
         } catch (MalformedURLException e) {
-            System.out.println(e.getMessage());
+            throw new RuntimeException("Error: " + e.getMessage());
         }
-        return null;
     }
 }

@@ -17,6 +17,8 @@ public interface UserService {
     void updateRecruiter(Long id, Recruiter recruiter);
 
     void updateDev(Long id, Dev dev);
+    Dev saveDev(Dev dev);
+    void updateDevCvPath(Long devId, String cvPath);
     void updateRecruiterPassword(Long id, Recruiter recruiter);
 
     void updateDevPassword(Long id, Dev dev);
