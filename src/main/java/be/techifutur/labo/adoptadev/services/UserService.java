@@ -1,8 +1,6 @@
 package be.techifutur.labo.adoptadev.services;
 
-import be.techifutur.labo.adoptadev.models.entities.Dev;
-import be.techifutur.labo.adoptadev.models.entities.Recruiter;
-import be.techifutur.labo.adoptadev.models.entities.User;
+import be.techifutur.labo.adoptadev.models.entities.*;
 
 public interface UserService {
 
@@ -19,8 +17,12 @@ public interface UserService {
     Dev getDevByConfirmationToken(String confirmationToken);
 
     void updateRecruiter(Long id, Recruiter recruiter);
+    void updateRecruiterCompany(Long id, Company company);
+    void updateCompanyAddress(Long id, Address address);
 
     void updateDev(Long id, Dev dev);
+
+    void updateDevAddress(Long id, Address address);
 
     void updateRecruiterPassword(Long id, Recruiter recruiter);
 

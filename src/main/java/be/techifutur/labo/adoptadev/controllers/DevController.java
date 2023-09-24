@@ -1,7 +1,9 @@
 package be.techifutur.labo.adoptadev.controllers;
 
+import be.techifutur.labo.adoptadev.models.dtos.AddressDTO;
 import be.techifutur.labo.adoptadev.models.dtos.DevDTO;
 import be.techifutur.labo.adoptadev.models.entities.Dev;
+import be.techifutur.labo.adoptadev.models.forms.AddressUpdateForm;
 import be.techifutur.labo.adoptadev.models.forms.DevPasswordUpdateForm;
 import be.techifutur.labo.adoptadev.models.forms.DevProfileUpdateForm;
 import be.techifutur.labo.adoptadev.services.UserService;
@@ -53,6 +55,14 @@ public class DevController {
     public ResponseEntity<DevDTO> updatePassword(Authentication authentication, @RequestBody @Valid DevPasswordUpdateForm form) {
         Dev dev = (Dev) userDetailsService.loadUserByUsername(authentication.getPrincipal().toString());
         userService.updateDevPassword(dev.getId(), form.toEntity());
+        return ResponseEntity.noContent()
+                .build();
+    }
+
+    @PutMapping("/address")
+    public ResponseEntity<AddressDTO> updateDevAddress(Authentication authentication, @RequestBody  AddressUpdateForm form){
+        Dev dev = (Dev) userDetailsService.loadUserByUsername(authentication.getPrincipal().toString());
+        userService.updateDevAddress(dev.getId(), form.toEntity());
         return ResponseEntity.noContent()
                 .build();
     }

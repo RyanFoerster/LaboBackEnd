@@ -1,9 +1,13 @@
 package be.techifutur.labo.adoptadev.controllers;
 
+import be.techifutur.labo.adoptadev.models.dtos.AddressDTO;
+import be.techifutur.labo.adoptadev.models.dtos.CompanyDTO;
 import be.techifutur.labo.adoptadev.models.dtos.DevDTO;
 import be.techifutur.labo.adoptadev.models.dtos.RecruiterDTO;
 import be.techifutur.labo.adoptadev.models.entities.Dev;
 import be.techifutur.labo.adoptadev.models.entities.Recruiter;
+import be.techifutur.labo.adoptadev.models.forms.AddressUpdateForm;
+import be.techifutur.labo.adoptadev.models.forms.CompanyUpdateForm;
 import be.techifutur.labo.adoptadev.models.forms.RecruiterPasswordUpdateForm;
 import be.techifutur.labo.adoptadev.models.forms.RecruiterProfileUpdateForm;
 import be.techifutur.labo.adoptadev.services.UserService;
@@ -62,6 +66,20 @@ public class RecruiterController {
     ResponseEntity<?> delete(Authentication authentication) {
         Recruiter recruiter = (Recruiter) userDetailsService.loadUserByUsername(authentication.getPrincipal().toString());
         userService.deleteRecruiter(recruiter.getId());
+        return ResponseEntity.noContent()
+                .build();
+    }
+    @PutMapping("/company")
+    public ResponseEntity<CompanyDTO> updateRecruiterCompany(Authentication authentication, @RequestBody CompanyUpdateForm form){
+        Recruiter recruiter = (Recruiter) userDetailsService.loadUserByUsername(authentication.getPrincipal().toString());
+        userService.updateRecruiterCompany(recruiter.getId(), form.toEntity());
+        return ResponseEntity.noContent()
+                .build();
+    }
+    @PutMapping("/company/address")
+    public ResponseEntity<AddressDTO> updateCompanyAddress(Authentication authentication, @RequestBody AddressUpdateForm form){
+        Recruiter recruiter = (Recruiter) userDetailsService.loadUserByUsername(authentication.getPrincipal().toString());
+        userService.updateCompanyAddress(recruiter.getId(), form.toEntity());
         return ResponseEntity.noContent()
                 .build();
     }

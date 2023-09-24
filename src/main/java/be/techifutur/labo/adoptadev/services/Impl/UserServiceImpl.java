@@ -2,12 +2,8 @@ package be.techifutur.labo.adoptadev.services.Impl;
 
 import be.techifutur.labo.adoptadev.exceptions.ResourceNotFoundException;
 import be.techifutur.labo.adoptadev.exceptions.UniqueViolationException;
-import be.techifutur.labo.adoptadev.models.entities.Dev;
-import be.techifutur.labo.adoptadev.models.entities.Recruiter;
-import be.techifutur.labo.adoptadev.models.entities.User;
-import be.techifutur.labo.adoptadev.repositories.DevRepository;
-import be.techifutur.labo.adoptadev.repositories.RecruiterRepository;
-import be.techifutur.labo.adoptadev.repositories.UserRepository;
+import be.techifutur.labo.adoptadev.models.entities.*;
+import be.techifutur.labo.adoptadev.repositories.*;
 import be.techifutur.labo.adoptadev.services.UserService;
 import be.techifutur.labo.adoptadev.utils.JwtUtil;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -25,19 +21,25 @@ public class UserServiceImpl implements UserService {
     private final DevRepository devRepository;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
+    private final AddressRepository addressRepository;
+    private final CompanyRepository companyRepository;
 
     public UserServiceImpl(
             UserRepository userRepository,
             RecruiterRepository recruiterRepository,
             DevRepository devRepository,
             PasswordEncoder passwordEncoder,
-            AuthenticationManager authenticationManager
+            AuthenticationManager authenticationManager,
+            AddressRepository addressRepository,
+            CompanyRepository companyRepository
     ) {
         this.userRepository = userRepository;
         this.recruiterRepository = recruiterRepository;
         this.devRepository = devRepository;
         this.passwordEncoder = passwordEncoder;
         this.authenticationManager = authenticationManager;
+        this.addressRepository = addressRepository;
+        this.companyRepository = companyRepository;
     }
 
     @Override
@@ -102,6 +104,38 @@ public class UserServiceImpl implements UserService {
             entity.setEmail(recruiter.getEmail());
 
         userRepository.save(entity);
+    }
+
+    @Override
+    public void updateRecruiterCompany(Long id, Company company) {
+        Recruiter recruiter = getOneRecruiter(id);
+        Company entity = recruiter.getCompany();
+
+        if (!company.getName().isBlank()&&!company.getName().isEmpty())
+            entity.setName(company.getName());
+        if (!company.getDescription().isEmpty()&&!company.getDescription().isBlank())
+            entity.setDescription(company.getDescription());
+
+        companyRepository.save(entity);
+    }
+
+    @Override
+    public void updateCompanyAddress(Long id, Address address) {
+        Recruiter recruiter = getOneRecruiter(id);
+        Address entity = recruiter.getCompany().getAddress();
+
+        if(!address.getStreet().isEmpty()&&!address.getStreet().isBlank())
+            entity.setStreet(address.getStreet());
+        if (!address.getNumber().isBlank()&&!address.getNumber().isEmpty())
+            entity.setNumber(address.getNumber());
+        if (!address.getCity().isEmpty()&&!address.getCity().isBlank())
+            entity.setCity(address.getCity());
+        if (!address.getZipcode().isBlank()&&!address.getZipcode().isEmpty())
+            entity.setZipcode(address.getZipcode());
+        if (!address.getCountry().isEmpty()&&!address.getCountry().isBlank())
+            entity.setCountry(address.getCountry());
+
+        addressRepository.save(entity);
     }
 
 
@@ -172,4 +206,25 @@ public class UserServiceImpl implements UserService {
 
         return JwtUtil.generateToken(authentication);
     }
+
+    @Override
+    public void updateDevAddress(Long id, Address address) {
+        Dev dev = getOneDev(id);
+
+        Address entity = dev.getAddress();
+        if(!address.getStreet().isEmpty()&&!address.getStreet().isBlank())
+            entity.setStreet(address.getStreet());
+        if (!address.getNumber().isBlank()&&!address.getNumber().isEmpty())
+            entity.setNumber(address.getNumber());
+        if (!address.getCity().isEmpty()&&!address.getCity().isBlank())
+            entity.setCity(address.getCity());
+        if (!address.getZipcode().isBlank()&&!address.getZipcode().isEmpty())
+            entity.setZipcode(address.getZipcode());
+        if (!address.getCountry().isEmpty()&&!address.getCountry().isBlank())
+            entity.setCountry(address.getCountry());
+
+        addressRepository.save(entity);
+    }
+
+
 }
