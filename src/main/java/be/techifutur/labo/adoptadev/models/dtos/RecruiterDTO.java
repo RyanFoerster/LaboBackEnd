@@ -12,6 +12,8 @@ import java.util.Set;
 @Builder
 public class RecruiterDTO {
 
+    private Long id;
+    private String username;
     private String firstName;
     private String lastName;
     private String email;
@@ -23,6 +25,8 @@ public class RecruiterDTO {
             return null;
 
         return RecruiterDTO.builder()
+                .id(entity.getId())
+                .username(entity.getUsername())
                 .firstName(entity.getFirstName())
                 .lastName(entity.getLastName())
                 .email(entity.getEmail())

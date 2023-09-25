@@ -45,13 +45,15 @@ public class User implements UserDetails {
     private Set<Role> roles = new HashSet<>();
 
     @Column(name = "user_enabled")
-    private boolean isEnabled = true;
+    private boolean isEnabled = false;
 
     @OneToMany(mappedBy = "emitter")
     private Set<Message> messagesEmitter = new LinkedHashSet<>();
 
     @OneToMany(mappedBy = "receptor")
     private Set<Message> messagesReceptor = new LinkedHashSet<>();
+
+    private String confirmationToken;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

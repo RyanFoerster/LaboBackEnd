@@ -2,12 +2,8 @@ package be.techifutur.labo.adoptadev.services.Impl;
 
 import be.techifutur.labo.adoptadev.exceptions.ResourceNotFoundException;
 import be.techifutur.labo.adoptadev.exceptions.UniqueViolationException;
-import be.techifutur.labo.adoptadev.models.entities.Dev;
-import be.techifutur.labo.adoptadev.models.entities.Recruiter;
-import be.techifutur.labo.adoptadev.models.entities.User;
-import be.techifutur.labo.adoptadev.repositories.DevRepository;
-import be.techifutur.labo.adoptadev.repositories.RecruiterRepository;
-import be.techifutur.labo.adoptadev.repositories.UserRepository;
+import be.techifutur.labo.adoptadev.models.entities.*;
+import be.techifutur.labo.adoptadev.repositories.*;
 import be.techifutur.labo.adoptadev.services.UserService;
 import be.techifutur.labo.adoptadev.utils.JwtUtil;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -25,19 +21,25 @@ public class UserServiceImpl implements UserService {
     private final DevRepository devRepository;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
+    private final AddressRepository addressRepository;
+    private final CompanyRepository companyRepository;
 
     public UserServiceImpl(
             UserRepository userRepository,
             RecruiterRepository recruiterRepository,
             DevRepository devRepository,
             PasswordEncoder passwordEncoder,
-            AuthenticationManager authenticationManager
+            AuthenticationManager authenticationManager,
+            AddressRepository addressRepository,
+            CompanyRepository companyRepository
     ) {
         this.userRepository = userRepository;
         this.recruiterRepository = recruiterRepository;
         this.devRepository = devRepository;
         this.passwordEncoder = passwordEncoder;
         this.authenticationManager = authenticationManager;
+        this.addressRepository = addressRepository;
+        this.companyRepository = companyRepository;
     }
 
     @Override
@@ -79,19 +81,61 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public Recruiter getRecByConfirmationToken(String confirmationToken) {
+        return recruiterRepository.findByConfirmationToken(confirmationToken)
+                .orElseThrow(() -> new RuntimeException("invalid token"));
+    }
+
+    @Override
+    public Dev getDevByConfirmationToken(String confirmationToken) {
+        return devRepository.findByConfirmationToken(confirmationToken)
+                .orElseThrow(() -> new RuntimeException("invalid token"));
+    }
+
+    @Override
     public void updateRecruiter(Long id, Recruiter recruiter) {
         Recruiter entity = getOneRecruiter(id);
 
-        if (!recruiter.getFirstName().isEmpty()&&!recruiter.getFirstName().isBlank())
+        if (!recruiter.getFirstName().isEmpty() && !recruiter.getFirstName().isBlank())
             entity.setFirstName(recruiter.getFirstName());
-        if (!recruiter.getLastName().isEmpty()&&!recruiter.getLastName().isBlank())
+        if (!recruiter.getLastName().isEmpty() && !recruiter.getLastName().isBlank())
             entity.setLastName(recruiter.getLastName());
-        if (!recruiter.getEmail().isEmpty()&&!recruiter.getEmail().isBlank())
+        if (!recruiter.getEmail().isEmpty() && !recruiter.getEmail().isBlank())
             entity.setEmail(recruiter.getEmail());
-        if (!recruiter.getDescription().isEmpty()&&!recruiter.getDescription().isBlank())
-            entity.setDescription(recruiter.getDescription());
 
         userRepository.save(entity);
+    }
+
+    @Override
+    public void updateRecruiterCompany(Long id, Company company) {
+        Recruiter recruiter = getOneRecruiter(id);
+        Company entity = recruiter.getCompany();
+
+        if (!company.getName().isBlank()&&!company.getName().isEmpty())
+            entity.setName(company.getName());
+        if (!company.getDescription().isEmpty()&&!company.getDescription().isBlank())
+            entity.setDescription(company.getDescription());
+
+        companyRepository.save(entity);
+    }
+
+    @Override
+    public void updateCompanyAddress(Long id, Address address) {
+        Recruiter recruiter = getOneRecruiter(id);
+        Address entity = recruiter.getCompany().getAddress();
+
+        if(!address.getStreet().isEmpty()&&!address.getStreet().isBlank())
+            entity.setStreet(address.getStreet());
+        if (!address.getNumber().isBlank()&&!address.getNumber().isEmpty())
+            entity.setNumber(address.getNumber());
+        if (!address.getCity().isEmpty()&&!address.getCity().isBlank())
+            entity.setCity(address.getCity());
+        if (!address.getZipcode().isBlank()&&!address.getZipcode().isEmpty())
+            entity.setZipcode(address.getZipcode());
+        if (!address.getCountry().isEmpty()&&!address.getCountry().isBlank())
+            entity.setCountry(address.getCountry());
+
+        addressRepository.save(entity);
     }
 
 
@@ -99,27 +143,25 @@ public class UserServiceImpl implements UserService {
     public void updateDev(Long id, Dev dev) {
         Dev entity = getOneDev(id);
 
-        if (!dev.getFirstName().isEmpty()&&!dev.getFirstName().isBlank())
+        System.out.println(dev);
+
+        if (!dev.getFirstName().isEmpty() && !dev.getFirstName().isBlank())
             entity.setFirstName(dev.getFirstName());
-        if (!dev.getLastName().isEmpty()&&!dev.getLastName().isBlank())
+        if (!dev.getLastName().isEmpty() && !dev.getLastName().isBlank())
             entity.setLastName(dev.getLastName());
-        if (!dev.getEmail().isEmpty()&&!dev.getEmail().isBlank())
-            entity.setEmail(dev.getEmail());
-        if (!dev.getDescription().isEmpty()&&!dev.getDescription().isBlank())
+        if (!dev.getDescription().isEmpty() && !dev.getDescription().isBlank())
             entity.setDescription(dev.getDescription());
-        if (dev.getBirthDate() != null)
-            entity.setBirthDate(dev.getBirthDate());
-        if (!dev.getTechnologiesBackEnd().isEmpty())
-            entity.setTechnologiesBackEnd(dev.getTechnologiesBackEnd());
-        if (!dev.getTechnologiesFrontEnd().isEmpty())
-            entity.setTechnologiesFrontEnd(dev.getTechnologiesFrontEnd());
-        if (!dev.getGitHub().isEmpty()&&!dev.getGitHub().isBlank())
+        if (!dev.getTechnologyBackEnds().isEmpty() )
+            entity.setTechnologyBackEnds(dev.getTechnologyBackEnds());
+        if (!dev.getTechnologyFrontEnds().isEmpty())
+            entity.setTechnologyFrontEnds(dev.getTechnologyFrontEnds());
+        if (!dev.getGitHub().isEmpty() && !dev.getGitHub().isBlank())
             entity.setGitHub(dev.getGitHub());
-        if (!dev.getLinkedIn().isEmpty()&&!dev.getLinkedIn().isBlank())
+        if (!dev.getLinkedIn().isEmpty() && !dev.getLinkedIn().isBlank())
             entity.setLinkedIn(dev.getLinkedIn());
-        if (!dev.getCv().isEmpty()&&!dev.getCv().isBlank())
+        if (!dev.getCv().isEmpty() && !dev.getCv().isBlank())
             entity.setCv(dev.getCv());
-        if (!dev.getPseudo().isEmpty()&&!dev.getPseudo().isBlank())
+        if (!dev.getPseudo().isEmpty() && !dev.getPseudo().isBlank())
             entity.setPseudo(dev.getPseudo());
 
         userRepository.save(entity);
@@ -142,7 +184,7 @@ public class UserServiceImpl implements UserService {
     public void updateRecruiterPassword(Long id, Recruiter recruiter) {
         Recruiter entity = getOneRecruiter(id);
 
-        entity.setPassword(recruiter.getPassword());
+        entity.setPassword(passwordEncoder.encode(recruiter.getPassword()));
 
         userRepository.save(entity);
     }
@@ -151,7 +193,7 @@ public class UserServiceImpl implements UserService {
     public void updateDevPassword(Long id, Dev dev) {
         Dev entity = getOneDev(id);
 
-        entity.setPassword(dev.getPassword());
+        entity.setPassword(passwordEncoder.encode(dev.getPassword()));
 
         userRepository.save(entity);
     }
@@ -177,4 +219,25 @@ public class UserServiceImpl implements UserService {
 
         return JwtUtil.generateToken(authentication);
     }
+
+    @Override
+    public void updateDevAddress(Long id, Address address) {
+        Dev dev = getOneDev(id);
+
+        Address entity = dev.getAddress();
+        if(!address.getStreet().isEmpty()&&!address.getStreet().isBlank())
+            entity.setStreet(address.getStreet());
+        if (!address.getNumber().isBlank()&&!address.getNumber().isEmpty())
+            entity.setNumber(address.getNumber());
+        if (!address.getCity().isEmpty()&&!address.getCity().isBlank())
+            entity.setCity(address.getCity());
+        if (!address.getZipcode().isBlank()&&!address.getZipcode().isEmpty())
+            entity.setZipcode(address.getZipcode());
+        if (!address.getCountry().isEmpty()&&!address.getCountry().isBlank())
+            entity.setCountry(address.getCountry());
+
+        addressRepository.save(entity);
+    }
+
+
 }

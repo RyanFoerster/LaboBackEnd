@@ -1,8 +1,11 @@
 package be.techifutur.labo.adoptadev.controllers;
 
 import be.techifutur.labo.adoptadev.exceptions.ResourceNotFoundException;
+import be.techifutur.labo.adoptadev.models.dtos.AddressDTO;
+
 import be.techifutur.labo.adoptadev.models.dtos.DevDTO;
 import be.techifutur.labo.adoptadev.models.entities.Dev;
+import be.techifutur.labo.adoptadev.models.forms.AddressUpdateForm;
 import be.techifutur.labo.adoptadev.models.forms.DevPasswordUpdateForm;
 import be.techifutur.labo.adoptadev.models.forms.DevProfileUpdateForm;
 import be.techifutur.labo.adoptadev.services.FileService;
@@ -38,8 +41,19 @@ public class DevController {
         return ResponseEntity.ok(body);
     }
 
+    @PatchMapping("/{confirmationToken}")
+    public ResponseEntity<?> confirmRegister(@PathVariable String confirmationToken) {
+        Dev dev = userService.getDevByConfirmationToken(confirmationToken);
+        dev.setEnabled(true);
+        dev.setConfirmationToken(null);
+        userService.updateDev(dev.getId(), dev);
+        return ResponseEntity.noContent()
+                .build();
+    }
+
     @PutMapping
     public ResponseEntity<DevDTO> update(Authentication authentication, @RequestBody @Valid DevProfileUpdateForm form) {
+        System.out.println(form);
         Dev dev = (Dev) userDetailsService.loadUserByUsername(authentication.getPrincipal().toString());
         userService.updateDev(dev.getId(), form.toEntity());
         return ResponseEntity.noContent()
@@ -50,6 +64,15 @@ public class DevController {
     public ResponseEntity<DevDTO> updatePassword(Authentication authentication, @RequestBody @Valid DevPasswordUpdateForm form) {
         Dev dev = (Dev) userDetailsService.loadUserByUsername(authentication.getPrincipal().toString());
         userService.updateDevPassword(dev.getId(), form.toEntity());
+        return ResponseEntity.noContent()
+                .build();
+    }
+
+    @PutMapping("/address")
+    public ResponseEntity<AddressDTO> updateDevAddress(Authentication authentication, @RequestBody  AddressUpdateForm form){
+        Dev dev = (Dev) userDetailsService.loadUserByUsername(authentication.getPrincipal().toString());
+        userService.updateDevAddress(dev.getId(), form.toEntity());
+
         return ResponseEntity.noContent()
                 .build();
     }

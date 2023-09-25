@@ -3,10 +3,7 @@ package be.techifutur.labo.adoptadev.models.entities;
 import be.techifutur.labo.adoptadev.models.enums.TechnologyBackEnd;
 import be.techifutur.labo.adoptadev.models.enums.TechnologyFrontEnd;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.util.*;
@@ -16,6 +13,7 @@ import java.util.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 public class Dev extends User {
 
     @Column(name = "dev_birthdate")
@@ -23,11 +21,11 @@ public class Dev extends User {
 
     @Column(name = "dev_technologies_back_end")
     @Enumerated(EnumType.STRING)
-    private Set<TechnologyBackEnd> technologiesBackEnd = new HashSet<>();//TODO enum Technologies
+    private Set<TechnologyBackEnd> technologyBackEnds = new HashSet<>();//TODO enum Technologies
 
     @Column(name = "dev_technologies_front_end")
     @Enumerated(EnumType.STRING)
-    private Set<TechnologyFrontEnd> technologiesFrontEnd = new HashSet<>();//TODO enum Technologies
+    private Set<TechnologyFrontEnd> technologyFrontEnds = new HashSet<>();//TODO enum Technologies
 
     @Column(name = "dev_github")
     private String gitHub;
