@@ -22,7 +22,12 @@ public interface UserService {
 
     void updateDev(Long id, Dev dev);
 
+    Dev saveDev(Dev dev);
+    void updateDevCvPath(Long devId, String cvPath);
+
+
     void updateDevAddress(Long id, Address address);
+
 
     void updateRecruiterPassword(Long id, Recruiter recruiter);
 

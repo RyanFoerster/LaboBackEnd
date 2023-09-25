@@ -19,6 +19,7 @@ public class CommentServiceImpl implements CommentService {
     private final CommentRepository commentRepository;
     private final VoteCommentRepository voteCommentRepository;
 
+
     public CommentServiceImpl(DevRepository devRepository,
                               CommentRepository commentRepository,
                               VoteCommentRepository voteCommentRepository) {
@@ -33,7 +34,6 @@ public class CommentServiceImpl implements CommentService {
         Dev dev = devRepository.findByUsername(devName).orElseThrow(
                 () -> new NameNotFoundException(devName, Dev.class)
         );
-
         comment.setDev(dev);
         return commentRepository.save(comment).getId();
     }

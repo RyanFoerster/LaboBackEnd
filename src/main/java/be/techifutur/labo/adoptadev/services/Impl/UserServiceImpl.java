@@ -168,6 +168,19 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public void updateDevCvPath(Long devId, String cvPath) {
+        Dev dev = devRepository.findById(devId).orElseThrow(
+                () -> new ResourceNotFoundException(devId, Dev.class)
+        );
+        dev.setCv(cvPath);
+        devRepository.save(dev);
+    }
+    @Override
+    public Dev saveDev(Dev dev) {
+        return devRepository.save(dev);
+    }
+
+    @Override
     public void updateRecruiterPassword(Long id, Recruiter recruiter) {
         Recruiter entity = getOneRecruiter(id);
 
