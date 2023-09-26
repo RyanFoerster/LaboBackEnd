@@ -5,15 +5,12 @@ import be.techifutur.labo.adoptadev.models.enums.Role;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.proxy.HibernateProxy;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.LinkedHashSet;
-import java.util.Set;
-import java.util.stream.Collectors;
+import java.util.*;
 
 @Entity
 @Table(name = "\"user\"")
@@ -42,24 +39,22 @@ public class User implements UserDetails {
 
     @Column(name = "user_roles", nullable = false)
     @Enumerated(EnumType.STRING)
-    private Set<Role> roles = new HashSet<>();
+    private Role role;
 
     @Column(name = "user_enabled")
     private boolean isEnabled = false;
 
-    @OneToMany(mappedBy = "emitter")
-    private Set<Message> messagesEmitter = new LinkedHashSet<>();
-
-    @OneToMany(mappedBy = "receptor")
-    private Set<Message> messagesReceptor = new LinkedHashSet<>();
+//    @OneToMany(mappedBy = "emitter", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+//    private Set<Message> messagesEmitter = new LinkedHashSet<>();
+//
+//    @OneToMany(mappedBy = "receptor", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+//    private Set<Message> messagesReceptor = new LinkedHashSet<>();
 
     private String confirmationToken;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return this.roles.stream()
-                .map(role -> new SimpleGrantedAuthority(role.name()))
-                .collect(Collectors.toSet());
+        return Collections.singleton(new SimpleGrantedAuthority("ROLE_" + role.name()));
     }
 
     @Override
@@ -75,5 +70,21 @@ public class User implements UserDetails {
     @Override
     public boolean isCredentialsNonExpired() {
         return true;
+    }
+
+    @Override
+    public final boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null) return false;
+        Class<?> oEffectiveClass = o instanceof HibernateProxy ? ((HibernateProxy) o).getHibernateLazyInitializer().getPersistentClass() : o.getClass();
+        Class<?> thisEffectiveClass = this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass() : this.getClass();
+        if (thisEffectiveClass != oEffectiveClass) return false;
+        User user = (User) o;
+        return getId() != null && Objects.equals(getId(), user.getId());
+    }
+
+    @Override
+    public final int hashCode() {
+        return this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass().hashCode() : getClass().hashCode();
     }
 }

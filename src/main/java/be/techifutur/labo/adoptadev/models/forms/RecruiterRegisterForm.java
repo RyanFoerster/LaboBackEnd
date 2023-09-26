@@ -50,7 +50,7 @@ public class RecruiterRegisterForm {
         recruiter.setEmail(this.email);
         recruiter.setDescription(this.description);
         recruiter.setCompany(this.companyForm.toEntity());
-        recruiter.setRoles(Collections.singleton(Role.RECRUITER));
+        recruiter.setRole(Role.RECRUITER);
         return recruiter;
     }
 }

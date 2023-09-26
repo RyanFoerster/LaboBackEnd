@@ -1,10 +1,9 @@
 package be.techifutur.labo.adoptadev.services.Impl;
 
-import be.techifutur.labo.adoptadev.models.entities.Dev;
-import be.techifutur.labo.adoptadev.models.entities.Match;
-import be.techifutur.labo.adoptadev.models.entities.Message;
-import be.techifutur.labo.adoptadev.models.entities.Recruiter;
+import be.techifutur.labo.adoptadev.models.entities.*;
+import be.techifutur.labo.adoptadev.models.enums.Role;
 import be.techifutur.labo.adoptadev.repositories.MatchRepository;
+import be.techifutur.labo.adoptadev.repositories.UserRepository;
 import be.techifutur.labo.adoptadev.services.MatchService;
 import be.techifutur.labo.adoptadev.services.UserService;
 import org.springframework.stereotype.Service;
@@ -17,10 +16,13 @@ public class MatchServiceImpl implements MatchService {
 
     private final UserService userService;
     private final MatchRepository matchRepository;
+    private final UserRepository userRepository;
 
-    public MatchServiceImpl(UserService userService, MatchRepository matchRepository) {
+    public MatchServiceImpl(UserService userService, MatchRepository matchRepository,
+                            UserRepository userRepository) {
         this.userService = userService;
         this.matchRepository = matchRepository;
+        this.userRepository = userRepository;
     }
 
     @Override
@@ -67,5 +69,19 @@ public class MatchServiceImpl implements MatchService {
         Recruiter recruiter = userService.getOneRecruiter(recruiterId);
 
         matchRepository.deleteByDevAndRecruiter(dev, recruiter);
+    }
+
+    @Override
+    public List<Match> getMatchByUser(String username) {
+
+        User user = userRepository.findByUsername(username).orElseThrow();
+        boolean isRecruiter = user.getRole() == Role.RECRUITER;
+
+        return isRecruiter ? matchRepository.findByRecruiterId(user.getId()) : matchRepository.findByDevId(user.getId());
+    }
+
+    @Override
+    public Match findById(Long matchId) {
+        return matchRepository.findById(matchId).orElseThrow();
     }
 }

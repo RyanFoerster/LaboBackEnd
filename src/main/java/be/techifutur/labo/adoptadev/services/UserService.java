@@ -2,6 +2,8 @@ package be.techifutur.labo.adoptadev.services;
 
 import be.techifutur.labo.adoptadev.models.entities.*;
 
+import java.util.List;
+
 public interface UserService {
 
     void devRegister(Dev dev);
@@ -10,6 +12,7 @@ public interface UserService {
 
     Recruiter getOneRecruiter(Long id);
 
+    List<User> getAllDev();
     Dev getOneDev(Long id);
 
     Recruiter getRecByConfirmationToken(String confirmationToken);

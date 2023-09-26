@@ -49,6 +49,8 @@ public class AuthController {
     }
 
     @PostMapping("/recruiter-register")
+
+
     public ResponseEntity<UserDTO> recruiterRegister(@RequestBody @Valid RecruiterRegisterForm form) {
         Recruiter recruiter = form.toEntity();
         String confirmationToken = generateConfirmationToken();
@@ -69,7 +71,6 @@ public class AuthController {
         String token = userService.login(loginForm.getUsername(), loginForm.getPassword());
 
         User user = (User) userDetailsService.loadUserByUsername(loginForm.getUsername());
-
         if (!user.isEnabled())
             return ResponseEntity.ok(null);
 

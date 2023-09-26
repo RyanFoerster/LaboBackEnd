@@ -4,10 +4,18 @@ import be.techifutur.labo.adoptadev.models.entities.Dev;
 import be.techifutur.labo.adoptadev.models.enums.Role;
 import be.techifutur.labo.adoptadev.models.enums.TechnologyBackEnd;
 import be.techifutur.labo.adoptadev.models.enums.TechnologyFrontEnd;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+
 import lombok.Builder;
 import lombok.Data;
 
 import java.time.LocalDate;
+
+import java.util.HashSet;
+
 import java.util.Set;
 
 @Data
@@ -21,13 +29,15 @@ public class DevDTO {
     private String description;
     private String email;
     private String pseudo;
+    private LocalDate birthDate;
+    private Set<TechnologyBackEnd> technologiesBackEnd;
+    private Set<TechnologyFrontEnd> technologiesFrontEnd;
+    private String gitHub;
+    private String linkedIn;
+    private Role role;
     private String gitHub;
     private String linkedIn;
     private String cv;
-    private LocalDate birthDate;
-    private Set<TechnologyBackEnd> technologyBackEnds;
-    private Set<TechnologyFrontEnd> technologyFrontEnds;
-    private Set<Role> roles;
     private AddressDTO address;
 
     public static DevDTO toDTO(Dev entity) {
@@ -43,14 +53,17 @@ public class DevDTO {
                 .lastName(entity.getLastName())
                 .email(entity.getEmail())
                 .pseudo(entity.getPseudo())
+                .birthDate(entity.getBirthDate())
+                .technologiesBackEnd(entity.getTechnologiesBackEnd())
+                .technologiesFrontEnd(entity.getTechnologiesFrontEnd())
+                .gitHub(entity.getGitHub())
+                .linkedIn(entity.getLinkedIn())
+                .role(entity.getRole())
                 .gitHub(entity.getGitHub())
                 .linkedIn(entity.getLinkedIn())
                 .cv(entity.getCv())
-                .birthDate(entity.getBirthDate())
-                .technologyBackEnds(entity.getTechnologyBackEnds())
-                .technologyFrontEnds(entity.getTechnologyFrontEnds())
-                .roles(entity.getRoles())
                 .address(AddressDTO.toDTO(entity.getAddress()))
+
                 .build();
     }
 }

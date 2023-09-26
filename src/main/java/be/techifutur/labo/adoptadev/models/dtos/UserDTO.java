@@ -16,7 +16,7 @@ public class UserDTO {
     private String firstName;
     private String lastName;
     private String email;
-    private Set<Role> roles;
+    private Role role;
 
     public static UserDTO toDTO(User entity) {
         if (entity == null) {
@@ -29,7 +29,7 @@ public class UserDTO {
                 .firstName(entity.getFirstName())
                 .lastName(entity.getLastName())
                 .email(entity.getEmail())
-                .roles(entity.getRoles())
+                .role(entity.getRole())
                 .build();
     }
 

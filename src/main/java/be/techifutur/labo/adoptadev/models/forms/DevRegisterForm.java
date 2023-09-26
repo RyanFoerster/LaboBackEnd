@@ -49,11 +49,12 @@ public class DevRegisterForm {
         dev.setFirstName(this.firstName);
         dev.setLastName(this.lastName);
         dev.setEmail(this.email);
-        dev.setRoles(Collections.singleton(Role.DEVELOPER));
+        dev.setRole(Role.DEVELOPER);
+        dev.setBirthDate(devProfileUpdateForm.getBirthDate());
+        dev.setTechnologiesBackEnd(devProfileUpdateForm.getTechnologyBackEnds());
+        dev.setTechnologiesFrontEnd(devProfileUpdateForm.getTechnologyFrontEnds());
         dev.setDescription(devProfileUpdateForm.getDescription());
         dev.setCv(devProfileUpdateForm.getCv());
-        dev.setTechnologyBackEnds(devProfileUpdateForm.getTechnologyBackEnds());
-        dev.setTechnologyFrontEnds(devProfileUpdateForm.getTechnologyFrontEnds());
         dev.setGitHub(devProfileUpdateForm.getGitHub());
         dev.setLinkedIn(devProfileUpdateForm.getLinkedIn());
         dev.setPseudo(devProfileUpdateForm.getPseudo());

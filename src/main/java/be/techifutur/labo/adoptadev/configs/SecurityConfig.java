@@ -44,7 +44,7 @@ public class SecurityConfig {
                             .requestMatchers("/swagger/**", "/swagger-ui/**", "/v3/api-docs/**").permitAll()
                             .requestMatchers("/auth/login", "/auth/register","/auth/dev-register","/auth/recruiter-register",
                                     "/job","/job/*", "/projet" , "/projet/*","/dev","/dev/*","/recruiter","/recruiter/*", "/posthelp", "/posthelp/*").permitAll()
-                            .requestMatchers("/**").authenticated();
+                            .requestMatchers("/**").permitAll();
                 });
 
         return http.build();

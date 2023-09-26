@@ -4,8 +4,11 @@ import be.techifutur.labo.adoptadev.exceptions.ResourceNotFoundException;
 import be.techifutur.labo.adoptadev.models.dtos.AddressDTO;
 
 import be.techifutur.labo.adoptadev.models.dtos.DevDTO;
+import be.techifutur.labo.adoptadev.models.dtos.UserDTO;
 import be.techifutur.labo.adoptadev.models.entities.Dev;
+import be.techifutur.labo.adoptadev.models.entities.User;
 import be.techifutur.labo.adoptadev.models.forms.AddressUpdateForm;
+
 import be.techifutur.labo.adoptadev.models.forms.DevPasswordUpdateForm;
 import be.techifutur.labo.adoptadev.models.forms.DevProfileUpdateForm;
 import be.techifutur.labo.adoptadev.services.FileService;
@@ -17,6 +20,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/dev")
@@ -32,6 +37,11 @@ public class DevController {
         this.userService = userService;
         this.fileService = fileService;
         this.userDetailsService = userDetailsService;
+    }
+
+    @GetMapping
+    public ResponseEntity<List<UserDTO>> getAll(){
+        return ResponseEntity.ok(userService.getAllDev().stream().map(UserDTO::toDTO).toList());
     }
 
     @GetMapping("/{id:[0-9]+}")

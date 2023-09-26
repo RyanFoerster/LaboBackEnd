@@ -1,19 +1,19 @@
 package be.techifutur.labo.adoptadev.models.entities;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import org.hibernate.proxy.HibernateProxy;
+import org.springframework.data.annotation.CreatedDate;
 
-import java.util.LinkedHashSet;
-import java.util.Set;
+import java.time.LocalDateTime;
+import java.util.Objects;
 
 @Entity
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class Message {
 
     @Id
@@ -24,16 +24,30 @@ public class Message {
     @Column(name = "message_content")
     private String message;
 
-    @ManyToOne
-    @JoinColumn(name = "emitter_id")
-    private User emitter;
+    private Long emitterId;
 
-    @ManyToOne
-    @JoinColumn(name = "receptor_id")
-    private User receptor;
+    private String receptor;
 
     @ManyToOne
     private Match match;
 
+    @Column(name = "created_at")
+    @CreatedDate
+    private LocalDateTime createdAt;
 
+    @Override
+    public final boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null) return false;
+        Class<?> oEffectiveClass = o instanceof HibernateProxy ? ((HibernateProxy) o).getHibernateLazyInitializer().getPersistentClass() : o.getClass();
+        Class<?> thisEffectiveClass = this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass() : this.getClass();
+        if (thisEffectiveClass != oEffectiveClass) return false;
+        Message message = (Message) o;
+        return getId() != null && Objects.equals(getId(), message.getId());
+    }
+
+    @Override
+    public final int hashCode() {
+        return this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass().hashCode() : getClass().hashCode();
+    }
 }

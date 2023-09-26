@@ -2,6 +2,13 @@ package be.techifutur.labo.adoptadev.services.Impl;
 
 import be.techifutur.labo.adoptadev.exceptions.ResourceNotFoundException;
 import be.techifutur.labo.adoptadev.exceptions.UniqueViolationException;
+import be.techifutur.labo.adoptadev.models.entities.Dev;
+import be.techifutur.labo.adoptadev.models.entities.Recruiter;
+import be.techifutur.labo.adoptadev.models.entities.User;
+import be.techifutur.labo.adoptadev.models.enums.Role;
+import be.techifutur.labo.adoptadev.repositories.DevRepository;
+import be.techifutur.labo.adoptadev.repositories.RecruiterRepository;
+import be.techifutur.labo.adoptadev.repositories.UserRepository;
 import be.techifutur.labo.adoptadev.models.entities.*;
 import be.techifutur.labo.adoptadev.repositories.*;
 import be.techifutur.labo.adoptadev.services.UserService;
@@ -12,6 +19,10 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
+
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -40,6 +51,11 @@ public class UserServiceImpl implements UserService {
         this.authenticationManager = authenticationManager;
         this.addressRepository = addressRepository;
         this.companyRepository = companyRepository;
+    }
+
+    @Override
+    public List<User> getAllDev() {
+        return userRepository.findAllByRole(Role.DEVELOPER);
     }
 
     @Override
