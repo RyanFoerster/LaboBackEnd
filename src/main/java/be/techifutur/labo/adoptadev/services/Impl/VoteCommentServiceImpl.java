@@ -3,6 +3,7 @@ package be.techifutur.labo.adoptadev.services.Impl;
 import be.techifutur.labo.adoptadev.exceptions.ResourceNotFoundException;
 import be.techifutur.labo.adoptadev.models.entities.Comment;
 import be.techifutur.labo.adoptadev.models.entities.Dev;
+import be.techifutur.labo.adoptadev.models.entities.PostHelp;
 import be.techifutur.labo.adoptadev.models.entities.VoteComment;
 import be.techifutur.labo.adoptadev.models.enums.VoteType;
 import be.techifutur.labo.adoptadev.repositories.CommentRepository;
@@ -63,6 +64,17 @@ public class VoteCommentServiceImpl implements VoteCommentService {
 
             return voteCommentRepository.save(voteComment);
         }
+    }
+
+    @Override
+    public Optional<VoteComment> getVote(Long commentId, Long devId) {
+        Comment comment = commentRepository.findById(commentId)
+                .orElseThrow(() -> new ResourceNotFoundException(commentId, Comment.class));
+
+        Dev dev = devRepository.findById(devId)
+                .orElseThrow(() -> new ResourceNotFoundException(devId, Dev.class));
+
+        return voteCommentRepository.findByCommentAndDev(comment, dev);
     }
 
     private void adjustScore(Comment comment, int adjustment) {

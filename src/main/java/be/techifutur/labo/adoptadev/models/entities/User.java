@@ -42,13 +42,15 @@ public class User implements UserDetails {
     private Role role;
 
     @Column(name = "user_enabled")
-    private boolean isEnabled = true;
+    private boolean isEnabled = false;
 
 //    @OneToMany(mappedBy = "emitter", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 //    private Set<Message> messagesEmitter = new LinkedHashSet<>();
 //
 //    @OneToMany(mappedBy = "receptor", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 //    private Set<Message> messagesReceptor = new LinkedHashSet<>();
+
+    private String confirmationToken;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

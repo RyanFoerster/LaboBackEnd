@@ -51,7 +51,7 @@ public class DataInitializer implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         PasswordEncoder passwordEncoder = securityConfig.passwordEncoder();
-
+      
         Dev dev = new Dev();
         dev.setUsername("string");
         dev.setPassword(passwordEncoder.encode("Test1234="));
@@ -120,6 +120,5 @@ public class DataInitializer implements CommandLineRunner {
         message2.setCreatedAt(LocalDateTime.now());
 
         messageRepository.saveAll(List.of(message, message2));
-
     }
 }

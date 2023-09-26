@@ -12,5 +12,7 @@ public interface DevRepository extends JpaRepository<Dev, Long> {
 
     Optional<Dev> findByUsername(String pseudo);
 
+    Optional<Dev> findByConfirmationToken(String confirmToken);
+
 
 }
