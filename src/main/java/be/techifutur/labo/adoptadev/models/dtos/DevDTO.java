@@ -30,13 +30,11 @@ public class DevDTO {
     private String email;
     private String pseudo;
     private LocalDate birthDate;
-    private Set<TechnologyBackEnd> technologiesBackEnd;
-    private Set<TechnologyFrontEnd> technologiesFrontEnd;
+    private Set<TechnologyBackEnd> technologyBackEnds;
+    private Set<TechnologyFrontEnd> technologyFrontEnds;
     private String gitHub;
     private String linkedIn;
     private Role role;
-    private String gitHub;
-    private String linkedIn;
     private String cv;
     private AddressDTO address;
 
@@ -54,8 +52,8 @@ public class DevDTO {
                 .email(entity.getEmail())
                 .pseudo(entity.getPseudo())
                 .birthDate(entity.getBirthDate())
-                .technologiesBackEnd(entity.getTechnologiesBackEnd())
-                .technologiesFrontEnd(entity.getTechnologiesFrontEnd())
+                .technologyBackEnds(entity.getTechnologyBackEnds())
+                .technologyFrontEnds(entity.getTechnologyFrontEnds())
                 .gitHub(entity.getGitHub())
                 .linkedIn(entity.getLinkedIn())
                 .role(entity.getRole())

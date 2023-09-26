@@ -50,9 +50,9 @@ public class DevRegisterForm {
         dev.setLastName(this.lastName);
         dev.setEmail(this.email);
         dev.setRole(Role.DEVELOPER);
-        dev.setBirthDate(devProfileUpdateForm.getBirthDate());
-        dev.setTechnologiesBackEnd(devProfileUpdateForm.getTechnologyBackEnds());
-        dev.setTechnologiesFrontEnd(devProfileUpdateForm.getTechnologyFrontEnds());
+        dev.setBirthDate(devProfileUpdateForm.toEntity().getBirthDate());
+        dev.setTechnologyBackEnds(devProfileUpdateForm.getTechnologyBackEnds());
+        dev.setTechnologyFrontEnds(devProfileUpdateForm.getTechnologyFrontEnds());
         dev.setDescription(devProfileUpdateForm.getDescription());
         dev.setCv(devProfileUpdateForm.getCv());
         dev.setGitHub(devProfileUpdateForm.getGitHub());
