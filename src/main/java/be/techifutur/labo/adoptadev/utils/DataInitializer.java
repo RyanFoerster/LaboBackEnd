@@ -59,6 +59,7 @@ public class DataInitializer implements CommandLineRunner {
         dev.setLastName("string");
         dev.setEmail("string@string");
         dev.setRole(Role.DEVELOPER);
+        dev.setEnabled(true);
         devRepository.save(dev);
 
         Dev dev2 = new Dev();
@@ -68,6 +69,7 @@ public class DataInitializer implements CommandLineRunner {
         dev2.setLastName("string");
         dev2.setEmail("string2@string");
         dev2.setRole(Role.DEVELOPER);
+        dev2.setEnabled(true);
         devRepository.save(dev2);
 
         Recruiter recruiter = new Recruiter();

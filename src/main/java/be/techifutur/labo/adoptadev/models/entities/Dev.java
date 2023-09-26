@@ -21,11 +21,11 @@ public class Dev extends User {
 
     @Column(name = "dev_technologies_back_end")
     @Enumerated(EnumType.STRING)
-    private Set<TechnologyBackEnd> technologiesBackEnd = new HashSet<>();
+    private Set<TechnologyBackEnd> technologyBackEnds = new HashSet<>();
 
     @Column(name = "dev_technologies_front_end")
     @Enumerated(EnumType.STRING)
-    private Set<TechnologyFrontEnd> technologiesFrontEnd = new HashSet<>();
+    private Set<TechnologyFrontEnd> technologyFrontEnds = new HashSet<>();
 
     @Column(name = "dev_github")
     private String gitHub;
