@@ -24,14 +24,6 @@ public class Message {
     @Column(name = "message_content")
     private String message;
 
-//    @ManyToOne
-//    @JoinColumn(name = "emitter_id")
-//    private User emitter;
-//
-//    @ManyToOne
-//    @JoinColumn(name = "receptor_id")
-//    private User receptor;
-
     private Long emitterId;
 
     private String receptor;
