@@ -15,6 +15,8 @@ public class MatchDTO {
 
     private String name;
 
+    private Long userId;
+
     private List<MessageDTO> messages;
 
     /**
@@ -29,6 +31,7 @@ public class MatchDTO {
         return MatchDTO.builder()
                 .id(match.getId())
                 .name(match.getRecruiter().getFirstName() + " " + match.getRecruiter().getLastName())
+                .userId(match.getRecruiter().getId())
                 .messages(match.getMessages().stream().map(MessageDTO::toDTO).sorted(Comparator.comparing(MessageDTO::getCreatedAt)).toList())
                 .build();
     }
@@ -47,6 +50,7 @@ public class MatchDTO {
         return MatchDTO.builder()
                 .id(match.getId())
                 .name(match.getDev().getFirstName() + " " + match.getDev().getLastName())
+                .userId(match.getDev().getId())
                 .messages(match.getMessages().stream().map(MessageDTO::toDTO).sorted(Comparator.comparing(MessageDTO::getCreatedAt)).toList())
                 .build();
     }
