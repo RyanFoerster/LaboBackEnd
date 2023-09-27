@@ -33,11 +33,8 @@ public class PostHelp {
     @Column(name = "post_help_description", nullable = false)
     private String description;
 
-    @Column(name = "post_help_github", nullable = false)
-    private String github;
-
-    @Column(name = "post_help_ouvert", nullable = false)
-    private Boolean ouvert = true;
+    @Column(name = "post_help_gitHub", nullable = false)
+    private String gitHub;
 
 
     @OneToMany(mappedBy = "post")

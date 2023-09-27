@@ -24,10 +24,7 @@ public class PostHelpForm {
     @Size(min = 10, max = 500, message = "La description doit comporter entre 10 et 500 caractères")
     private String description;
 
-    private String github;
-
-    @NotNull
-    private Boolean ouvert;
+    private String gitHub;
 
     public PostHelp toEntity() {
 
@@ -37,8 +34,7 @@ public class PostHelpForm {
         postHelp.setTechnologyFrontEnd(this.technologyFrontEnd);
         postHelp.setTechnologyBackEnd(this.technologyBackEnd);
         postHelp.setDescription(this.description);
-        postHelp.setGithub(this.github);
-        postHelp.setOuvert(this.ouvert);
+        postHelp.setGitHub(this.gitHub);
 
         return postHelp;
     }

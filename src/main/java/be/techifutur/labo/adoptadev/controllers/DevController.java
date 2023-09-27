@@ -14,6 +14,8 @@ import be.techifutur.labo.adoptadev.models.forms.DevProfileUpdateForm;
 import be.techifutur.labo.adoptadev.services.FileService;
 import be.techifutur.labo.adoptadev.services.UserService;
 import jakarta.validation.Valid;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -21,6 +23,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 @RestController
@@ -109,5 +113,33 @@ public class DevController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }
+
+    @GetMapping("/{devId}/download-cv")
+    public ResponseEntity<?> downloadCV(@PathVariable Long devId) {
+        try {
+            Dev dev = userService.getOneDev(devId);
+            String fullCvPath = dev.getCv();
+            Path path = Paths.get(fullCvPath);
+            String cvFileName = path.getFileName().toString();
+            // Assuming the subdirectory can be derived from the full path,
+            // but you might need to adjust this based on your actual file structure
+            String subDirectory = path.getParent().getFileName().toString();
+
+            Resource resource = fileService.getFile(cvFileName, subDirectory);
+
+            if (resource.exists()) {
+                return ResponseEntity.ok()
+                        .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
+                        .body(resource);
+            } else {
+                throw new RuntimeException("File not found.");
+            }
+        } catch (ResourceNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+    }
+
 
 }
