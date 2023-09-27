@@ -65,8 +65,7 @@ public class PostHelpServiceImpl implements PostHelpService {
         entity.setTechnologyFrontEnd(postHelp.getTechnologyFrontEnd());
         entity.setTechnologyBackEnd(postHelp.getTechnologyBackEnd());
         entity.setDescription(postHelp.getDescription());
-        entity.setGithub(postHelp.getGithub());
-        entity.setOuvert(postHelp.getOuvert());
+        entity.setGitHub(postHelp.getGitHub());
         postHelpRepository.save(entity);
     }
 
@@ -74,7 +73,6 @@ public class PostHelpServiceImpl implements PostHelpService {
     public void delete(Long aLong) {
 
         PostHelp postHelp = getOne(aLong);
-        postHelp.setOuvert(false);
         postHelpRepository.save(postHelp);
 
     }
@@ -83,7 +81,6 @@ public class PostHelpServiceImpl implements PostHelpService {
     public void isActive(Long aLong, PostHelp postHelp) {
 
         PostHelp entity = getOne(aLong);
-        entity.setOuvert(!postHelp.getOuvert());
         postHelpRepository.save(entity);
     }
 

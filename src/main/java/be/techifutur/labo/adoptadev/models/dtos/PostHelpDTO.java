@@ -20,8 +20,7 @@ public class PostHelpDTO {
     private TechnologyFrontEnd technologyFrontEnd;
     private TechnologyBackEnd technologyBackEnd;
     private String description;
-    private String github;
-    private Boolean ouvert;
+    private String gitHub;
     private Set<CommentDTO> comments;
     private Set<VoteSujetDTO> voteSujets;
     private int score;
@@ -37,8 +36,8 @@ public class PostHelpDTO {
                 .technologyFrontEnd(postHelp.getTechnologyFrontEnd())
                 .technologyBackEnd(postHelp.getTechnologyBackEnd())
                 .description(postHelp.getDescription())
-                .github(postHelp.getGithub())
-                .ouvert(postHelp.getOuvert())
+                .gitHub(postHelp.getGitHub())
+//                .ouvert(postHelp.getOuvert())
                 .comments(postHelp.getComments().stream().map(CommentDTO::toDTO).collect(Collectors.toSet()))
                 .score(postHelp.getScore())
                 .voteSujets(postHelp.getVoteSujets().stream().map(VoteSujetDTO::toDTO).collect(Collectors.toSet()))

@@ -87,7 +87,7 @@ public class DataInitializer implements CommandLineRunner {
         postHelp.setDev(dev);
         postHelp.setTechnologyFrontEnd(TechnologyFrontEnd.ANGULAR);
         postHelp.setDescription("J'ai besoin d'aide pour créer un component en utilisant le cli Angular");
-        postHelp.setGithub("https://github.com/LoVanors/finalLab");
+        postHelp.setGitHub("https://github.com/LoVanors/finalLab");
         postHelpRepository.save(postHelp);
 
         Comment comment = new Comment();
